@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar.jsx';
-import Login from './local/Login.jsx';
-import NotFoundPage from './local/NotFoundPage.jsx';
+import Login from './Page/Login.jsx';
+import NotFoundPage from './Page/NotFoundPage.jsx';
 
 const App = () => (
   <>
