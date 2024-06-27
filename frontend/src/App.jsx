@@ -5,7 +5,7 @@ import Login from './Page/Login.jsx';
 import NotFoundPage from './Page/NotFoundPage.jsx';
 
 const App = () => (
-  <div className="h-100 bg-light">
+  <div className="d-flex flex-column h-100">
     <Navbar />
     <Routes>
       <Route path="/" element={<Login />} />
