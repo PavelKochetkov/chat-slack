@@ -1,8 +1,9 @@
 import React from 'react';
+import logo404 from '../../public/images/404.svg';
 
 const NotFoundPage = () => (
   <div className="text-center">
-    <img src="" alt="Страница не найдена" className="img-fluid h-25" />
+    <img src={logo404} alt="Страница не найдена" className="img-fluid h-25" />
     <h1 className="h4 text-muted">Страница не найдена</h1>
     <p className="text-muted">
       Но вы можете перейти

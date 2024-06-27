@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginForm from '../Components/LoginForm.jsx';
+import logo from '../../public/images/logo.jpg';
 
 const Login = () => (
   <div className="container-fluid h-100">
@@ -8,7 +9,7 @@ const Login = () => (
         <div className="card shadow-sm">
           <div className="card-body row p-5">
             <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-              <img src="" className="rounded-circle" alt="Войти" />
+              <img src={logo} className="rounded-circle" alt="Войти" />
             </div>
             <LoginForm />
           </div>
