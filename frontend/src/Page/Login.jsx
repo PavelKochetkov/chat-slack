@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginForm from '../Components/LoginForm.jsx';
-import logo from '../../public/images/logo.jpg';
+import logo from '../images/logo.jpg';
 
 const Login = () => (
   <div className="container-fluid h-100">

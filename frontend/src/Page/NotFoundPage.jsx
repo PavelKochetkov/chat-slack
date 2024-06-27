@@ -1,5 +1,5 @@
 import React from 'react';
-import logo404 from '../../public/images/404.svg';
+import logo404 from '../images/404.svg';
 
 const NotFoundPage = () => (
   <div className="text-center">
