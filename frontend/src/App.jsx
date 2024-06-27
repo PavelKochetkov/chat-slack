@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar.jsx';
-import Login from './pages/Login.jsx';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Navbar from './Components/Navbar.jsx';
+import Login from './Pages/Login.jsx';
 
 const App = () => (
   <>
@@ -9,6 +9,7 @@ const App = () => (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
+      <Navigate to="/login" />
     </Routes>
   </>
 );
