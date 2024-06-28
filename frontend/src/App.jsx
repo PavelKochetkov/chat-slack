@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar.jsx';
 import Login from './Page/Login.jsx';
 import NotFoundPage from './Page/NotFoundPage.jsx';
@@ -9,7 +9,7 @@ const App = () => (
     <Navbar />
     <div className="d-flex justify-content-center align-items-center min-vh-100">
       <Routes>
-        <Route path="/" element={<Navigate replace to="/login" />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
