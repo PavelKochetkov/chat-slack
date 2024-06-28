@@ -15,6 +15,7 @@ const LoginForm = () => (
           placeholder="Ваш ник"
           id="username"
           required
+          autoFocus
         />
         <label htmlFor="username">Ваш ник</label>
       </div>

@@ -7,7 +7,7 @@ import NotFoundPage from './Page/NotFoundPage.jsx';
 const App = () => (
   <div className="d-flex flex-column h-100">
     <Navbar />
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />

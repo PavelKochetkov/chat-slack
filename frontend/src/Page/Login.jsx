@@ -13,9 +13,9 @@ const Login = () => (
             </div>
             <LoginForm />
           </div>
-          <div className="card-footer">
+          <div className="card-footer p-4">
             <div className="text-center">
-              <span>Нет аккаунта?</span>
+              <span>Нет аккаунта? </span>
               <a href="/login">Регистрация</a>
             </div>
           </div>
