@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchChatData = createAsyncThunk(
@@ -15,6 +15,8 @@ export const fetchChatData = createAsyncThunk(
     return response.data;
   },
 );
+
+const chatAdapter = createEntityAdapter();
 
 const chatSlice = createSlice({
   name: 'chat',
@@ -37,8 +39,7 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchChatData.fulfilled, (state, action) => {
-        state.channels = action.payload.channels;
-        state.messages = action.payload.messages;
+        chatAdapter.addOne(state, action.payload);
         state.loadingStatus = 'idle';
         state.error = null;
       })
@@ -50,4 +51,4 @@ const chatSlice = createSlice({
 });
 
 export const { actions } = chatSlice;
-export default chatSlice.reducer;
+export default chatAdapter.reducer;
