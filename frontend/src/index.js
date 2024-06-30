@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import store from './slices/index.js';
+import store from './store.js';
 
 const chat = ReactDOM.createRoot(document.getElementById('chat'));
 chat.render(

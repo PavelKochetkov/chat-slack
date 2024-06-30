@@ -17,13 +17,11 @@ const App = () => {
   return (
     <div className="d-flex flex-column h-100">
       <Navbar />
-      <div className="d-flex justify-content-center align-items-center min-vh-100">
-        <Routes>
-          <Route path="/" element={<ChatPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<ChatPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </div>
   );
 };

@@ -1,20 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchChatData } from '../slices/chatSlice.js';
+import React from 'react';
+import ChannelSidebar from '../Components/ChannelSidebar.jsx';
+import MessageContainer from '../Components/MessageContainer.jsx';
 
-const ChatPage = () => {
-  const dispatch = useDispatch();
-  const channels = useSelector((state) => console.log('state', state));
-  console.log('channels', channels);
-
-  useEffect(() => {
-    dispatch(fetchChatData());
-  }, [dispatch]);
-  return (
-    <div>
-      <h1>Chat Page</h1>
+const ChatPage = () => (
+  <div className="container h-100 my-4 overflow-hidden rounded shadow">
+    <div className="row h-100 bg-white flex-md-row">
+      <ChannelSidebar />
+      <MessageContainer />
     </div>
-  );
-};
+  </div>
+);
 
 export default ChatPage;
