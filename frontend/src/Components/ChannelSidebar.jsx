@@ -3,7 +3,6 @@ import { useGetChannelsQuery } from '../api/chatApi.js';
 
 const ChannelSidebar = () => {
   const { data: channels, isLoading } = useGetChannelsQuery();
-  console.log(channels);
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
