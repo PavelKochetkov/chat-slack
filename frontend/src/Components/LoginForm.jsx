@@ -14,6 +14,7 @@ const LoginForm = () => {
         try {
           const responce = await axios.post('/api/v1/login', values);
           localStorage.setItem('token', responce.data.token);
+          localStorage.setItem('username', responce.data.username);
           navigate('/');
         } catch (error) {
           setLoginError('Ошибка авторизации. Проверьте введенные данные');
