@@ -20,7 +20,7 @@ const ChannelSidebar = () => {
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels && channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100">
-            <button type="button" className="w-100 rounded-0 text-start btn">
+            <button type="button" className="w-100 rounded-0 text-start btn" id={channel.id}>
               <span className="me-1">#</span>
               {channel.name}
             </button>

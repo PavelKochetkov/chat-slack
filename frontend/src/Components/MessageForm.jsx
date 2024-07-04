@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useAddMessageMutation, useGetMessagesQuery } from '../api/chatApi';
+import socket from '../socket.js';
 
 const MessageForm = () => {
-  const { refetch } = useGetMessagesQuery();
   const [
     addMessage,
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
 
-  const onSubmit = (values, { setSubmitting, resetForm }) => {
+  const { data: messages } = useGetMessagesQuery();
+
+  const sendMessage = ((values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
     addMessage({ body: values.body }).then(() => {
       setSubmitting(false);
       resetForm();
-      refetch();
     });
-  };
+  });
+
+  useEffect(() => {
+    socket.on('newMessage', () => messages);
+
+    return () => {
+      socket.off('newMessage', () => messages);
+    };
+  }, [messages]);
 
   return (
     <div className="mt-auto px-5 py-3">
       <Formik
         initialValues={{ body: '' }}
-        onSubmit={onSubmit}
+        onSubmit={sendMessage}
       >
         {({ isSubmitting }) => (
           <Form className="py-1 border rounded-2">

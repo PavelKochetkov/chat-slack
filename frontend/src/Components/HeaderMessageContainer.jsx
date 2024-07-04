@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useGetMessagesQuery } from '../api/chatApi.js';
+import { useGetMessagesQuery, useGetChannelsQuery } from '../api/chatApi.js';
 
 const HeaderMessageContainer = () => {
   const [countMessage, setCountMessage] = useState(0);
   const { data: messages } = useGetMessagesQuery();
+  const { data: channels } = useGetChannelsQuery();
+  console.log(channels);
+  console.log(messages);
 
   useEffect(() => {
     if (messages) {
