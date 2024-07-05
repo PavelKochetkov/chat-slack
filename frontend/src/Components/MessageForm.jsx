@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useAddMessageMutation, useGetMessagesQuery } from '../api/chatApi';
-import socket from '../socket.js';
+import { useAddMessageMutation } from '../api/chatApi';
 
 const MessageForm = () => {
   const [
     addMessage,
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
-
-  const { data: messages } = useGetMessagesQuery();
 
   const sendMessage = ((values, { setSubmitting, resetForm }) => {
     setSubmitting(true);
@@ -18,15 +15,6 @@ const MessageForm = () => {
       resetForm();
     });
   });
-
-  useEffect(() => {
-    socket.on('newMessage', () => messages);
-
-    return () => {
-      socket.off('newMessage', () => messages);
-    };
-  }, [messages]);
-
   return (
     <div className="mt-auto px-5 py-3">
       <Formik
