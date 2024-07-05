@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGetChannelsQuery } from '../api/chatApi.js';
+import Spinner from './Spinner.jsx';
 
 const ChannelSidebar = () => {
+  const [activeChannelId, setActiveChannelId] = useState(null);
   const { data: channels, isLoading } = useGetChannelsQuery();
+  const hadleChannelClick = (id) => {
+    setActiveChannelId(id);
+  };
+
+  useEffect(() => {
+    if (channels && channels.length > 0) {
+      setActiveChannelId(channels[0].id);
+    }
+  }, [channels]);
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        {isLoading && <div className="spinner-border text-primary" role="status"><span className="visually-hidden">Загрузка...</span></div>}
+        {isLoading && <Spinner />}
         <b>Каналы</b>
         <button type="button" className="p-0 text-primary btn btn-group-vertical">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
@@ -20,7 +31,11 @@ const ChannelSidebar = () => {
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels && channels.map((channel) => (
           <li key={channel.id} className="nav-item w-100">
-            <button type="button" className="w-100 rounded-0 text-start btn" id={channel.id}>
+            <button
+              type="button"
+              className={activeChannelId === channel.id ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn'}
+              onClick={() => hadleChannelClick(channel.id)}
+            >
               <span className="me-1">#</span>
               {channel.name}
             </button>
