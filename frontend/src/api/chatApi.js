@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import _ from 'lodash';
-
-const getNextId = () => _.uniqueId();
-
 const chatApi = createApi({
   reducerPath: 'chatApi',
   baseQuery: fetchBaseQuery({
@@ -20,6 +16,25 @@ const chatApi = createApi({
     getChannels: builder.query({
       query: () => 'channels',
     }),
+    addChannel: builder.mutation({
+      query: (channel) => ({
+        method: 'POST',
+        body: channel,
+      }),
+    }),
+    editChannel: builder.mutation({
+      query: (channel) => ({
+        method: 'PATCH',
+        url: channel.id,
+        body: channel,
+      }),
+    }),
+    removeChannel: builder.mutation({
+      query: (id) => ({
+        method: 'DELETE',
+        url: id,
+      }),
+    }),
     getMessages: builder.query({
       query: () => 'messages',
     }),
@@ -29,7 +44,6 @@ const chatApi = createApi({
         method: 'POST',
         body: {
           ...message,
-          channelId: getNextId(),
           username: localStorage.getItem('username'),
         },
       }),
@@ -37,4 +51,11 @@ const chatApi = createApi({
   }),
 });
 export default chatApi;
-export const { useGetChannelsQuery, useGetMessagesQuery, useAddMessageMutation } = chatApi;
+export const {
+  useGetChannelsQuery,
+  useAddChannelMutation,
+  useEditChannelMutation,
+  useRemoveChannelMutation,
+  useGetMessagesQuery,
+  useAddMessageMutation,
+} = chatApi;

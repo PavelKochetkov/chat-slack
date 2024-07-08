@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useGetChannelsQuery } from '../api/chatApi.js';
+import { changeChannel } from '../store/slice/appSlice.js';
 import Spinner from './Spinner.jsx';
 
 const ChannelSidebar = () => {
-  const [activeChannelId, setActiveChannelId] = useState(null);
   const { data: channels, isLoading } = useGetChannelsQuery();
-  const hadleChannelClick = (id) => {
-    setActiveChannelId(id);
-  };
-
+  const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (channels && channels.length > 0) {
-      setActiveChannelId(channels[0].id);
+    if (channels && channels.length > 0 && currentChannelId === 1) {
+      const { id, name } = channels[0];
+      dispatch(changeChannel({ id, name }));
     }
-  }, [channels]);
+  }, [channels, currentChannelId, dispatch]);
+  const hadleChannelClick = (id, name) => {
+    if (id !== currentChannelId) {
+      dispatch(changeChannel({ id, name }));
+    }
+  };
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
@@ -29,18 +34,21 @@ const ChannelSidebar = () => {
         </button>
       </div>
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
-        {channels && channels.map((channel) => (
-          <li key={channel.id} className="nav-item w-100">
-            <button
-              type="button"
-              className={activeChannelId === channel.id ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn'}
-              onClick={() => hadleChannelClick(channel.id)}
-            >
-              <span className="me-1">#</span>
-              {channel.name}
-            </button>
-          </li>
-        ))}
+        {channels && channels.map((channel) => {
+          const styleButton = channel.id === currentChannelId ? 'w-100 rounded-0 text-start btn btn-secondary' : 'w-100 rounded-0 text-start btn';
+          return (
+            <li key={channel.id} className="nav-item w-100">
+              <button
+                type="button"
+                className={styleButton}
+                onClick={() => hadleChannelClick(channel.id, channel.name)}
+              >
+                <span className="me-1">#</span>
+                {channel.name}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

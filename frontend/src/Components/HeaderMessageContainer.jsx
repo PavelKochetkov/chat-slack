@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useGetMessagesQuery, useGetChannelsQuery } from '../api/chatApi.js';
 
 const HeaderMessageContainer = () => {
-  const [countMessage, setCountMessage] = useState(0);
+  const currentChannelName = useSelector((state) => state.app.currentChannelName);
+  const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const { data: messages } = useGetMessagesQuery();
+  const filteredMessages = messages && messages
+    .filter((message) => message.channelId === currentChannelId);
   const { data: channels } = useGetChannelsQuery();
   console.log(channels);
   console.log(messages);
 
-  useEffect(() => {
-    if (messages) {
-      setCountMessage(messages.length);
-    }
-  }, [messages]);
-
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
       <p className="m-0">
-        <b># general</b>
+        <b>{`# ${currentChannelName}`}</b>
       </p>
       <span className="text-muted">
-        {countMessage}
+        {filteredMessages && filteredMessages.length}
         {' '}
         сообщений
       </span>
