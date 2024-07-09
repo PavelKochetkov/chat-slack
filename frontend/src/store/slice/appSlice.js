@@ -4,19 +4,26 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   currentChannelId: 1,
   currentChannelName: 'general',
+  showModal: '',
 };
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    changeChannel: (state, action) => {
-      const { name, id } = action.payload;
-      state.currentChannelId = id;
-      state.currentChannelName = name;
+    changeChannel: (state, { payload }) => {
+      Object.assign(state, {
+        currentChannelId: payload.id,
+        currentChannelName: payload.name,
+      });
+    },
+    setChannelModal: (state, { payload }) => {
+      Object.assign(state, {
+        showModal: payload.modalName,
+      });
     },
   },
 });
 
-export const { changeChannel } = appSlice.actions;
+export const { changeChannel, setChannelModal } = appSlice.actions;
 export default appSlice.reducer;

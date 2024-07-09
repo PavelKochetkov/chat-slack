@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetMessagesQuery } from '../api/chatApi';
 import socket from '../socket.js';
-import Spinner from './Spinner.jsx';
+import Loading from './Spinner.jsx';
 
 const MessageBox = () => {
   const { data: messages, isLoading, refetch } = useGetMessagesQuery();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
-  const filtredMessages = messages && messages
-    .filter((message) => message.channelId === currentChannelId);
+  const filtredMessages = messages?.filter((message) => message.channelId === currentChannelId);
 
   useEffect(() => {
     const handleNewMessage = async () => {
@@ -24,8 +23,8 @@ const MessageBox = () => {
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-      {isLoading && <Spinner />}
-      {filtredMessages && filtredMessages.length > 0 && filtredMessages.map((message) => (
+      {isLoading && <Loading />}
+      {filtredMessages?.map((message) => (
         <div className="text-break mb-2" key={message.id}>
           <b>{message.username}</b>
           :

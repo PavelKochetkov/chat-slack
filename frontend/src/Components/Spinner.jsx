@@ -1,16 +1,8 @@
 import React from 'react';
+import { Spinner } from 'react-bootstrap';
 
-const Spinner = () => (
-  <div
-    className="spinner-border spinner-border-sm text-primary"
-    role="status"
-  >
-    <span
-      className="visually-hidden"
-    >
-      Загрузка...
-    </span>
-  </div>
+const Loading = () => (
+  <Spinner animation="grow" variant="primary" size="sm" />
 );
 
-export default Spinner;
+export default Loading;
