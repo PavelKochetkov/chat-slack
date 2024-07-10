@@ -2,11 +2,15 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import NewChannel from './NewChannel';
-// import { setChannelModal } from '../../store/slice/appSlice';
+import { setChannelModal } from '../../store/slice/appSlice';
 import { useGetChannelsQuery } from '../../api/chatApi';
 
+const modals = {
+  adding: NewChannel,
+};
+
 const ModalContainer = (props) => {
-  const { show, handleClose } = props;
+  const { handleClose } = props;
   const dispatch = useDispatch();
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
@@ -18,14 +22,21 @@ const ModalContainer = (props) => {
       .required('Обязательное поле')
       .notOneOf(channelNames, 'Должно быть уникальным'),
   });
+  const handleCloseModal = () => {
+    dispatch(setChannelModal({ modalName: '' }));
+  };
+  const showModal = useSelector((state) => state.app.showModal);
+  const Container = modals[showModal];
+  if (!Container) return null;
 
   return (
-    <NewChannel
+    <Container
       dispatch={dispatch}
       addChannelSchema={addChannelSchema}
       currentChannelId={currentChannelId}
-      show={show}
       handleClose={handleClose}
+      showModal={showModal}
+      handleCloseModal={handleCloseModal}
     />
   );
 };

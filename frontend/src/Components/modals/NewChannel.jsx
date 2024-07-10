@@ -4,15 +4,19 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation } from '../../api/chatApi.js';
+import { changeChannel } from '../../store/slice/appSlice.js';
 
 const NewChannel = (props) => {
-  const { show, handleClose, addChannelSchema } = props;
+  const {
+    showModal, addChannelSchema, handleCloseModal, dispatch,
+  } = props;
   const [addChannel] = useAddChannelMutation();
-
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      await addChannel({ name: values.name });
-      handleClose();
+      const response = await addChannel({ name: values.name });
+      const { id, name } = response.data;
+      handleCloseModal();
+      dispatch(changeChannel({ id, name }));
       toast.success('Канал создан');
     } catch (e) {
       console.error(e);
@@ -22,7 +26,7 @@ const NewChannel = (props) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={showModal === 'adding'} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
         <Modal.Title>Добавить канал</Modal.Title>
       </Modal.Header>
@@ -44,7 +48,7 @@ const NewChannel = (props) => {
               ) : null}
               <div className="d-flex justify-content-end">
                 <div className="me-2">
-                  <Button variant="secondary" onClick={handleClose}>Отменить</Button>
+                  <Button variant="secondary" onClick={handleCloseModal}>Отменить</Button>
                 </div>
                 <Button
                   type="submit"
