@@ -26,9 +26,11 @@ const ChannelSidebar = () => {
     };
 
     socket.on('newChannel', handleNewChannel);
+    socket.on('removeChannel', handleNewChannel);
 
     return () => {
       socket.off('newChannel');
+      socket.off('removeChannel');
     };
   }, [refetch]);
 

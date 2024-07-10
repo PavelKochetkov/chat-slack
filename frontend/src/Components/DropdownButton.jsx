@@ -1,11 +1,14 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
-import { changeChannel } from '../store/slice/appSlice';
+import { changeChannel, setChannelModal } from '../store/slice/appSlice';
 
 const DropdownButton = ({ data }) => {
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
+    dispatch(setChannelModal({ modalName, id: channel.id, name: channel.name }));
+  };
   const switchChannel = () => {
     const { id, name } = data;
     if (id !== currentChannelId) {
@@ -26,8 +29,8 @@ const DropdownButton = ({ data }) => {
           <span className="visually-hidden">Управление каналом</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item eventKey="1">Удалить</Dropdown.Item>
-          <Dropdown.Item eventKey="2">Переименовать</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowModal('remove', data)}>Удалить</Dropdown.Item>
+          <Dropdown.Item>Переименовать</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </ButtonGroup>
