@@ -30,7 +30,7 @@ const DropdownButton = ({ data }) => {
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Item onClick={() => handleShowModal('remove', data)}>Удалить</Dropdown.Item>
-          <Dropdown.Item>Переименовать</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowModal('renaming', data)}>Переименовать</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </ButtonGroup>

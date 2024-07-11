@@ -12,6 +12,7 @@ const chatApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Channels', 'Messages'],
   endpoints: (builder) => ({
     getChannels: builder.query({
       query: () => 'channels',
@@ -33,11 +34,13 @@ const chatApi = createApi({
     removeChannel: builder.mutation({
       query: (id) => ({
         method: 'DELETE',
-        url: id,
+        url: `channels/${id}`,
       }),
+      invalidatesTags: ['Channels', 'Messages'],
     }),
     getMessages: builder.query({
       query: () => 'messages',
+      providesTags: ['Messages'],
     }),
     addMessage: builder.mutation({
       query: (message) => ({

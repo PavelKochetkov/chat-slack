@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
+import RenameChannel from './RenameChannel';
 import { setChannelModal } from '../../store/slice/appSlice';
 import { useGetChannelsQuery } from '../../api/chatApi';
 
-const modals = {
+const modalsTypes = {
   adding: NewChannel,
   remove: RemoveChannel,
+  renaming: RenameChannel,
 };
 
 const ModalContainer = () => {
@@ -28,7 +30,7 @@ const ModalContainer = () => {
     dispatch(setChannelModal({ modalName: '', id: '' }));
   };
   const showModal = useSelector((state) => state.app.showModal);
-  const Container = modals[showModal];
+  const Container = modalsTypes[showModal];
   if (!Container) return null;
 
   return (
