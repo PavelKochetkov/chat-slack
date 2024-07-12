@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -11,19 +10,11 @@ const RenameChannel = (props) => {
     showModal, addChannelSchema, handleCloseModal, dispatch, modalId,
   } = props;
   const [editChannel] = useEditChannelMutation();
-  const modalNameChannel = useSelector((state) => state.app.modalNameChannel);
-  console.log(modalNameChannel);
   const renameChannel = async (values, { setSubmitting }) => {
     try {
-      const { name, id } = values;
-      const data = {
-        name,
-        id,
-      };
-      console.log(values);
-      await editChannel(data);
+      await editChannel(values);
       handleCloseModal();
-      dispatch(changeChannel({ name }));
+      dispatch(changeChannel(values));
       toast.success('Канал переименован');
     } catch (e) {
       console.error(e);

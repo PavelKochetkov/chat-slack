@@ -25,10 +25,10 @@ const chatApi = createApi({
       }),
     }),
     editChannel: builder.mutation({
-      query: (channel) => ({
+      query: ({ name, id }) => ({
         method: 'PATCH',
-        url: channel.id,
-        body: channel,
+        url: `channels/${id}`,
+        body: { name },
       }),
     }),
     removeChannel: builder.mutation({
