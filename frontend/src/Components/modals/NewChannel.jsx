@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -7,6 +7,7 @@ import { useAddChannelMutation } from '../../api/chatApi.js';
 import { changeChannel } from '../../store/slice/appSlice.js';
 
 const NewChannel = (props) => {
+  const inputRef = useRef(null);
   const {
     showModal, addChannelSchema, handleCloseModal, dispatch,
   } = props;
@@ -24,6 +25,11 @@ const NewChannel = (props) => {
       setSubmitting(false);
     }
   };
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <Modal show={showModal === 'adding'} onHide={handleCloseModal} centered>
@@ -39,10 +45,14 @@ const NewChannel = (props) => {
           onSubmit={handleSubmit}
         >
           {({
-            errors, touched,
+            errors, touched, isSubmitting,
           }) => (
             <Form>
-              <Field name="name" className={errors.name && touched.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'} />
+              <Field
+                name="name"
+                className={errors.name && touched.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'}
+                innerRef={inputRef}
+              />
               {errors.name && touched.name ? (
                 <div className="invalid-feedback">{errors.name}</div>
               ) : null}
@@ -53,6 +63,7 @@ const NewChannel = (props) => {
                 <Button
                   type="submit"
                   variant="primary"
+                  disabled={isSubmitting}
                 >
                   Отправить
                 </Button>

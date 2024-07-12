@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -6,6 +6,7 @@ import { changeChannel } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/chatApi';
 
 const RenameChannel = (props) => {
+  const inputRef = useRef(null);
   const {
     showModal, addChannelSchema, handleCloseModal, dispatch, modalId,
   } = props;
@@ -22,6 +23,11 @@ const RenameChannel = (props) => {
       setSubmitting(false);
     }
   };
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
@@ -41,7 +47,11 @@ const RenameChannel = (props) => {
             errors, isSubmitting,
           }) => (
             <Form>
-              <Field name="name" className={errors.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'} />
+              <Field
+                name="name"
+                className={errors.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'}
+                innerRef={inputRef}
+              />
               {errors.name ? (
                 <div className="invalid-feedback">{errors.name}</div>
               ) : null}
