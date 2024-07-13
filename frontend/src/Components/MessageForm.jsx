@@ -18,8 +18,8 @@ const MessageForm = () => {
       await addMessage({ body: filter.clean(values.body), channelId: currentChannelId });
       resetForm();
       inputRef.current.focus();
-    } catch (error) {
-      console.error('ERROR', error);
+    } catch (e) {
+      console.error(e);
     } finally {
       setSubmitting(false);
     }
