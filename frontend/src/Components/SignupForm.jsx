@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +7,7 @@ import axios from 'axios';
 
 const SignupForm = (props) => {
   const { signupSchema } = props;
+  const { t } = useTranslation();
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState('');
@@ -35,24 +37,24 @@ const SignupForm = (props) => {
           localStorage.setItem('username', response.data.username);
           navigate('/');
         } catch (error) {
-          setRegistrationError('Такой пользователь уже существует');
+          setRegistrationError(t('errors.userExists'));
           setSubmitting(false);
         }
       }}
     >
       { ({ errors, touched, isSubmitting }) => (
         <Form className="w-50">
-          <h1 className="text-center mb-4">Регистрация</h1>
+          <h1 className="text-center mb-4">{t('signupPage.title')}</h1>
           {registrationError && <div className="alert alert-danger">{registrationError}</div>}
           <div className="form-floating mb-3">
             <Field
               name="username"
-              placeholder="От 3 до 20 символов"
+              placeholder={t('errors.range')}
               autoComplete="username"
               className={`form-control ${errors.username && touched.username ? 'is-invalid' : ''}`}
               innerRef={inputRef}
             />
-            <label className="form-label" htmlFor="username">Имя пользователя</label>
+            <label className="form-label" htmlFor="username">{t('signupPage.username')}</label>
             {errors.username && touched.username ? (
               <div className="invalid-tooltip">{errors.username}</div>
             ) : null}
@@ -61,11 +63,11 @@ const SignupForm = (props) => {
             <Field
               name="password"
               type="password"
-              placeholder="Не менее 6 символов"
+              placeholder={t('errors.min')}
               autoComplete="new-password"
               className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="password">Пароль</label>
+            <label className="form-label" htmlFor="password">{t('signupPage.password')}</label>
             {errors.password && touched.password ? (
               <div className="invalid-tooltip">{errors.password}</div>
             ) : null}
@@ -74,11 +76,11 @@ const SignupForm = (props) => {
             <Field
               name="confirmPassword"
               type="password"
-              placeholder="Пароли должны совпадать"
+              placeholder={t('errors.mustMatch')}
               autoComplete="new-password"
               className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="password">Пароль</label>
+            <label className="form-label" htmlFor="password">{t('signupPage.password')}</label>
             {errors.confirmPassword && touched.confirmPassword ? (
               <div className="invalid-tooltip">{errors.confirmPassword}</div>
             ) : null}
@@ -88,7 +90,7 @@ const SignupForm = (props) => {
             variant="outline-primary w-100"
             disabled={isSubmitting}
           >
-            Зарегистрироваться
+            {t('signupPage.button')}
           </Button>
         </Form>
       )}

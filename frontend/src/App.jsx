@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  Route, Routes, useNavigate, useLocation,
+  Route, Routes, useNavigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Navbar from './Components/Navbar.jsx';
@@ -11,13 +11,13 @@ import NotFoundPage from './Page/NotFoundPage.jsx';
 
 const App = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token && location.pathname !== '/signup') {
+
+    if (!token) {
       navigate('/login');
     }
-  }, [location.pathname, navigate]);
+  }, [navigate]);
 
   return (
     <div className="d-flex flex-column h-100">

@@ -2,18 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import store from './store/store.js';
+import init from './init.js';
 
 const chat = ReactDOM.createRoot(document.getElementById('chat'));
 chat.render(
   <BrowserRouter>
     <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      {await init()}
     </React.StrictMode>
   </BrowserRouter>,
 );

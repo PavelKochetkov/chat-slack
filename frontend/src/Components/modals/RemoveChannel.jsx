@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../api/chatApi';
@@ -8,13 +9,14 @@ const RemoveChannel = (props) => {
   const {
     dispatch, showModal, handleCloseModal, modalId,
   } = props;
+  const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
   const deleteChannel = async (id) => {
     try {
       await removeChannel(id);
       handleCloseModal();
       dispatch(changeChannel({ id: 1, name: 'general' }));
-      toast.success('Канал удален');
+      toast.success(t('toast.removeChannel'));
     } catch (e) {
       console.log(e);
     }
@@ -23,16 +25,16 @@ const RemoveChannel = (props) => {
   return (
     <Modal show={showModal === 'remove'} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('modal.removeChannelTitle')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Уверены?
+        {t('modal.text')}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseModal}>
-          Отменить
+          {t('modal.cancel')}
         </Button>
-        <Button variant="danger" onClick={() => deleteChannel(modalId)}>Удалить</Button>
+        <Button variant="danger" onClick={() => deleteChannel(modalId)}>{t('modal.remove')}</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
@@ -7,6 +8,7 @@ import { useAddChannelMutation } from '../../api/chatApi.js';
 import { changeChannel } from '../../store/slice/appSlice.js';
 
 const NewChannel = (props) => {
+  const { t } = useTranslation();
   const inputRef = useRef(null);
   const {
     showModal, addChannelSchema, handleCloseModal, dispatch,
@@ -18,7 +20,7 @@ const NewChannel = (props) => {
       const { id, name } = response.data;
       handleCloseModal();
       dispatch(changeChannel({ id, name }));
-      toast.success('Канал создан');
+      toast.success(t('toast.newChannel'));
     } catch (e) {
       console.error(e);
     } finally {
@@ -34,7 +36,7 @@ const NewChannel = (props) => {
   return (
     <Modal show={showModal === 'adding'} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modal.titleAdd')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
@@ -58,14 +60,14 @@ const NewChannel = (props) => {
               ) : null}
               <div className="d-flex justify-content-end">
                 <div className="me-2">
-                  <Button variant="secondary" onClick={handleCloseModal}>Отменить</Button>
+                  <Button variant="secondary" onClick={handleCloseModal}>{t('modal.cancel')}</Button>
                 </div>
                 <Button
                   type="submit"
                   variant="primary"
                   disabled={isSubmitting}
                 >
-                  Отправить
+                  {t('modal.send')}
                 </Button>
               </div>
             </Form>

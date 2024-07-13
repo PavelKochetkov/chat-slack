@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 const LoginForm = () => {
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <Formik
@@ -17,44 +19,44 @@ const LoginForm = () => {
           localStorage.setItem('username', responce.data.username);
           navigate('/');
         } catch (error) {
-          setLoginError('Ошибка авторизации. Проверьте введенные данные');
+          setLoginError(t('errors.login'));
           setSubmitting(false);
         }
       }}
     >
       {({ isSubmitting }) => (
         <Form className="col-12 col-md-6 mt-3 mt-mb-0">
-          <h1 className="text-center mb-4">Войти</h1>
+          <h1 className="text-center mb-4">{t('loginPage.title')}</h1>
           {loginError && <div className="alert alert-danger">{loginError}</div>}
           <div className="form-floating mb-3">
             <Field
               type="text"
               name="username"
               className="form-control"
-              placeholder="Ваш ник"
+              placeholder={t('loginPage.usernamePlaceholder')}
               id="username"
               required
               autoFocus
             />
-            <label htmlFor="username">Ваш ник</label>
+            <label htmlFor="username">{t('loginPage.userLabel')}</label>
           </div>
           <div className="form-floating mb-4">
             <Field
               type="password"
               name="password"
               className="form-control"
-              placeholder="Пароль"
+              placeholder={t('loginPage.passwordPlaceholder')}
               id="password"
               required
             />
-            <label className="form-label" htmlFor="password">Пароль</label>
+            <label className="form-label" htmlFor="password">{t('loginPage.passwordLabel')}</label>
           </div>
           <button
             type="submit"
             className="w-100 mb-3 btn btn-outline-primary"
             disabled={isSubmitting}
           >
-            Войти
+            {t('loginPage.button')}
           </button>
         </Form>
       )}

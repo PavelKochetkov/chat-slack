@@ -1,20 +1,22 @@
 import React from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import logo from '../images/avatar.jpg';
 import SignupForm from '../Components/SignupForm';
 
 const Signup = () => {
+  const { t } = useTranslation();
   const signupSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле'),
+      .min(3, t('errors.range'))
+      .max(20, t('errors.range'))
+      .required(t('errors.required')),
     password: Yup.string()
-      .min(6, 'Не менее 6 символов')
-      .required('Обязательное поле'),
+      .min(6, t('errors.min'))
+      .required(t('errors.required')),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
-      .required('Обязательное поле'),
+      .oneOf([Yup.ref('password'), null], t('errors.mustMatch'))
+      .required(t('errors.required')),
   });
 
   return (
@@ -24,7 +26,7 @@ const Signup = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-                <img src={logo} className="rounded-circle" alt="Войти" />
+                <img src={logo} className="rounded-circle" alt={t('signupPage.alt')} />
                 <SignupForm
                   signupSchema={signupSchema}
                 />

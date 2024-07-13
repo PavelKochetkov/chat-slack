@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useAddMessageMutation } from '../api/chatApi';
 
 const MessageForm = () => {
+  const { t } = useTranslation();
   const [
     addMessage,
     { isLoading: isAddingMessage },
@@ -31,7 +33,7 @@ const MessageForm = () => {
               <Field
                 type="text"
                 name="body"
-                placeholder="Введите сообщение"
+                placeholder={t('messageForm.placeholder')}
                 className="border-0 p-0 ps-2 form-control"
                 autoFocus
                 required
@@ -41,7 +43,7 @@ const MessageForm = () => {
                 className="btn btn-outline-secondary"
                 disabled={isAddingMessage && isSubmitting}
               >
-                Отправить
+                {t('messageForm.button')}
               </button>
             </div>
           </Form>

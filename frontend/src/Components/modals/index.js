@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
@@ -14,6 +15,7 @@ const modalsTypes = {
 };
 
 const ModalContainer = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
@@ -21,10 +23,10 @@ const ModalContainer = () => {
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const addChannelSchema = Yup.object().shape({
     name: Yup.string()
-      .min(3, 'От 3 до 20 символов')
-      .max(20, 'От 3 до 20 символов')
-      .required('Обязательное поле')
-      .notOneOf(channelNames, 'Должно быть уникальным'),
+      .min(3, t('errors.range'))
+      .max(20, t('errors.range'))
+      .required(t('errors.required'))
+      .notOneOf(channelNames, t('errors.unique')),
   });
   const handleCloseModal = () => {
     dispatch(setChannelModal({ modalName: '', id: '' }));

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -10,13 +11,14 @@ const RenameChannel = (props) => {
   const {
     showModal, addChannelSchema, handleCloseModal, dispatch, modalId,
   } = props;
+  const { t } = useTranslation();
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values, { setSubmitting }) => {
     try {
       await editChannel(values);
       handleCloseModal();
       dispatch(changeChannel(values));
-      toast.success('Канал переименован');
+      toast.success(t('toast.renameChannel'));
     } catch (e) {
       console.error(e);
     } finally {
@@ -32,7 +34,7 @@ const RenameChannel = (props) => {
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modal.renameChannelTitle')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
@@ -61,7 +63,7 @@ const RenameChannel = (props) => {
                     variant="secondary"
                     onClick={handleCloseModal}
                   >
-                    Отменить
+                    {t('modal.cancel')}
                   </Button>
                 </div>
                 <Button
@@ -69,7 +71,7 @@ const RenameChannel = (props) => {
                   variant="primary"
                   disabled={isSubmitting}
                 >
-                  Отправить
+                  {t('modal.send')}
                 </Button>
               </div>
             </Form>

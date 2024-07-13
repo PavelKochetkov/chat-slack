@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetChannelsQuery } from '../api/chatApi.js';
 import { changeChannel, setChannelModal } from '../store/slice/appSlice.js';
@@ -8,6 +9,7 @@ import ModalContainer from './modals/index.js';
 import DropdownButton from './DropdownButton.jsx';
 
 const ChannelSidebar = () => {
+  const { t } = useTranslation();
   const { data: channels, isLoading, refetch } = useGetChannelsQuery();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ const ChannelSidebar = () => {
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>{t('channelSidebar.title')}</b>
         {isLoading && <Loading />}
         <button onClick={() => handleShowModal('adding')} type="button" className="p-0 text-primary btn btn-group-vertical">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

@@ -1,9 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { changeChannel, setChannelModal } from '../store/slice/appSlice';
 
 const DropdownButton = ({ data }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
@@ -26,11 +28,11 @@ const DropdownButton = ({ data }) => {
       </Button>
       <Dropdown as={ButtonGroup}>
         <Dropdown.Toggle split variant={buttonClass} id="channel-management-dropdown" className="flex-grow-0">
-          <span className="visually-hidden">Управление каналом</span>
+          <span className="visually-hidden">{t('dropdown.text')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleShowModal('remove', data)}>Удалить</Dropdown.Item>
-          <Dropdown.Item onClick={() => handleShowModal('renaming', data)}>Переименовать</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowModal('remove', data)}>{t('dropdown.remove')}</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowModal('renaming', data)}>{t('dropdown.rename')}</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </ButtonGroup>
