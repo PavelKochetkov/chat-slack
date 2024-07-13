@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
+import * as filter from 'leo-profanity';
 import { useAddChannelMutation } from '../../api/chatApi.js';
 import { changeChannel } from '../../store/slice/appSlice.js';
 
@@ -16,7 +17,7 @@ const NewChannel = (props) => {
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await addChannel({ name: values.name });
+      const response = await addChannel({ name: filter.clean(values.name) });
       const { id, name } = response.data;
       handleCloseModal();
       dispatch(changeChannel({ id, name }));

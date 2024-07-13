@@ -58,6 +58,7 @@ export default {
       newChannel: 'Канал создан',
       removeChannel: 'Канал удалён',
       renameChannel: 'Канал переименован',
+      networkError: 'Ошибка соединения',
     },
     countMessages: {
       amount_of_messages_one: '{{count}} сообщение',

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const LoginForm = () => {
@@ -19,7 +20,11 @@ const LoginForm = () => {
           localStorage.setItem('username', responce.data.username);
           navigate('/');
         } catch (error) {
-          setLoginError(t('errors.login'));
+          if (error.message === 'Network Error') {
+            toast.error(t('toast.networkError'));
+          } else {
+            setLoginError(t('errors.login'));
+          }
           setSubmitting(false);
         }
       }}
