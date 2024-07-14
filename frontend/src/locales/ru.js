@@ -30,7 +30,7 @@ export default {
       button: 'Зарегистрироваться',
     },
     navBar: {
-      title: 'Chat Slack',
+      title: 'Hexlet Chat',
       button: 'Выйти',
     },
     messageForm: {
