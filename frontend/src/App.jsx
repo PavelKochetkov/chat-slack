@@ -11,7 +11,7 @@ import Signup from './Page/Signup.jsx';
 import NotFoundPage from './Page/NotFoundPage.jsx';
 
 const rollbarConfig = {
-  accessToken: process.env.REACT_ACCESS_TOKEN,
+  accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
   environment: 'production',
 };
 
