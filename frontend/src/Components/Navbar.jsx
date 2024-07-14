@@ -24,7 +24,15 @@ const Navbar = () => {
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
         <a className="navbar-brand" href="/">{t('navBar.title')}</a>
-        {isLoggedIn && <button onClick={handleLogout} type="button" className="btn btn-primary">{t('navBar.button')}</button>}
+        {isLoggedIn && (
+        <button
+          onClick={handleLogout}
+          type="button"
+          className="btn btn-primary"
+        >
+          {t('navBar.button')}
+        </button>
+        )}
       </div>
     </nav>
   );
