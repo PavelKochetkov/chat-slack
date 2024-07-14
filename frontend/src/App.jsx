@@ -3,11 +3,17 @@ import {
   Route, Routes, useNavigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { Provider, ErrorBoundary } from '@rollbar/react';
 import Navbar from './Components/Navbar.jsx';
 import Login from './Page/Login.jsx';
 import ChatPage from './Page/ChatPage.jsx';
 import Signup from './Page/Signup.jsx';
 import NotFoundPage from './Page/NotFoundPage.jsx';
+
+const rollbarConfig = {
+  accessToken: process.env.POST_CLIENT_ITEM_ACCESS_TOKEN,
+  environment: 'production',
+};
 
 const App = () => {
   const navigate = useNavigate();
@@ -21,14 +27,18 @@ const App = () => {
 
   return (
     <div className="d-flex flex-column h-100">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<ChatPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <ToastContainer />
+      <Provider config={rollbarConfig}>
+        <ErrorBoundary>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<ChatPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <ToastContainer />
+        </ErrorBoundary>
+      </Provider>
     </div>
   );
 };
