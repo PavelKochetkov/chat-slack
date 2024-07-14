@@ -80,7 +80,7 @@ const SignupForm = (props) => {
               autoComplete="new-password"
               className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="password">{t('signupPage.password')}</label>
+            <label className="form-label" htmlFor="password">{t('signupPage.confirmPassword')}</label>
             {errors.confirmPassword && touched.confirmPassword ? (
               <div className="invalid-tooltip">{errors.confirmPassword}</div>
             ) : null}

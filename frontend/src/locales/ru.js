@@ -27,6 +27,7 @@ export default {
       title: 'Регистрация',
       username: 'Имя пользователя',
       password: 'Пароль',
+      confirmPassword: 'Подтвердите пароль',
       button: 'Зарегистрироваться',
     },
     navBar: {
