@@ -15,6 +15,10 @@ const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
   environment: 'production',
 };
+function TestError() {
+  const a = null;
+  return a.hello();
+}
 
 const App = () => (
   <div className="d-flex flex-column h-100">
@@ -28,6 +32,7 @@ const App = () => (
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <ToastContainer />
+        <TestError />
       </ErrorBoundary>
     </Provider>
   </div>
