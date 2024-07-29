@@ -22,7 +22,7 @@ const DropdownButton = ({ data }) => {
 
   return data.removable ? (
     <ButtonGroup className="d-flex" role="group">
-      <Button onClick={switchChannel} variant={buttonClass} className="w-100 text-start text-truncate rounded-0">
+      <Button onClick={switchChannel} variant={buttonClass} className="w-100 rounded-0 text-start text-truncate">
         <span className="me-1">#</span>
         {data.name}
       </Button>
@@ -38,7 +38,7 @@ const DropdownButton = ({ data }) => {
     </ButtonGroup>
   ) : (
     <ButtonGroup className="d-flex" role="group">
-      <Button onClick={switchChannel} variant={buttonClass} className="w-100 text-start text-truncate rounded-0">
+      <Button onClick={switchChannel} variant={buttonClass} className="w-100 rounded-0 text-start text-truncate">
         <span className="me-1">#</span>
         {data.name}
       </Button>
