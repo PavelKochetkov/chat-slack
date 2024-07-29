@@ -37,6 +37,7 @@ export default {
     messageForm: {
       button: 'Отправить',
       placeholder: 'Введите сообщение',
+      label: 'Новое сообщение',
     },
     channelSidebar: {
       title: 'Каналы',

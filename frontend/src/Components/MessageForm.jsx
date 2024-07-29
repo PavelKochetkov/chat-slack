@@ -41,6 +41,7 @@ const MessageForm = () => {
                 autoFocus
                 required
                 innerRef={inputRef}
+                aria-label={t('messageForm.label')}
               />
               <button
                 type="submit"
