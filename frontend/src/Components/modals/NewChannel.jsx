@@ -55,6 +55,7 @@ const NewChannel = (props) => {
                 name="name"
                 className={errors.name && touched.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'}
                 innerRef={inputRef}
+                id="name"
               />
               {errors.name && touched.name ? (
                 <div className="invalid-feedback">{errors.name}</div>

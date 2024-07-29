@@ -55,6 +55,7 @@ const RenameChannel = (props) => {
                 name="name"
                 className={errors.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'}
                 innerRef={inputRef}
+                id="name"
               />
               {errors.name ? (
                 <div className="invalid-feedback">{errors.name}</div>

@@ -49,6 +49,7 @@ const SignupForm = (props) => {
           <div className="form-floating mb-3">
             <Field
               name="username"
+              id="username"
               placeholder={t('errors.range')}
               autoComplete="username"
               className={`form-control ${errors.username && touched.username ? 'is-invalid' : ''}`}
@@ -62,6 +63,7 @@ const SignupForm = (props) => {
           <div className="form-floating mb-3">
             <Field
               name="password"
+              id="password"
               type="password"
               placeholder={t('errors.min')}
               autoComplete="new-password"
@@ -75,6 +77,7 @@ const SignupForm = (props) => {
           <div className="form-floating mb-3">
             <Field
               name="confirmPassword"
+              id="confirmPassword"
               type="password"
               placeholder={t('errors.mustMatch')}
               autoComplete="new-password"
