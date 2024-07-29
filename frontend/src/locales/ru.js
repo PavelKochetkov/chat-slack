@@ -50,6 +50,7 @@ export default {
       renameChannelTitle: 'Переименовать канал',
       removeChannelTitle: 'Удалить канал',
       text: 'Уверены?',
+      label: 'Имя канала',
     },
     dropdown: {
       rename: 'Переименовать',

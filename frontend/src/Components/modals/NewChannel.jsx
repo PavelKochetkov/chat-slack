@@ -57,6 +57,7 @@ const NewChannel = (props) => {
                 innerRef={inputRef}
                 id="name"
               />
+              <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
               {errors.name && touched.name ? (
                 <div className="invalid-feedback">{errors.name}</div>
               ) : null}
