@@ -7,7 +7,7 @@ import { changeChannel } from '../../store/slice/appSlice';
 
 const RemoveChannel = (props) => {
   const {
-    dispatch, showModal, handleCloseModal, modalId,
+    dispatch, showModal, handleCloseModal, modalId, currentChannelId,
   } = props;
   const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
@@ -15,7 +15,9 @@ const RemoveChannel = (props) => {
     try {
       await removeChannel(id);
       handleCloseModal();
-      dispatch(changeChannel({ id: 1, name: 'general' }));
+      if (modalId === currentChannelId) {
+        dispatch(changeChannel({ id: 1, name: 'general' }));
+      }
       toast.success(t('toast.removeChannel'));
     } catch (e) {
       console.log(e);
