@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import filteredText from '../utils/filteredText';
 
 const SignupForm = (props) => {
   const { signupSchema } = props;
@@ -29,7 +30,7 @@ const SignupForm = (props) => {
         try {
           const { username, password } = values;
           const data = {
-            username,
+            username: filteredText(username),
             password,
           };
           const response = await axios.post('/api/v1/signup', data);

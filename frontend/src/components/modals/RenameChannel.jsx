@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import * as filter from 'leo-profanity';
 import { changeChannel } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/chatApi';
+import filteredText from '../../utils/filteredText';
 
 const RenameChannel = (props) => {
   const inputRef = useRef(null);
@@ -17,7 +17,7 @@ const RenameChannel = (props) => {
   const renameChannel = async (values, { setSubmitting }) => {
     try {
       const { id, name } = values;
-      await editChannel({ id, name: filter.clean(name) });
+      await editChannel({ id, name: filteredText(name) });
       handleCloseModal();
       dispatch(changeChannel(values));
       toast.success(t('toast.renameChannel'));

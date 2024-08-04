@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
-import * as filter from 'leo-profanity';
 import { useAddMessageMutation } from '../api/chatApi';
+import filteredText from '../utils/filteredText';
 
 const MessageForm = () => {
   const inputRef = useRef(null);
@@ -15,7 +15,7 @@ const MessageForm = () => {
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
     try {
-      await addMessage({ body: filter.clean(values.body), channelId: currentChannelId });
+      await addMessage({ body: filteredText(values.body), channelId: currentChannelId });
       resetForm();
       inputRef.current.focus();
     } catch (e) {
