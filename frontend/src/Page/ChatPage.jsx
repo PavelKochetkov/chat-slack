@@ -1,6 +1,6 @@
 import React from 'react';
-import ChannelSidebar from '../Components/ChannelSidebar.jsx';
-import MessageContainer from '../Components/MessageContainer.jsx';
+import ChannelSidebar from '../components/ChannelSidebar.jsx';
+import MessageContainer from '../components/MessageContainer.jsx';
 
 const ChatPage = () => (
   <div className="container h-100 my-4 overflow-hidden rounded shadow">

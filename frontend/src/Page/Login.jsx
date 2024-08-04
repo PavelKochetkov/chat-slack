@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import LoginForm from '../Components/LoginForm.jsx';
-import logo from '../images/logo.jpg';
+import LoginForm from '../components/LoginForm.jsx';
+import logo from '../assets/logo.jpg';
 
 const Login = () => {
   const { t } = useTranslation();

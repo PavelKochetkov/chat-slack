@@ -1,8 +1,8 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import logo from '../images/avatar.jpg';
-import SignupForm from '../Components/SignupForm';
+import logo from '../assets/avatar.jpg';
+import SignupForm from '../components/SignupForm';
 
 const Signup = () => {
   const { t } = useTranslation();

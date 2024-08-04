@@ -4,12 +4,12 @@ import {
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Provider, ErrorBoundary } from '@rollbar/react';
-import Navbar from './Components/Navbar.jsx';
-import Login from './Page/Login.jsx';
-import ChatPage from './Page/ChatPage.jsx';
-import Signup from './Page/Signup.jsx';
-import NotFoundPage from './Page/NotFoundPage.jsx';
-import PrivateRoute from './Components/PrivateRoute.jsx';
+import Navbar from './components/Navbar.jsx';
+import Login from './page/Login.jsx';
+import ChatPage from './page/ChatPage.jsx';
+import Signup from './page/Signup.jsx';
+import NotFoundPage from './page/NotFoundPage.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 
 const rollbarConfig = {
   accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
