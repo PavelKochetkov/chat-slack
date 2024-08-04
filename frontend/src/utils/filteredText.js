@@ -1,7 +1,7 @@
 import * as filter from 'leo-profanity';
-import russianProfanity from '../dictionary/russianProfanity.json';
 
-filter.add(russianProfanity);
+const ruDictionary = filter.getDictionary('ru');
+filter.add(ruDictionary);
 
 const filteredText = (text) => filter.clean(text);
 
