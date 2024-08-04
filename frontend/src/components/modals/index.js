@@ -21,6 +21,7 @@ const ModalContainer = () => {
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const modalId = useSelector((state) => state.app.modalId);
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const addChannelSchema = Yup.object().shape({
     name: Yup.string()
       .trim()
@@ -41,6 +42,7 @@ const ModalContainer = () => {
       dispatch={dispatch}
       addChannelSchema={addChannelSchema}
       currentChannelId={currentChannelId}
+      currentChannelName={currentChannelName}
       showModal={showModal}
       handleCloseModal={handleCloseModal}
       modalId={modalId}

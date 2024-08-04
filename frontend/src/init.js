@@ -8,7 +8,7 @@ import resources from './locales/index.js';
 
 const init = async () => {
   const i18nextInstance = i18next.createInstance();
-  i18nextInstance.init({
+  await i18nextInstance.init({
     debug: false,
     lng: 'ru',
     resources,

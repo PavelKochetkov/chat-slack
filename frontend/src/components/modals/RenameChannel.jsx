@@ -10,7 +10,7 @@ import filteredText from '../../utils/filteredText';
 const RenameChannel = (props) => {
   const inputRef = useRef(null);
   const {
-    showModal, addChannelSchema, handleCloseModal, dispatch, modalId,
+    showModal, addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName,
   } = props;
   const { t } = useTranslation();
   const [editChannel] = useEditChannelMutation();
@@ -29,7 +29,7 @@ const RenameChannel = (props) => {
   };
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.select();
     }
   }, []);
 
@@ -41,7 +41,7 @@ const RenameChannel = (props) => {
       <Modal.Body>
         <Formik
           initialValues={{
-            name: '',
+            name: currentChannelName,
             id: modalId,
           }}
           validationSchema={addChannelSchema}
