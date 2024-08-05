@@ -32,7 +32,7 @@ const NewChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [inputRef]);
 
   return (
     <Modal show={showModal === 'adding'} onHide={handleCloseModal} centered>
@@ -45,22 +45,22 @@ const NewChannel = (props) => {
             name: '',
           }}
           validationSchema={addChannelSchema}
+          validateOnBlur={false}
           onSubmit={handleSubmit}
         >
           {({
-            errors, touched, isSubmitting,
+            errors, isSubmitting, isValid,
           }) => (
             <Form>
               <Field
                 name="name"
-                className={errors.name && touched.name ? 'mb-2 form-control is-invalid' : 'mb-2 form-control'}
+                type="text"
                 innerRef={inputRef}
+                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
               />
               <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
-              {errors.name && touched.name ? (
-                <div className="invalid-feedback">{errors.name}</div>
-              ) : null}
+              {!isValid && <div className="invalid-feedback">{errors.name}</div>}
               <div className="d-flex justify-content-end">
                 <div className="me-2">
                   <Button variant="secondary" onClick={handleCloseModal}>{t('modal.cancel')}</Button>
