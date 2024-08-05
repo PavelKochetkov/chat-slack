@@ -14,7 +14,7 @@ const MessageBox = () => {
     if (messageRef.current) {
       messageRef.current.scrollTop = messageRef.current.scrollHeight;
     }
-  }, [messages.length, currentChannelId]);
+  }, [messages?.length, currentChannelId]);
 
   useEffect(() => {
     const handleNewMessage = async () => {
