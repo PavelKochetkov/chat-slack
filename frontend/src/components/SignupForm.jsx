@@ -12,6 +12,7 @@ const SignupForm = (props) => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState('');
+  const [isErrorRegistration, setIsErrorRegistration] = useState(false);
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -39,6 +40,7 @@ const SignupForm = (props) => {
           navigate('/');
         } catch (error) {
           setRegistrationError(t('errors.userExists'));
+          setIsErrorRegistration(!isErrorRegistration);
           setSubmitting(false);
         }
       }}
@@ -46,20 +48,18 @@ const SignupForm = (props) => {
       { ({ errors, touched, isSubmitting }) => (
         <Form className="w-50">
           <h1 className="text-center mb-4">{t('signupPage.title')}</h1>
-          {registrationError && <div className="alert alert-danger">{registrationError}</div>}
           <div className="form-floating mb-3">
             <Field
               name="username"
               id="username"
               placeholder={t('errors.range')}
               autoComplete="username"
-              className={`form-control ${errors.username && touched.username ? 'is-invalid' : ''}`}
+              className={`form-control ${(errors.username && touched.username) || isErrorRegistration ? 'is-invalid' : ''}`}
               innerRef={inputRef}
             />
             <label className="form-label" htmlFor="username">{t('signupPage.username')}</label>
-            {errors.username && touched.username ? (
-              <div className="invalid-tooltip">{errors.username}</div>
-            ) : null}
+            {isErrorRegistration && <div className="invalid-tooltip d-block">{registrationError}</div>}
+            {errors.username && touched.username && <div className="invalid-tooltip">{errors.username}</div>}
           </div>
           <div className="form-floating mb-3">
             <Field
@@ -71,9 +71,7 @@ const SignupForm = (props) => {
               className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
             />
             <label className="form-label" htmlFor="password">{t('signupPage.password')}</label>
-            {errors.password && touched.password ? (
-              <div className="invalid-tooltip">{errors.password}</div>
-            ) : null}
+            {errors.password && touched.password && <div className="invalid-tooltip">{errors.password}</div>}
           </div>
           <div className="form-floating mb-3">
             <Field
@@ -85,9 +83,7 @@ const SignupForm = (props) => {
               className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
             />
             <label className="form-label" htmlFor="confirmPassword">{t('signupPage.confirmPassword')}</label>
-            {errors.confirmPassword && touched.confirmPassword ? (
-              <div className="invalid-tooltip">{errors.confirmPassword}</div>
-            ) : null}
+            {errors.confirmPassword && touched.confirmPassword && <div className="invalid-tooltip">{errors.confirmPassword}</div>}
           </div>
           <Button
             type="submit"
