@@ -6,7 +6,7 @@ const initialState = {
   currentChannelName: 'general',
   showModal: '',
   modalId: '',
-  modalNameChannel: '',
+  modalChannelName: '',
 };
 
 const appSlice = createSlice({
@@ -23,7 +23,7 @@ const appSlice = createSlice({
       Object.assign(state, {
         showModal: payload.modalName,
         modalId: payload.id,
-        modalNameChannel: payload.name,
+        modalChannelName: payload.name,
       });
     },
   },
