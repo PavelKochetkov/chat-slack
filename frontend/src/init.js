@@ -5,6 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import store from './store/store.js';
 import App from './App.jsx';
 import resources from './locales/index.js';
+import addRussianDictionary from './utils/addDictionary.js';
 
 const init = async () => {
   const i18nextInstance = i18next.createInstance();
@@ -16,6 +17,7 @@ const init = async () => {
       escapeValue: false,
     },
   });
+  await addRussianDictionary('ru');
 
   return (
     <Provider store={store}>
