@@ -9,25 +9,26 @@ const LoginForm = () => {
   const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const handleLogin = async (values, { setSubmitting }) => {
+    try {
+      const responce = await axios.post('/api/v1/login', values);
+      localStorage.setItem('token', responce.data.token);
+      localStorage.setItem('username', responce.data.username);
+      navigate('/');
+    } catch (error) {
+      if (error.message === 'Network Error') {
+        toast.error(t('toast.networkError'));
+      } else {
+        setLoginError(t('errors.login'));
+      }
+      setSubmitting(false);
+    }
+  };
 
   return (
     <Formik
       initialValues={{ username: '', password: '' }}
-      onSubmit={async (values, { setSubmitting }) => {
-        try {
-          const responce = await axios.post('/api/v1/login', values);
-          localStorage.setItem('token', responce.data.token);
-          localStorage.setItem('username', responce.data.username);
-          navigate('/');
-        } catch (error) {
-          if (error.message === 'Network Error') {
-            toast.error(t('toast.networkError'));
-          } else {
-            setLoginError(t('errors.login'));
-          }
-          setSubmitting(false);
-        }
-      }}
+      onSubmit={handleLogin}
     >
       {({ isSubmitting }) => (
         <Form className="col-12 col-md-6 mt-3 mt-mb-0">
