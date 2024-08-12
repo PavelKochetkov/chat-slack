@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
-import { useAddChannelMutation } from '../../api/chatApi.js';
+import { useAddChannelMutation } from '../../api/channelsApi.js';
 import { changeChannel } from '../../store/slice/appSlice.js';
 import filteredText from '../../utils/filteredText.js';
 

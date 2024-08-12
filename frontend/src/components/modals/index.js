@@ -6,7 +6,7 @@ import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
 import { setChannelModal } from '../../store/slice/appSlice';
-import { useGetChannelsQuery } from '../../api/chatApi';
+import { useGetChannelsQuery } from '../../api/channelsApi';
 
 const modalsTypes = {
   adding: NewChannel,

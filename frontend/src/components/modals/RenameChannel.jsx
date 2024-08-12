@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { changeChannel } from '../../store/slice/appSlice';
-import { useEditChannelMutation } from '../../api/chatApi';
+import { useEditChannelMutation } from '../../api/channelsApi';
 import filteredText from '../../utils/filteredText';
 
 const RenameChannel = (props) => {

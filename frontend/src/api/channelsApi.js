@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import prepareHeaders from '../utils/apiHelpers';
 
-const chatApi = createApi({
-  reducerPath: 'chatApi',
+const channelsApi = createApi({
+  reducerPath: 'channelsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: '/api/v1',
     prepareHeaders: (headers) => prepareHeaders(headers),
@@ -33,28 +33,13 @@ const chatApi = createApi({
       }),
       invalidatesTags: ['Channels', 'Messages'],
     }),
-    getMessages: builder.query({
-      query: () => 'messages',
-      providesTags: ['Messages'],
-    }),
-    addMessage: builder.mutation({
-      query: (message) => ({
-        url: '/messages',
-        method: 'POST',
-        body: {
-          ...message,
-          username: localStorage.getItem('username'),
-        },
-      }),
-    }),
   }),
 });
-export default chatApi;
+
+export default channelsApi;
 export const {
   useGetChannelsQuery,
   useAddChannelMutation,
   useEditChannelMutation,
   useRemoveChannelMutation,
-  useGetMessagesQuery,
-  useAddMessageMutation,
-} = chatApi;
+} = channelsApi;

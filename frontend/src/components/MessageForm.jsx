@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useAddMessageMutation } from '../api/chatApi';
+import { useAddMessageMutation } from '../api/messagesApi';
 import filteredText from '../utils/filteredText';
 
 const MessageForm = () => {

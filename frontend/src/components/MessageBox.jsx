@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useGetMessagesQuery } from '../api/chatApi.js';
+import { useGetMessagesQuery } from '../api/messagesApi.js';
 import socket from '../socket.js';
 import Loading from './Spinner.jsx';
 
