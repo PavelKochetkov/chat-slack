@@ -29,9 +29,9 @@ const RenameChannel = (props) => {
   };
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.select();
     }
-  }, []);
+  }, [inputRef]);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
