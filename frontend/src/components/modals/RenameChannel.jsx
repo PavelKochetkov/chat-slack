@@ -52,13 +52,18 @@ const RenameChannel = (props) => {
             errors, isSubmitting, isValid,
           }) => (
             <Form>
-              <Field
-                name="name"
-                type="text"
-                innerRef={inputRef}
-                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
-                id="name"
-              />
+              <Field name="name">
+                {({ field }) => (
+                  <input
+                    value={field.value}
+                    onChange={field.onChange}
+                    type="text"
+                    ref={inputRef}
+                    className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
+                    id="name"
+                  />
+                )}
+              </Field>
               <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
               {!isValid && <div className="invalid-feedback">{errors.name}</div>}
               <div className="d-flex justify-content-end">
