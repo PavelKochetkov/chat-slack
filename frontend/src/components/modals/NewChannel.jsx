@@ -57,6 +57,7 @@ const NewChannel = (props) => {
                 type="text"
                 innerRef={inputRef}
                 className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
+                autoFocus
                 id="name"
               />
               <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
