@@ -54,8 +54,9 @@ const RenameChannel = (props) => {
             <Form>
               <Field
                 name="name"
-                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
+                type="text"
                 innerRef={inputRef}
+                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
               />
               <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
