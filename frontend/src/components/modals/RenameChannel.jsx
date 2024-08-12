@@ -29,7 +29,7 @@ const RenameChannel = (props) => {
   };
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.select();
+      inputRef.current.focus();
     }
   }, []);
 
