@@ -28,10 +28,12 @@ const RenameChannel = (props) => {
     }
   };
   useEffect(() => {
+    console.log('useEffect срабатывает');
     if (inputRef.current) {
+      console.log('Устанавливаем фокус на инпут');
       inputRef.current.select();
     }
-  }, [inputRef]);
+  }, []);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
