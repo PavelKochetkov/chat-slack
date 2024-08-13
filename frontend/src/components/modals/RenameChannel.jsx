@@ -31,6 +31,7 @@ const RenameChannel = (props) => {
     console.log('useEffect срабатывает');
     if (inputRef.current) {
       console.log('Устанавливаем фокус на инпут');
+      console.log('input', inputRef.current);
       inputRef.current.select();
     }
   }, []);
@@ -51,13 +52,13 @@ const RenameChannel = (props) => {
           onSubmit={renameChannel}
         >
           {({
-            errors, isSubmitting, isValid,
+            errors, isSubmitting, isValid, values,
           }) => (
             <Form>
               <Field name="name">
                 {({ field }) => (
                   <FormControl
-                    value={field.value}
+                    value={values.name}
                     onChange={field.onChange}
                     type="text"
                     ref={inputRef}
