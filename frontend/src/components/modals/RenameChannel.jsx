@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field } from 'formik';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, FormControl } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { changeChannel } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/channelsApi';
@@ -56,7 +56,7 @@ const RenameChannel = (props) => {
             <Form>
               <Field name="name">
                 {({ field }) => (
-                  <input
+                  <FormControl
                     value={field.value}
                     onChange={field.onChange}
                     type="text"
