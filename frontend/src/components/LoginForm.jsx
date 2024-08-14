@@ -3,18 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+// import axios from 'axios';
+import { useLoginMutation } from '../api/userApi';
+import getRoute from '../utils/routes';
 
 const LoginForm = () => {
   const [loginError, setLoginError] = useState('');
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const handleLogin = async (values, { setSubmitting }) => {
     try {
-      const responce = await axios.post('/api/v1/login', values);
+      const responce = await login(values);
       localStorage.setItem('token', responce.data.token);
       localStorage.setItem('username', responce.data.username);
-      navigate('/');
+      navigate(getRoute('PAGE_CHAT'));
     } catch (error) {
       if (error.message === 'Network Error') {
         toast.error(t('toast.networkError'));

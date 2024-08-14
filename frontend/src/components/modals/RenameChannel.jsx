@@ -28,10 +28,7 @@ const RenameChannel = (props) => {
     }
   };
   useEffect(() => {
-    console.log('useEffect срабатывает');
     if (inputRef.current) {
-      console.log('Устанавливаем фокус на инпут');
-      console.log('input', inputRef.current);
       inputRef.current.select();
     }
   }, []);

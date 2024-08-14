@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import { useCreateNewUserMutation } from '../api/userApi';
 import filteredText from '../utils/filteredText';
 
 const SignupForm = (props) => {
@@ -13,6 +13,25 @@ const SignupForm = (props) => {
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState('');
   const [isErrorRegistration, setIsErrorRegistration] = useState(false);
+  const [createNewUser] = useCreateNewUserMutation();
+  const handleSignup = async (values, { setSubmitting }) => {
+    try {
+      const { username, password } = values;
+      const data = {
+        username: filteredText(username),
+        password,
+      };
+      const response = await createNewUser(data);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('username', response.data.username);
+      navigate('/');
+    } catch (error) {
+      setRegistrationError(t('errors.userExists'));
+      setIsErrorRegistration(!isErrorRegistration);
+      setSubmitting(false);
+    }
+  };
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -27,23 +46,7 @@ const SignupForm = (props) => {
         confirmPassword: '',
       }}
       validationSchema={signupSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        try {
-          const { username, password } = values;
-          const data = {
-            username: filteredText(username),
-            password,
-          };
-          const response = await axios.post('/api/v1/signup', data);
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('username', response.data.username);
-          navigate('/');
-        } catch (error) {
-          setRegistrationError(t('errors.userExists'));
-          setIsErrorRegistration(!isErrorRegistration);
-          setSubmitting(false);
-        }
-      }}
+      onSubmit={handleSignup}
     >
       { ({ errors, touched, isSubmitting }) => (
         <Form className="w-50">
