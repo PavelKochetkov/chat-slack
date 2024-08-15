@@ -1,11 +1,13 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import getRoute from '../utils/routes';
+import { selectIsAuth } from '../store/slice/authSlice';
 
 const PrivateRoute = ({ element: Component }) => {
-  const token = localStorage.getItem('token');
+  const isAuth = useSelector(selectIsAuth);
 
-  return token ? <Component /> : <Navigate to={getRoute('PAGE_LOGIN')} />;
+  return isAuth ? <Component /> : <Navigate to={getRoute('PAGE_LOGIN')} />;
 };
 
 export default PrivateRoute;
