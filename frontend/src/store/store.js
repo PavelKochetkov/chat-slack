@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import appReducer from './slice/appSlice.js';
+import authReducer from './slice/authSlice.js';
 import channelsApi from '../api/channelsApi.js';
 import messagesApi from '../api/messagesApi.js';
 import userApi from '../api/userApi.js';
@@ -7,6 +8,7 @@ import userApi from '../api/userApi.js';
 const store = configureStore({
   reducer: {
     app: appReducer,
+    auth: authReducer,
     [channelsApi.reducerPath]: channelsApi.reducer,
     [messagesApi.reducerPath]: messagesApi.reducer,
     [userApi.reducerPath]: userApi.reducer,

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-// import axios from 'axios';
+import { setUser } from '../store/slice/authSlice';
 import { useLoginMutation } from '../api/userApi';
 import getRoute from '../utils/routes';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [loginError, setLoginError] = useState('');
   const [login] = useLoginMutation();
   const navigate = useNavigate();
@@ -15,8 +17,8 @@ const LoginForm = () => {
   const handleLogin = async (values, { setSubmitting }) => {
     try {
       const responce = await login(values);
-      localStorage.setItem('token', responce.data.token);
-      localStorage.setItem('username', responce.data.username);
+      const { username, token } = responce.data;
+      dispatch(setUser({ username, token }));
       navigate(getRoute('PAGE_CHAT'));
     } catch (error) {
       if (error.message === 'Network Error') {

@@ -1,12 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import Button from 'react-bootstrap/Button';
+import { setUser } from '../store/slice/authSlice';
 import { useCreateNewUserMutation } from '../api/userApi';
 import filteredText from '../utils/filteredText';
+import getRoute from '../utils/routes';
 
 const SignupForm = (props) => {
+  const dispatch = useDispatch();
   const { signupSchema } = props;
   const { t } = useTranslation();
   const inputRef = useRef(null);
@@ -22,9 +26,9 @@ const SignupForm = (props) => {
         password,
       };
       const response = await createNewUser(data);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('username', response.data.username);
-      navigate('/');
+      const { token } = response.data;
+      dispatch(setUser({ username, token }));
+      navigate(getRoute('PAGE_CHAT'));
     } catch (error) {
       setRegistrationError(t('errors.userExists'));
       setIsErrorRegistration(!isErrorRegistration);

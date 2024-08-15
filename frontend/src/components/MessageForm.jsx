@@ -4,6 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useAddMessageMutation } from '../api/messagesApi';
 import filteredText from '../utils/filteredText';
+import { selectUsername } from '../store/slice/authSlice';
 
 const MessageForm = () => {
   const inputRef = useRef(null);
@@ -13,9 +14,15 @@ const MessageForm = () => {
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
   const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const username = useSelector(selectUsername);
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
     try {
-      await addMessage({ body: filteredText(values.body), channelId: currentChannelId });
+      const { message } = values;
+      await addMessage({
+        message: filteredText(message),
+        channelId: currentChannelId,
+        username,
+      });
       resetForm();
       inputRef.current.focus();
     } catch (e) {
@@ -27,7 +34,7 @@ const MessageForm = () => {
   return (
     <div className="mt-auto px-5 py-3">
       <Formik
-        initialValues={{ body: '' }}
+        initialValues={{ message: '' }}
         onSubmit={sendMessage}
       >
         {({ isSubmitting }) => (
@@ -35,7 +42,7 @@ const MessageForm = () => {
             <div className="input-group has-validation">
               <Field
                 type="text"
-                name="body"
+                name="message"
                 placeholder={t('messageForm.placeholder')}
                 className="border-0 p-0 ps-2 form-control"
                 autoFocus

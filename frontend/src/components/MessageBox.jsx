@@ -36,7 +36,7 @@ const MessageBox = () => {
           <b>{message.username}</b>
           :
           {' '}
-          {message.body}
+          {message.message}
         </div>
       ))}
     </div>

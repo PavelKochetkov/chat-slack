@@ -17,10 +17,7 @@ const messagesApi = createApi({
       query: (message) => ({
         url: '/messages',
         method: 'POST',
-        body: {
-          ...message,
-          username: localStorage.getItem('username'),
-        },
+        body: message,
       }),
     }),
   }),
