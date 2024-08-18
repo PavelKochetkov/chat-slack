@@ -1,16 +1,16 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
+import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
-import { setUser } from '../store/slice/authSlice';
-import { useCreateNewUserMutation } from '../api/userApi';
+import { selectAuthError } from '../store/slice/authSlice';
+import { useCreateNewUserMutation } from '../api/authApi';
 import filteredText from '../utils/filteredText';
 import getRoute from '../utils/routes';
 
 const SignupForm = (props) => {
-  const dispatch = useDispatch();
   const { signupSchema } = props;
   const { t } = useTranslation();
   const inputRef = useRef(null);
@@ -18,6 +18,7 @@ const SignupForm = (props) => {
   const [registrationError, setRegistrationError] = useState('');
   const [isErrorRegistration, setIsErrorRegistration] = useState(false);
   const [createNewUser] = useCreateNewUserMutation();
+  const error = useSelector(selectAuthError);
   const handleSignup = async (values, { setSubmitting }) => {
     try {
       const { username, password } = values;
@@ -25,14 +26,28 @@ const SignupForm = (props) => {
         username: filteredText(username),
         password,
       };
-      const response = await createNewUser(data);
-      const { token } = response.data;
-      dispatch(setUser({ username, token }));
+      await createNewUser(data);
       navigate(getRoute('PAGE_CHAT'));
-    } catch (error) {
-      setRegistrationError(t('errors.userExists'));
-      setIsErrorRegistration(!isErrorRegistration);
-      setSubmitting(false);
+    } catch {
+      switch (error.status) {
+        case 409: {
+          setIsErrorRegistration(!isErrorRegistration);
+          setRegistrationError(t('errors.userExists'));
+          setSubmitting(false);
+          break;
+        }
+        case 'FETCH_ERROR': {
+          setIsErrorRegistration(!isErrorRegistration);
+          toast.error(t('toast.networkError'));
+          setSubmitting(false);
+          break;
+        }
+        default: {
+          setRegistrationError(t('errors.userExists'));
+          setSubmitting(false);
+          break;
+        }
+      }
     }
   };
 

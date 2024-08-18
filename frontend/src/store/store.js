@@ -3,7 +3,7 @@ import appReducer from './slice/appSlice.js';
 import authReducer from './slice/authSlice.js';
 import channelsApi from '../api/channelsApi.js';
 import messagesApi from '../api/messagesApi.js';
-import userApi from '../api/userApi.js';
+import authApi from '../api/authApi.js';
 
 const store = configureStore({
   reducer: {
@@ -11,12 +11,12 @@ const store = configureStore({
     auth: authReducer,
     [channelsApi.reducerPath]: channelsApi.reducer,
     [messagesApi.reducerPath]: messagesApi.reducer,
-    [userApi.reducerPath]: userApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
     channelsApi.middleware,
     messagesApi.middleware,
-    userApi.middleware,
+    authApi.middleware,
   ),
 });
 

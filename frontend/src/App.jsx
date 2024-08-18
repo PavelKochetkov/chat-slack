@@ -1,11 +1,7 @@
-import React, { useEffect } from 'react';
-import {
-  Route, Routes,
-} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Provider, ErrorBoundary } from '@rollbar/react';
-import { initUser } from './store/slice/authSlice.js';
 import Navbar from './components/Navbar.jsx';
 import Login from './page/Login.jsx';
 import ChatPage from './page/ChatPage.jsx';
@@ -19,29 +15,21 @@ const rollbarConfig = {
   environment: 'production',
 };
 
-const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(initUser());
-  }, [dispatch]);
-
-  return (
-    <div className="d-flex flex-column h-100">
-      <Provider config={rollbarConfig}>
-        <ErrorBoundary>
-          <Navbar />
-          <Routes>
-            <Route path={getRoute('PAGE_CHAT')} element={<PrivateRoute element={ChatPage} />} />
-            <Route path={getRoute('PAGE_LOGIN')} element={<Login />} />
-            <Route path={getRoute('PAGE_SIGNUP')} element={<Signup />} />
-            <Route path={getRoute('PAGE_NOT_FOUND')} element={<NotFoundPage />} />
-          </Routes>
-          <ToastContainer />
-        </ErrorBoundary>
-      </Provider>
-    </div>
-  );
-};
+const App = () => (
+  <div className="d-flex flex-column h-100">
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Navbar />
+        <Routes>
+          <Route path={getRoute('PAGE_CHAT')} element={<PrivateRoute element={ChatPage} />} />
+          <Route path={getRoute('PAGE_LOGIN')} element={<Login />} />
+          <Route path={getRoute('PAGE_SIGNUP')} element={<Signup />} />
+          <Route path={getRoute('PAGE_NOT_FOUND')} element={<NotFoundPage />} />
+        </Routes>
+        <ToastContainer />
+      </ErrorBoundary>
+    </Provider>
+  </div>
+);
 
 export default App;

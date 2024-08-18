@@ -1,32 +1,38 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { setUser } from '../store/slice/authSlice';
-import { useLoginMutation } from '../api/userApi';
+import { selectAuthError } from '../store/slice/authSlice';
+import { useLoginMutation } from '../api/authApi';
 import getRoute from '../utils/routes';
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
   const [loginError, setLoginError] = useState('');
   const [login] = useLoginMutation();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const handleLogin = async (values, { setSubmitting }) => {
+  const error = useSelector(selectAuthError);
+  const handleLogin = async (values) => {
     try {
-      const responce = await login(values);
-      const { username, token } = responce.data;
-      dispatch(setUser({ username, token }));
+      await login(values).unwrap();
       navigate(getRoute('PAGE_CHAT'));
-    } catch (error) {
-      if (error.message === 'Network Error') {
-        toast.error(t('toast.networkError'));
-      } else {
-        setLoginError(t('errors.login'));
+    } catch {
+      switch (error.status) {
+        case 401: {
+          setLoginError(t('errors.login'));
+          break;
+        }
+        case 'FETCH_ERROR': {
+          toast.error(t('toast.networkError'));
+          break;
+        }
+        default: {
+          setLoginError(t('errors.login'));
+          break;
+        }
       }
-      setSubmitting(false);
     }
   };
 
