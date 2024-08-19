@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Formik, Form, Field } from 'formik';
-import { Modal, Button, FormControl } from 'react-bootstrap';
+import { Formik } from 'formik';
+import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { changeChannel } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/channelsApi';
@@ -52,24 +52,21 @@ const RenameChannel = (props) => {
           onSubmit={renameChannel}
         >
           {({
-            errors, isSubmitting, isValid, values,
+            errors, handleSubmit, handleChange, isValid, values,
           }) => (
-            <Form>
-              <Field name="name">
-                {({ field }) => (
-                  <FormControl
-                    value={values.name}
-                    onChange={field.onChange}
-                    type="text"
-                    ref={inputRef}
-                    className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
-                    id="name"
-                    autoFocus
-                  />
-                )}
-              </Field>
-              <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
-              {!isValid && <div className="invalid-feedback">{errors.name}</div>}
+            <Form noValidate onSubmit={handleSubmit}>
+              <Form.Control
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                type="text"
+                ref={inputRef}
+                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
+                id="name"
+              />
+
+              <Form.Label className="visually-hidden" htmlFor="name">{t('modal.label')}</Form.Label>
+              {!isValid && <Form.Control.Feedback className="invalid-feedback">{errors.name}</Form.Control.Feedback>}
               <div className="d-flex justify-content-end">
                 <div className="me-2">
                   <Button
@@ -82,7 +79,6 @@ const RenameChannel = (props) => {
                 <Button
                   type="submit"
                   variant="primary"
-                  disabled={isSubmitting}
                 >
                   {t('modal.send')}
                 </Button>
