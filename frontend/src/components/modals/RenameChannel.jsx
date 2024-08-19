@@ -34,7 +34,7 @@ const RenameChannel = (props) => {
       inputRef.current.focus();
       inputRef.current.select();
     }
-  }, []);
+  }, [currentChannelName]);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
