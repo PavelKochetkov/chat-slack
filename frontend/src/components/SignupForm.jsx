@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
-import { selectAuthError } from '../store/slice/authSlice';
+import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useCreateNewUserMutation } from '../api/authApi';
 import filteredText from '../utils/filteredText';
 import getRoute from '../utils/routes';
@@ -15,40 +15,24 @@ const SignupForm = (props) => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const navigate = useNavigate();
-  const [registrationError, setRegistrationError] = useState('');
-  const [isErrorRegistration, setIsErrorRegistration] = useState(false);
   const [createNewUser] = useCreateNewUserMutation();
-  const error = useSelector(selectAuthError);
-  const handleSignup = async (values, { setSubmitting }) => {
-    try {
-      const { username, password } = values;
-      const data = {
-        username: filteredText(username),
-        password,
-      };
-      await createNewUser(data);
-      navigate(getRoute('PAGE_CHAT'));
-    } catch {
-      switch (error.status) {
-        case 409: {
-          setIsErrorRegistration(!isErrorRegistration);
-          setRegistrationError(t('errors.userExists'));
-          setSubmitting(false);
-          break;
-        }
-        case 'FETCH_ERROR': {
-          setIsErrorRegistration(!isErrorRegistration);
-          toast.error(t('toast.networkError'));
-          setSubmitting(false);
-          break;
-        }
-        default: {
-          setRegistrationError(t('errors.userExists'));
-          setSubmitting(false);
-          break;
-        }
-      }
+  const authError = useSelector(selectAuthError);
+  const isAuthError = useSelector(selectIsAuthError);
+
+  useEffect(() => {
+    if (isAuthError && authError === 'FETCH_ERROR') {
+      toast.error(t('toast.networkError'));
     }
+  }, [isAuthError, authError, t]);
+
+  const handleSignup = async (values) => {
+    const { username, password } = values;
+    const data = {
+      username: filteredText(username),
+      password,
+    };
+    await createNewUser(data).unwrap();
+    navigate(getRoute('PAGE_CHAT'));
   };
 
   useEffect(() => {
@@ -76,12 +60,12 @@ const SignupForm = (props) => {
               id="username"
               placeholder={t('errors.range')}
               autoComplete="username"
-              className={`form-control ${(errors.username && touched.username) || isErrorRegistration ? 'is-invalid' : ''}`}
+              className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
               innerRef={inputRef}
             />
             <label className="form-label" htmlFor="username">{t('signupPage.username')}</label>
-            {isErrorRegistration && <div className="invalid-tooltip d-block">{registrationError}</div>}
             {errors.username && touched.username && <div className="invalid-tooltip">{errors.username}</div>}
+            {isAuthError && authError === 409 && <div className="invalid-tooltip">{t('errors.userExists')}</div>}
           </div>
           <div className="form-floating mb-3">
             <Field

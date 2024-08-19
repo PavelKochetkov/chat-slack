@@ -5,7 +5,8 @@ const initialState = {
   username: localStorage.getItem('username') ? localStorage.getItem('username') : null,
   token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
   isAuth: !!localStorage.getItem('token'),
-  hasError: null,
+  authError: null,
+  isAuthError: false,
 };
 
 const authSlice = createSlice({
@@ -17,7 +18,8 @@ const authSlice = createSlice({
         username: null,
         token: null,
         isAuth: false,
-        hasError: null,
+        authError: null,
+        isAuthError: false,
       });
       localStorage.removeItem('username');
       localStorage.removeItem('token');
@@ -27,7 +29,8 @@ const authSlice = createSlice({
     builder.addMatcher(authApi.endpoints.login.matchPending, (state) => {
       Object.assign(state, {
         ...initialState,
-        hasError: null,
+        authError: null,
+        isAuthError: false,
       });
     });
     builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
@@ -44,13 +47,15 @@ const authSlice = createSlice({
     builder.addMatcher(authApi.endpoints.login.matchRejected, (state, { payload }) => {
       Object.assign(state, {
         ...initialState,
-        hasError: payload,
+        authError: payload.status,
+        isAuthError: true,
       });
     });
     builder.addMatcher(authApi.endpoints.createNewUser.matchPending, (state) => {
       Object.assign(state, {
         ...initialState,
-        hasError: null,
+        authError: null,
+        isAuthError: false,
       });
     });
     builder.addMatcher(authApi.endpoints.createNewUser.matchFulfilled, (state, { payload }) => {
@@ -67,7 +72,8 @@ const authSlice = createSlice({
     builder.addMatcher(authApi.endpoints.createNewUser.matchRejected, (state, { payload }) => {
       Object.assign(state, {
         ...initialState,
-        hasError: payload,
+        authError: payload.status,
+        isAuthError: true,
       });
     });
   },
@@ -76,5 +82,6 @@ const authSlice = createSlice({
 export const { logOut } = authSlice.actions;
 export const selectUsername = (state) => state.auth.username;
 export const selectIsAuth = (state) => state.auth.isAuth;
-export const selectAuthError = (state) => state.auth.hasError;
+export const selectAuthError = (state) => state.auth.authError;
+export const selectIsAuthError = (state) => state.auth.isAuthError;
 export default authSlice.reducer;
