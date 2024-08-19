@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
@@ -9,10 +8,9 @@ import { useEditChannelMutation } from '../../api/channelsApi';
 import filteredText from '../../utils/filteredText';
 
 const RenameChannel = (props) => {
-  const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const inputRef = useRef(null);
   const {
-    showModal, addChannelSchema, handleCloseModal, dispatch, modalId,
+    showModal, addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName,
   } = props;
   const { t } = useTranslation();
   const [editChannel] = useEditChannelMutation();
@@ -31,10 +29,9 @@ const RenameChannel = (props) => {
   };
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
       inputRef.current.select();
     }
-  }, [currentChannelName]);
+  }, []);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
