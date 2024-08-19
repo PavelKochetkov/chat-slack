@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field } from 'formik';
 import { Modal, Button, FormControl } from 'react-bootstrap';
@@ -8,9 +9,10 @@ import { useEditChannelMutation } from '../../api/channelsApi';
 import filteredText from '../../utils/filteredText';
 
 const RenameChannel = (props) => {
+  const currentChannelName = useSelector((state) => state.app.currentChannelName);
   const inputRef = useRef(null);
   const {
-    showModal, addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName,
+    showModal, addChannelSchema, handleCloseModal, dispatch, modalId,
   } = props;
   const { t } = useTranslation();
   const [editChannel] = useEditChannelMutation();
