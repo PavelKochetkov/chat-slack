@@ -15,18 +15,12 @@ const NewChannel = (props) => {
     showModal, addChannelSchema, handleCloseModal, dispatch,
   } = props;
   const [addChannel] = useAddChannelMutation();
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const response = await addChannel({ name: filteredText(values.name) });
-      const { id, name } = response.data;
-      handleCloseModal();
-      dispatch(changeChannel({ id, name }));
-      toast.success(t('toast.newChannel'));
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setSubmitting(false);
-    }
+  const handleSubmit = async (values) => {
+    const response = await addChannel({ name: filteredText(values.name) });
+    const { id, name } = response.data;
+    handleCloseModal();
+    dispatch(changeChannel({ id, name }));
+    toast.success(t('toast.newChannel'));
   };
   useEffect(() => {
     if (inputRef.current) {

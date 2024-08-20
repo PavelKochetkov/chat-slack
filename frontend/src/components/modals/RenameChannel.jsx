@@ -14,22 +14,14 @@ const RenameChannel = (props) => {
   } = props;
   const { t } = useTranslation();
   const [editChannel] = useEditChannelMutation();
-  const renameChannel = async (values, { setSubmitting }) => {
-    try {
-      const { id, name } = values;
-      await editChannel({ id, name: filteredText(name) });
-      handleCloseModal();
-      dispatch(changeChannel(values));
-      toast.success(t('toast.renameChannel'));
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setSubmitting(false);
-    }
+  const renameChannel = async (values) => {
+    const { id, name } = values;
+    await editChannel({ id, name: filteredText(name) });
+    handleCloseModal();
+    dispatch(changeChannel(values));
+    toast.success(t('toast.renameChannel'));
   };
   useEffect(() => {
-    // eslint-disable-next-line no-debugger
-    debugger;
     if (inputRef.current) {
       inputRef.current.select();
     }
