@@ -25,7 +25,7 @@ const RenameChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-  }, []);
+  }, [showModal]);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
@@ -54,7 +54,6 @@ const RenameChannel = (props) => {
                 ref={inputRef}
                 className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
-                autoFocus
               />
 
               <Form.Label className="visually-hidden" htmlFor="name">{t('modal.label')}</Form.Label>
