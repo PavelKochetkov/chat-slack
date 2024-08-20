@@ -27,6 +27,13 @@ const RenameChannel = (props) => {
     inputRef.current.select();
   }, []);
 
+  useEffect(
+    () => {
+      const myProps = props;
+      console.log(myProps);
+    },
+  );
+
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
