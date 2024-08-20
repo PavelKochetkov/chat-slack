@@ -28,6 +28,8 @@ const RenameChannel = (props) => {
     }
   };
   useEffect(() => {
+    // eslint-disable-next-line no-debugger
+    debugger;
     if (inputRef.current) {
       inputRef.current.select();
     }
