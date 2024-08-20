@@ -23,6 +23,8 @@ const NewChannel = (props) => {
     toast.success(t('toast.newChannel'));
   };
   useEffect(() => {
+    const test = 'my-test';
+    console.log(test);
     if (inputRef.current) {
       inputRef.current.focus();
     }
