@@ -22,10 +22,13 @@ const RenameChannel = (props) => {
     toast.success(t('toast.renameChannel'));
   };
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-  }, [inputRef]);
+    const timer = setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.select();
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
