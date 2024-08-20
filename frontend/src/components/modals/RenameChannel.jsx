@@ -31,7 +31,9 @@ const RenameChannel = (props) => {
     () => {
       const myProps = props;
       console.log(myProps);
+      inputRef.current.select();
     },
+    [showModal, addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName],
   );
 
   return (

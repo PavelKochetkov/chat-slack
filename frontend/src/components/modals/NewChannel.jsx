@@ -12,7 +12,7 @@ const NewChannel = (props) => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const {
-    showModal, addChannelSchema, handleCloseModal, dispatch,
+    addChannelSchema, handleCloseModal, dispatch,
   } = props;
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values) => {
@@ -31,7 +31,7 @@ const NewChannel = (props) => {
   }, []);
 
   return (
-    <Modal show={showModal === 'adding'} onHide={handleCloseModal} centered>
+    <Modal show onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.titleAdd')}</Modal.Title>
       </Modal.Header>
