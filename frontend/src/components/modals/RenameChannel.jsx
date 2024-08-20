@@ -22,12 +22,11 @@ const RenameChannel = (props) => {
     toast.success(t('toast.renameChannel'));
   };
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.select();
-      }
-    }, 0);
-    return () => clearTimeout(timer);
+    const test = 'my-test';
+    console.log(test);
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
   }, []);
 
   return (
