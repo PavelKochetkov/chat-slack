@@ -7,7 +7,7 @@ import { changeChannel } from '../../store/slice/appSlice';
 
 const RemoveChannel = (props) => {
   const {
-    dispatch, showModal, handleCloseModal, modalId, currentChannelId,
+    dispatch, handleCloseModal, modalId, currentChannelId,
   } = props;
   const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
@@ -25,7 +25,7 @@ const RemoveChannel = (props) => {
   };
 
   return (
-    <Modal show={showModal === 'remove'} onHide={handleCloseModal} centered>
+    <Modal show onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.removeChannelTitle')}</Modal.Title>
       </Modal.Header>

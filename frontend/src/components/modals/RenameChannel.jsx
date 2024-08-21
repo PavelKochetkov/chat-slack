@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import createSchemaValidation from '../../utils/createSchemaValidation';
 import { changeChannel } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/channelsApi';
 import filteredText from '../../utils/filteredText';
@@ -10,9 +10,10 @@ import filteredText from '../../utils/filteredText';
 const RenameChannel = (props) => {
   const inputRef = useRef(null);
   const {
-    showModal, addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName,
+    addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName, t, channelNames,
+    modalChannelName,
   } = props;
-  const { t } = useTranslation();
+  const validationSchema = createSchemaValidation(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
     const { id, name } = values;
@@ -35,21 +36,21 @@ const RenameChannel = (props) => {
       console.log(myProps);
       inputRef.current.select();
     },
-    [showModal, addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName],
+    [addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName],
   );
 
   return (
-    <Modal show={showModal === 'renaming'} onHide={handleCloseModal} centered>
+    <Modal show onHide={handleCloseModal} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.renameChannelTitle')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
           initialValues={{
-            name: currentChannelName,
+            name: modalChannelName,
             id: modalId,
           }}
-          validationSchema={addChannelSchema}
+          validationSchema={validationSchema}
           validateOnBlur={false}
           onSubmit={renameChannel}
         >

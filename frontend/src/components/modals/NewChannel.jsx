@@ -1,19 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation } from '../../api/channelsApi.js';
+import createSchemaValidation from '../../utils/createSchemaValidation.js';
 import { changeChannel } from '../../store/slice/appSlice.js';
 import filteredText from '../../utils/filteredText.js';
 
 const NewChannel = (props) => {
-  const { t } = useTranslation();
   const inputRef = useRef(null);
   const {
-    addChannelSchema, handleCloseModal, dispatch,
+    handleCloseModal, dispatch, channelNames, t,
   } = props;
+  const validationSchema = createSchemaValidation(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values) => {
     const response = await addChannel({ name: filteredText(values.name) });
@@ -40,7 +40,7 @@ const NewChannel = (props) => {
           initialValues={{
             name: '',
           }}
-          validationSchema={addChannelSchema}
+          validationSchema={validationSchema}
           validateOnBlur={false}
           onSubmit={handleSubmit}
         >
