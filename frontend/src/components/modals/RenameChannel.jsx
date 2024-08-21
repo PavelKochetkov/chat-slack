@@ -31,13 +31,6 @@ const RenameChannel = (props) => {
       inputRef.current.select();
     }
   };
-  // useEffect(() => {
-  //   const test = 'my-test';
-  //   console.log(test);
-  //   if (inputRef.current) {
-  //     inputRef.current.select();
-  //   }
-  // }, []);
 
   return (
     <Modal show onHide={() => dispatch(setChannelModal({ modalName: '', id: '' }))} onEntered={handleEntered} centered>
