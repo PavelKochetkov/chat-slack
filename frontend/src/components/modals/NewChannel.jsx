@@ -1,37 +1,35 @@
 import React, { useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation } from '../../api/channelsApi.js';
 import createSchemaValidation from '../../utils/createSchemaValidation.js';
-import { changeChannel } from '../../store/slice/appSlice.js';
+import { changeChannel, setChannelModal } from '../../store/slice/appSlice.js';
 import filteredText from '../../utils/filteredText.js';
 
 const NewChannel = (props) => {
+  const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const {
-    handleCloseModal, dispatch, channelNames, t,
-  } = props;
+  const { channelNames, t } = props;
   const validationSchema = createSchemaValidation(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values) => {
     const response = await addChannel({ name: filteredText(values.name) });
     const { id, name } = response.data;
-    handleCloseModal();
+    dispatch(setChannelModal({ modalName: '', id: '' }));
     dispatch(changeChannel({ id, name }));
     toast.success(t('toast.newChannel'));
   };
   useEffect(() => {
-    const test = 'my-test';
-    console.log(test);
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
 
   return (
-    <Modal show onHide={handleCloseModal} centered>
+    <Modal show onHide={() => dispatch(setChannelModal({ modalName: '', id: '' }))} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.titleAdd')}</Modal.Title>
       </Modal.Header>
@@ -59,7 +57,7 @@ const NewChannel = (props) => {
               {!isValid && <div className="invalid-feedback">{errors.name}</div>}
               <div className="d-flex justify-content-end">
                 <div className="me-2">
-                  <Button variant="secondary" onClick={handleCloseModal}>{t('modal.cancel')}</Button>
+                  <Button variant="secondary" onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}>{t('modal.cancel')}</Button>
                 </div>
                 <Button
                   type="submit"

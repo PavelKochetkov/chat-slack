@@ -2,15 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import createSchemaValidation from '../../utils/createSchemaValidation';
-import { changeChannel } from '../../store/slice/appSlice';
+import { changeChannel, setChannelModal } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/channelsApi';
 import filteredText from '../../utils/filteredText';
 
 const RenameChannel = (props) => {
+  const dispatch = useDispatch();
   const inputRef = useRef(null);
   const {
-    addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName, t, channelNames,
+    channelId,
+    t,
+    channelNames,
     modalChannelName,
   } = props;
   const validationSchema = createSchemaValidation(channelNames, t);
@@ -18,7 +22,7 @@ const RenameChannel = (props) => {
   const renameChannel = async (values) => {
     const { id, name } = values;
     await editChannel({ id, name: filteredText(name) });
-    handleCloseModal();
+    dispatch(setChannelModal({ modalName: '', id: '' }));
     dispatch(changeChannel(values));
     toast.success(t('toast.renameChannel'));
   };
@@ -30,17 +34,8 @@ const RenameChannel = (props) => {
     }
   }, []);
 
-  useEffect(
-    () => {
-      const myProps = props;
-      console.log(myProps);
-      inputRef.current.select();
-    },
-    [addChannelSchema, handleCloseModal, dispatch, modalId, currentChannelName],
-  );
-
   return (
-    <Modal show onHide={handleCloseModal} centered>
+    <Modal show onHide={() => dispatch(setChannelModal({ modalName: '', id: '' }))} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.renameChannelTitle')}</Modal.Title>
       </Modal.Header>
@@ -48,7 +43,7 @@ const RenameChannel = (props) => {
         <Formik
           initialValues={{
             name: modalChannelName,
-            id: modalId,
+            id: channelId,
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}
@@ -74,7 +69,7 @@ const RenameChannel = (props) => {
                 <div className="me-2">
                   <Button
                     variant="secondary"
-                    onClick={handleCloseModal}
+                    onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}
                   >
                     {t('modal.cancel')}
                   </Button>
