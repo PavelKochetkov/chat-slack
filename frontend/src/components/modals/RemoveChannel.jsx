@@ -32,7 +32,7 @@ const RemoveChannel = (props) => {
   };
 
   return (
-    <>
+    <Modal show onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.removeChannelTitle')}</Modal.Title>
       </Modal.Header>
@@ -47,7 +47,7 @@ const RemoveChannel = (props) => {
           <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
         </div>
       </Modal.Body>
-    </>
+    </Modal>
   );
 };
 

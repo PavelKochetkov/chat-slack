@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'react-bootstrap/Modal';
 import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
@@ -13,24 +12,16 @@ const modalsTypes = {
 };
 
 const ModalContainer = () => {
-  const inputRef = useRef(null);
   const dispatch = useDispatch();
   const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
-  const handleEntered = () => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-  };
   const showModal = useSelector(selectShowModal);
   const Container = modalsTypes[showModal];
   if (!Container) return null;
 
   return (
-    <Modal show onHide={handleClose} onEntered={handleEntered} centered>
-      <Container
-        handleClose={handleClose}
-      />
-    </Modal>
+    <Container
+      handleClose={handleClose}
+    />
   );
 };
 
