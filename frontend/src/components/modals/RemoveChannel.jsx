@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
@@ -32,22 +32,17 @@ const RemoveChannel = (props) => {
   };
 
   return (
-    <Modal show onHide={handleClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>{t('modal.removeChannelTitle')}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {t('modal.text')}
-        <div className="d-flex justify-content-end">
-          <div className="me-2">
-            <Button variant="secondary" onClick={handleClose}>
-              {t('modal.cancel')}
-            </Button>
-          </div>
-          <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
+    <>
+      {t('modal.text')}
+      <div className="d-flex justify-content-end">
+        <div className="me-2">
+          <Button variant="secondary" onClick={handleClose}>
+            {t('modal.cancel')}
+          </Button>
         </div>
-      </Modal.Body>
-    </Modal>
+        <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
+      </div>
+    </>
   );
 };
 
