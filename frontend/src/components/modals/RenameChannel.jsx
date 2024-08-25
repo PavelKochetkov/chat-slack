@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import createSchemaValidation from '../../utils/createSchemaValidation';
+import { createSchemaValidationRenameChannel } from './validate';
 import { changeChannel, setChannelModal } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/channelsApi';
 import filterText from '../../utils/filterText';
@@ -17,7 +17,7 @@ const RenameChannel = (props) => {
     channelNames,
     modalChannelName,
   } = props;
-  const validationSchema = createSchemaValidation(channelNames, t);
+  const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
     const { id, name } = values;
