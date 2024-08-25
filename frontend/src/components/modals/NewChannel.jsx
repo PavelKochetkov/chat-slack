@@ -1,18 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
-import { useAddChannelMutation } from '../../api/channelsApi.js';
+import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
 import { changeChannel, setChannelModal } from '../../store/slice/appSlice.js';
 import filterText from '../../utils/filterText.js';
 
 const NewChannel = (props) => {
+  const { handleClose } = props;
+  const { t } = useTranslation();
+  const { data: channels } = useGetChannelsQuery();
+  const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const { channelNames, t } = props;
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values) => {
@@ -22,7 +26,6 @@ const NewChannel = (props) => {
     dispatch(changeChannel({ id, name }));
     toast.success(t('toast.newChannel'));
   };
-  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();

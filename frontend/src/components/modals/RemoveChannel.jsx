@@ -1,14 +1,23 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
-import { changeChannel, setChannelModal } from '../../store/slice/appSlice';
+import {
+  changeChannel,
+  setChannelModal,
+  selectCurrentChannelId,
+  selectChannelId,
+} from '../../store/slice/appSlice';
 
 const RemoveChannel = (props) => {
+  const { handleClose } = props;
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { channelId, currentChannelId, t } = props;
   const [removeChannel] = useRemoveChannelMutation();
+  const currentChannelId = useSelector(selectCurrentChannelId);
+  const channelId = useSelector(selectChannelId);
   const deleteChannel = async (id) => {
     try {
       await removeChannel(id);
@@ -21,7 +30,6 @@ const RemoveChannel = (props) => {
       console.log(e);
     }
   };
-  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
 
   return (
     <Modal show onHide={handleClose} centered>

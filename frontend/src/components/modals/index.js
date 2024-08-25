@@ -1,10 +1,9 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
-import { useGetChannelsQuery } from '../../api/channelsApi';
+import { setChannelModal, selectShowModal } from '../../store/slice/appSlice';
 
 const modalsTypes = {
   adding: NewChannel,
@@ -13,23 +12,15 @@ const modalsTypes = {
 };
 
 const ModalContainer = () => {
-  const { t } = useTranslation();
-  const { data: channels } = useGetChannelsQuery();
-  const channelNames = channels ? channels.map((channel) => channel.name) : [];
-  const channelId = useSelector((state) => state.app.channelId);
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
-  const modalChannelName = useSelector((state) => state.app.modalChannelName);
-  const showModal = useSelector((state) => state.app.showModal);
+  const dispatch = useDispatch();
+  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
+  const showModal = useSelector(selectShowModal);
   const Container = modalsTypes[showModal];
   if (!Container) return null;
 
   return (
     <Container
-      channelNames={channelNames}
-      currentChannelId={currentChannelId}
-      modalChannelName={modalChannelName}
-      channelId={channelId}
-      t={t}
+      handleClose={handleClose}
     />
   );
 };

@@ -2,21 +2,27 @@ import React, { useRef } from 'react';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { createSchemaValidationRenameChannel } from './validate';
-import { changeChannel, setChannelModal } from '../../store/slice/appSlice';
-import { useEditChannelMutation } from '../../api/channelsApi';
+import {
+  changeChannel,
+  setChannelModal,
+  selectModalChannelName,
+  selectChannelId,
+} from '../../store/slice/appSlice';
+import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
 import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
+  const { handleClose } = props;
+  const { data: channels } = useGetChannelsQuery();
+  const channelNames = channels ? channels.map((channel) => channel.name) : [];
+  const modalChannelName = useSelector(selectModalChannelName);
+  const channelId = useSelector(selectChannelId);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const {
-    channelId,
-    t,
-    channelNames,
-    modalChannelName,
-  } = props;
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
@@ -31,7 +37,6 @@ const RenameChannel = (props) => {
       inputRef.current.select();
     }
   };
-  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
 
   return (
     <Modal show onHide={handleClose} onEntered={handleEntered} centered>
