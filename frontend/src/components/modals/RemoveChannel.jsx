@@ -29,13 +29,15 @@ const RemoveChannel = (props) => {
       </Modal.Header>
       <Modal.Body>
         {t('modal.text')}
+        <div className="d-flex justify-content-end">
+          <div className="me-2">
+            <Button variant="secondary" onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}>
+              {t('modal.cancel')}
+            </Button>
+          </div>
+          <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
+        </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}>
-          {t('modal.cancel')}
-        </Button>
-        <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
-      </Modal.Footer>
     </Modal>
   );
 };
