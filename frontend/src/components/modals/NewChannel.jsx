@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useAddChannelMutation } from '../../api/channelsApi.js';
 import createSchemaValidation from '../../utils/createSchemaValidation.js';
 import { changeChannel, setChannelModal } from '../../store/slice/appSlice.js';
-import filteredText from '../../utils/filteredText.js';
+import filterText from '../../utils/filterText.js';
 
 const NewChannel = (props) => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const NewChannel = (props) => {
   const validationSchema = createSchemaValidation(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values) => {
-    const response = await addChannel({ name: filteredText(values.name) });
+    const response = await addChannel({ name: filterText(values.name) });
     const { id, name } = response.data;
     dispatch(setChannelModal({ modalName: '', id: '' }));
     dispatch(changeChannel({ id, name }));

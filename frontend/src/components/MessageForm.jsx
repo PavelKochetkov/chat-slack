@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useAddMessageMutation } from '../api/messagesApi';
-import filteredText from '../utils/filteredText';
+import filterText from '../utils/filterText';
 import { selectUsername } from '../store/slice/authSlice';
 
 const MessageForm = () => {
@@ -19,7 +19,7 @@ const MessageForm = () => {
     try {
       const { message } = values;
       await addMessage({
-        message: filteredText(message),
+        message: filterText(message),
         channelId: currentChannelId,
         username,
       });

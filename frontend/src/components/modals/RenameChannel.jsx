@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import createSchemaValidation from '../../utils/createSchemaValidation';
 import { changeChannel, setChannelModal } from '../../store/slice/appSlice';
 import { useEditChannelMutation } from '../../api/channelsApi';
-import filteredText from '../../utils/filteredText';
+import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const RenameChannel = (props) => {
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
     const { id, name } = values;
-    await editChannel({ id, name: filteredText(name) });
+    await editChannel({ id, name: filterText(name) });
     dispatch(setChannelModal({ modalName: '', id: '' }));
     dispatch(changeChannel(values));
     toast.success(t('toast.renameChannel'));
