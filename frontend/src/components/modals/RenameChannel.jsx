@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -15,13 +15,14 @@ import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsA
 import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
-  const { handleClose, inputRef } = props;
+  const { handleClose } = props;
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const modalChannelName = useSelector(selectModalChannelName);
   const channelId = useSelector(selectChannelId);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
@@ -35,7 +36,7 @@ const RenameChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-  }, [inputRef]);
+  }, []);
 
   return (
     <>

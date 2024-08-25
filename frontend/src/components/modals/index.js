@@ -16,15 +16,19 @@ const ModalContainer = () => {
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
+  const handleEntered = () => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
+  };
   const showModal = useSelector(selectShowModal);
   const Container = modalsTypes[showModal];
   if (!Container) return null;
 
   return (
-    <Modal show onHide={handleClose} centered>
+    <Modal show onHide={handleClose} onEntered={handleEntered} centered>
       <Container
         handleClose={handleClose}
-        inputRef={inputRef}
       />
     </Modal>
   );
