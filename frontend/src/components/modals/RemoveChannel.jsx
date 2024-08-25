@@ -21,9 +21,10 @@ const RemoveChannel = (props) => {
       console.log(e);
     }
   };
+  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
 
   return (
-    <Modal show onHide={() => dispatch(setChannelModal({ modalName: '', id: '' }))} centered>
+    <Modal show onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.removeChannelTitle')}</Modal.Title>
       </Modal.Header>
@@ -31,7 +32,7 @@ const RemoveChannel = (props) => {
         {t('modal.text')}
         <div className="d-flex justify-content-end">
           <div className="me-2">
-            <Button variant="secondary" onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}>
+            <Button variant="secondary" onClick={handleClose}>
               {t('modal.cancel')}
             </Button>
           </div>

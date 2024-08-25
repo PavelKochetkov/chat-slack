@@ -22,6 +22,7 @@ const NewChannel = (props) => {
     dispatch(changeChannel({ id, name }));
     toast.success(t('toast.newChannel'));
   };
+  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -29,7 +30,7 @@ const NewChannel = (props) => {
   }, []);
 
   return (
-    <Modal show onHide={() => dispatch(setChannelModal({ modalName: '', id: '' }))} centered>
+    <Modal show onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.titleAdd')}</Modal.Title>
       </Modal.Header>
@@ -57,7 +58,7 @@ const NewChannel = (props) => {
               {!isValid && <div className="invalid-feedback">{errors.name}</div>}
               <div className="d-flex justify-content-end">
                 <div className="me-2">
-                  <Button variant="secondary" onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}>{t('modal.cancel')}</Button>
+                  <Button variant="secondary" onClick={handleClose}>{t('modal.cancel')}</Button>
                 </div>
                 <Button
                   type="submit"

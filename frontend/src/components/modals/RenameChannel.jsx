@@ -31,9 +31,10 @@ const RenameChannel = (props) => {
       inputRef.current.select();
     }
   };
+  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
 
   return (
-    <Modal show onHide={() => dispatch(setChannelModal({ modalName: '', id: '' }))} onEntered={handleEntered} centered>
+    <Modal show onHide={handleClose} onEntered={handleEntered} centered>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.renameChannelTitle')}</Modal.Title>
       </Modal.Header>
@@ -67,7 +68,7 @@ const RenameChannel = (props) => {
                 <div className="me-2">
                   <Button
                     variant="secondary"
-                    onClick={() => dispatch(setChannelModal({ modalName: '', id: '' }))}
+                    onClick={handleClose}
                   >
                     {t('modal.cancel')}
                   </Button>
