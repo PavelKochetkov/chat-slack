@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -11,12 +11,11 @@ import { changeChannel, setChannelModal } from '../../store/slice/appSlice.js';
 import filterText from '../../utils/filterText.js';
 
 const NewChannel = (props) => {
-  const { handleClose } = props;
+  const { handleClose, inputRef } = props;
   const { t } = useTranslation();
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const handleSubmit = async (values) => {
@@ -30,7 +29,7 @@ const NewChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [inputRef]);
 
   return (
     <>
