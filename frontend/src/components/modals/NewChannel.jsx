@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -26,14 +26,14 @@ const NewChannel = (props) => {
     dispatch(changeChannel({ id, name }));
     toast.success(t('toast.newChannel'));
   };
-  const handleEntered = () => {
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  };
+  }, []);
 
   return (
-    <Modal show onHide={handleClose} onEntered={handleEntered} centered>
+    <>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.titleAdd')}</Modal.Title>
       </Modal.Header>
@@ -75,7 +75,7 @@ const NewChannel = (props) => {
           )}
         </Formik>
       </Modal.Body>
-    </Modal>
+    </>
   );
 };
 

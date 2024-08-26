@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -32,14 +32,19 @@ const RenameChannel = (props) => {
     dispatch(changeChannel(values));
     toast.success(t('toast.renameChannel'));
   };
-  const handleEntered = () => {
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const myProps = props;
+    console.log(myProps);
+  });
 
   return (
-    <Modal show onHide={handleClose} onEntered={handleEntered} centered>
+    <>
       <Modal.Header closeButton>
         <Modal.Title>{t('modal.renameChannelTitle')}</Modal.Title>
       </Modal.Header>
@@ -89,7 +94,7 @@ const RenameChannel = (props) => {
           )}
         </Formik>
       </Modal.Body>
-    </Modal>
+    </>
   );
 };
 

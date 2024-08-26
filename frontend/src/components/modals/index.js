@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Modal } from 'react-bootstrap';
 import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
@@ -19,9 +20,9 @@ const ModalContainer = () => {
   if (!Container) return null;
 
   return (
-    <Container
-      handleClose={handleClose}
-    />
+    <Modal show onHide={handleClose} centered>
+      <Container handleClose={handleClose} />
+    </Modal>
   );
 };
 
