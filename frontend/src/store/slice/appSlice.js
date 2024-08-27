@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import channelsApi from '../../api/channelsApi';
 
 const initialState = {
   currentChannelId: 1,
@@ -8,6 +7,7 @@ const initialState = {
   channelId: '',
   modalChannelName: '',
   isSuccses: false,
+  error: null,
 };
 
 const appSlice = createSlice({
@@ -27,35 +27,33 @@ const appSlice = createSlice({
         modalChannelName: payload.name,
       });
     },
-  },
-  extraReducers: (builder) => {
-    builder.addMatcher(channelsApi.endpoints.addChannel.matchPending, (state) => {
+    setDefaultChannel: (state) => {
       Object.assign(state, {
-        ...initialState,
-        isSuccses: false,
+        currentChannelId: 1,
+        currentChannelName: 'general',
       });
-    });
-    builder.addMatcher(channelsApi.endpoints.addChannel.matchFulfilled, (state, { payload }) => {
+    },
+    closeModal: (state) => {
       Object.assign(state, {
-        ...initialState,
-        currentChannelId: payload.id,
-        currentChannelName: payload.name,
-        isSuccses: true,
+        showModal: '',
+        channelId: '',
+        modalChannelName: '',
+        error: null,
       });
-    });
-    builder.addMatcher(channelsApi.endpoints.addChannel.matchRejected, (state) => {
-      Object.assign(state, {
-        ...initialState,
-        isSuccses: false,
-      });
-    });
+    },
   },
 });
 
-export const { changeChannel, setChannelModal } = appSlice.actions;
+export const {
+  changeChannel,
+  setChannelModal,
+  setDefaultChannel,
+  closeModal,
+} = appSlice.actions;
 export const selectCurrentChannelId = (state) => state.app.currentChannelId;
 export const selectIsSuccses = (state) => state.app.isSuccses;
 export const selectModalChannelName = (state) => state.app.modalChannelName;
 export const selectChannelId = (state) => state.app.channelId;
 export const selectShowModal = (state) => state.app.showModal;
+export const selectError = (state) => state.app.error;
 export default appSlice.reducer;

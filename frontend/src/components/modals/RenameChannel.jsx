@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { createSchemaValidationRenameChannel } from './validate';
 import {
   changeChannel,
-  setChannelModal,
   selectModalChannelName,
   selectChannelId,
+  closeModal,
 } from '../../store/slice/appSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
 import filterText from '../../utils/filterText';
@@ -28,7 +28,7 @@ const RenameChannel = (props) => {
   const renameChannel = async (values) => {
     const { id, name } = values;
     await editChannel({ id, name: filterText(name) });
-    dispatch(setChannelModal({ modalName: '', id: '' }));
+    dispatch(closeModal());
     dispatch(changeChannel(values));
     toast.success(t('toast.renameChannel'));
   };

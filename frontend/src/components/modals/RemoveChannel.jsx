@@ -5,10 +5,10 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
 import {
-  changeChannel,
-  setChannelModal,
   selectCurrentChannelId,
   selectChannelId,
+  setDefaultChannel,
+  closeModal,
 } from '../../store/slice/appSlice';
 
 const RemoveChannel = (props) => {
@@ -21,9 +21,9 @@ const RemoveChannel = (props) => {
   const deleteChannel = async (id) => {
     try {
       await removeChannel(id);
-      dispatch(setChannelModal({ modalName: '', id: '' }));
+      dispatch(closeModal());
       if (channelId === currentChannelId) {
-        dispatch(changeChannel({ id: 1, name: 'general' }));
+        dispatch(setDefaultChannel());
       }
       toast.success(t('toast.removeChannel'));
     } catch (e) {

@@ -7,7 +7,7 @@ import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
-import { changeChannel, setChannelModal } from '../../store/slice/appSlice.js';
+import { changeChannel, closeModal } from '../../store/slice/appSlice.js';
 import filterText from '../../utils/filterText.js';
 
 const NewChannel = (props) => {
@@ -22,7 +22,7 @@ const NewChannel = (props) => {
   const handleSubmit = async (values) => {
     const response = await addChannel({ name: filterText(values.name) });
     const { id, name } = response.data;
-    dispatch(setChannelModal({ modalName: '', id: '' }));
+    dispatch(closeModal());
     dispatch(changeChannel({ id, name }));
     toast.success(t('toast.newChannel'));
   };

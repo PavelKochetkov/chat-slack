@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap';
 import NewChannel from './NewChannel';
 import RemoveChannel from './RemoveChannel';
 import RenameChannel from './RenameChannel';
-import { setChannelModal, selectShowModal } from '../../store/slice/appSlice';
+import { selectShowModal, closeModal } from '../../store/slice/appSlice';
 
 const modalsTypes = {
   adding: NewChannel,
@@ -14,7 +14,7 @@ const modalsTypes = {
 
 const ModalContainer = () => {
   const dispatch = useDispatch();
-  const handleClose = () => dispatch(setChannelModal({ modalName: '', id: '' }));
+  const handleClose = () => dispatch(closeModal());
   const showModal = useSelector(selectShowModal);
   const Container = modalsTypes[showModal];
   if (!Container) return null;

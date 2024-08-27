@@ -23,13 +23,13 @@ const ChannelSidebar = () => {
     }
   }, [channels, currentChannelId, dispatch]);
   useEffect(() => {
-    const handleNewChannel = async () => {
+    const handleChannel = async () => {
       await refetch();
     };
 
-    socket.on('newChannel', handleNewChannel);
-    socket.on('removeChannel', handleNewChannel);
-    socket.on('renameChannel', handleNewChannel);
+    socket.on('newChannel', handleChannel);
+    socket.on('removeChannel', handleChannel);
+    socket.on('renameChannel', handleChannel);
 
     return () => {
       socket.off('newChannel');
