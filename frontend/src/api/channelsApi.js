@@ -4,17 +4,16 @@ import prepareHeaders from '../utils/apiHelpers';
 const channelsApi = createApi({
   reducerPath: 'channelsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1',
+    baseUrl: '/api/v1/channels',
     prepareHeaders: (headers) => prepareHeaders(headers),
   }),
   tagTypes: ['Channels', 'Messages'],
   endpoints: (builder) => ({
     getChannels: builder.query({
-      query: () => 'channels',
+      query: () => '',
     }),
     addChannel: builder.mutation({
       query: (channel) => ({
-        url: 'channels',
         method: 'POST',
         body: { ...channel },
       }),
@@ -22,14 +21,14 @@ const channelsApi = createApi({
     editChannel: builder.mutation({
       query: ({ name, id }) => ({
         method: 'PATCH',
-        url: `channels/${id}`,
+        url: id,
         body: { name },
       }),
     }),
     removeChannel: builder.mutation({
       query: (id) => ({
         method: 'DELETE',
-        url: `channels/${id}`,
+        url: id,
       }),
       invalidatesTags: ['Channels', 'Messages'],
     }),
