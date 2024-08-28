@@ -2,11 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { createSchemaValidationRenameChannel } from './validate';
 import {
-  changeChannel,
   selectModalChannelName,
   selectModalChannelId,
   selectIsSuccses,
@@ -25,13 +24,11 @@ const RenameChannel = (props) => {
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
     const { id, name } = values;
     await editChannel({ id, name: filterText(name) }).unwrap();
-    dispatch(changeChannel(values));
   };
 
   useEffect(() => {

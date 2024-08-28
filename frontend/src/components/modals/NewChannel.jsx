@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
 import {
-  changeChannel,
   selectIsSuccses,
   selectError,
 } from '../../store/slice/appSlice.js';
@@ -21,14 +20,11 @@ const NewChannel = (props) => {
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
-  const dispatch = useDispatch();
   const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const createNewChannel = async (values) => {
-    const response = await addChannel({ name: filterText(values.name) }).unwrap();
-    const { id, name } = response.data;
-    dispatch(changeChannel({ id, name }));
+    await addChannel({ name: filterText(values.name) }).unwrap();
   };
 
   useEffect(() => {
