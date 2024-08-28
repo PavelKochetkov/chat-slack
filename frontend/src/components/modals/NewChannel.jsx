@@ -24,7 +24,11 @@ const NewChannel = (props) => {
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
   const createNewChannel = async (values) => {
-    await addChannel({ name: filterText(values.name) }).unwrap();
+    const { name } = values;
+    const data = {
+      name: filterText(name),
+    };
+    await addChannel(data).unwrap();
   };
 
   useEffect(() => {

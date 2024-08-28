@@ -21,7 +21,7 @@ const RenameChannel = (props) => {
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const modalChannelName = useSelector(selectModalChannelName);
-  const modalChannelId = useSelector(selectModalChannelId);
+  const сhannelId = useSelector(selectModalChannelId);
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const isOpen = useSelector(selectIsOpen);
@@ -29,8 +29,12 @@ const RenameChannel = (props) => {
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
-    const { id, name } = values;
-    await editChannel({ id, name: filterText(name) }).unwrap();
+    const { name } = values;
+    const data = {
+      name: filterText(name),
+      id: сhannelId,
+    };
+    await editChannel(data).unwrap();
   };
 
   useEffect(() => {
@@ -66,7 +70,7 @@ const RenameChannel = (props) => {
         <Formik
           initialValues={{
             name: modalChannelName,
-            id: modalChannelId,
+            id: сhannelId,
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}

@@ -18,11 +18,12 @@ const MessageForm = () => {
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
     try {
       const { message } = values;
-      await addMessage({
+      const data = {
         message: filterText(message),
         channelId: currentChannelId,
         username,
-      });
+      };
+      await addMessage(data);
       resetForm();
       inputRef.current.focus();
     } catch (e) {
