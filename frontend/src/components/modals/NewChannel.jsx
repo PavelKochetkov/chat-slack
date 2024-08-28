@@ -1,31 +1,49 @@
 import React, { useRef, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
-import { changeChannel, closeModal } from '../../store/slice/appSlice.js';
+import {
+  changeChannel,
+  selectIsSuccses,
+  selectError,
+} from '../../store/slice/appSlice.js';
 import filterText from '../../utils/filterText.js';
 
 const NewChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
   const { data: channels } = useGetChannelsQuery();
+  const isSuccses = useSelector(selectIsSuccses);
+  const errorStatus = useSelector(selectError);
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
-  const handleSubmit = async (values) => {
-    const response = await addChannel({ name: filterText(values.name) });
+  const createNewChannel = async (values) => {
+    const response = await addChannel({ name: filterText(values.name) }).unwrap();
     const { id, name } = response.data;
-    dispatch(closeModal());
     dispatch(changeChannel({ id, name }));
-    toast.success(t('toast.newChannel'));
   };
+
+  useEffect(() => {
+    if (isSuccses && errorStatus === null) {
+      toast.success(t('toast.newChannel'));
+      handleClose();
+    }
+  }, [handleClose, errorStatus, isSuccses, t]);
+
+  useEffect(() => {
+    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
+      toast.error(t('toast.networkError'));
+    }
+  }, [errorStatus, isSuccses, t]);
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -44,7 +62,7 @@ const NewChannel = (props) => {
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}
-          onSubmit={handleSubmit}
+          onSubmit={createNewChannel}
         >
           {({
             errors, isSubmitting, isValid,

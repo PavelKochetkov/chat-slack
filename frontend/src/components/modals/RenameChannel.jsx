@@ -8,30 +8,45 @@ import { createSchemaValidationRenameChannel } from './validate';
 import {
   changeChannel,
   selectModalChannelName,
-  selectChannelId,
-  closeModal,
+  selectModalChannelId,
+  selectIsSuccses,
+  selectError,
 } from '../../store/slice/appSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
 import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
   const { handleClose } = props;
+  const inputRef = useRef(null);
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const modalChannelName = useSelector(selectModalChannelName);
-  const channelId = useSelector(selectChannelId);
+  const modalChannelId = useSelector(selectModalChannelId);
+  const isSuccses = useSelector(selectIsSuccses);
+  const errorStatus = useSelector(selectError);
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
   const renameChannel = async (values) => {
     const { id, name } = values;
-    await editChannel({ id, name: filterText(name) });
-    dispatch(closeModal());
+    await editChannel({ id, name: filterText(name) }).unwrap();
     dispatch(changeChannel(values));
-    toast.success(t('toast.renameChannel'));
   };
+
+  useEffect(() => {
+    if (isSuccses && errorStatus === null) {
+      toast.success(t('toast.renameChannel'));
+      handleClose();
+    }
+  }, [errorStatus, handleClose, isSuccses, t]);
+
+  useEffect(() => {
+    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
+      toast.error(t('toast.networkError'));
+    }
+  }, [errorStatus, isSuccses, t]);
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.select();
@@ -52,7 +67,7 @@ const RenameChannel = (props) => {
         <Formik
           initialValues={{
             name: modalChannelName,
-            id: channelId,
+            id: modalChannelId,
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}

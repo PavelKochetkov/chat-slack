@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
 import {
   selectCurrentChannelId,
-  selectChannelId,
+  selectModalChannelId,
   setDefaultChannel,
-  closeModal,
+  selectError,
+  selectIsSuccses,
 } from '../../store/slice/appSlice';
 
 const RemoveChannel = (props) => {
@@ -17,19 +18,28 @@ const RemoveChannel = (props) => {
   const dispatch = useDispatch();
   const [removeChannel] = useRemoveChannelMutation();
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const channelId = useSelector(selectChannelId);
+  const modalChannelId = useSelector(selectModalChannelId);
+  const isSuccses = useSelector(selectIsSuccses);
+  const errorStatus = useSelector(selectError);
   const deleteChannel = async (id) => {
-    try {
-      await removeChannel(id);
-      dispatch(closeModal());
-      if (channelId === currentChannelId) {
-        dispatch(setDefaultChannel());
-      }
-      toast.success(t('toast.removeChannel'));
-    } catch (e) {
-      console.log(e);
+    await removeChannel(id).unwrap();
+    if (id === currentChannelId) {
+      dispatch(setDefaultChannel());
     }
   };
+
+  useEffect(() => {
+    if (isSuccses && errorStatus === null) {
+      toast.success(t('toast.removeChannel'));
+      handleClose();
+    }
+  }, [isSuccses, errorStatus, t, handleClose]);
+
+  useEffect(() => {
+    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
+      toast.error(t('toast.networkError'));
+    }
+  }, [errorStatus, isSuccses, t]);
 
   return (
     <>
@@ -44,7 +54,7 @@ const RemoveChannel = (props) => {
               {t('modal.cancel')}
             </Button>
           </div>
-          <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
+          <Button variant="danger" onClick={() => deleteChannel(modalChannelId)}>{t('modal.remove')}</Button>
         </div>
       </Modal.Body>
     </>

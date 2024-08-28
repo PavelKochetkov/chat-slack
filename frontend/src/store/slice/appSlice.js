@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import channelsApi from '../../api/channelsApi';
 
 const initialState = {
   currentChannelId: 1,
   currentChannelName: 'general',
   showModal: '',
-  channelId: '',
+  modalChannelId: '',
   modalChannelName: '',
   isSuccses: false,
   error: null,
+  isOpen: false,
 };
 
 const appSlice = createSlice({
@@ -23,7 +25,8 @@ const appSlice = createSlice({
     setChannelModal: (state, { payload }) => {
       Object.assign(state, {
         showModal: payload.modalName,
-        channelId: payload.id,
+        isOpen: true,
+        modalChannelId: payload.id,
         modalChannelName: payload.name,
       });
     },
@@ -36,11 +39,81 @@ const appSlice = createSlice({
     closeModal: (state) => {
       Object.assign(state, {
         showModal: '',
-        channelId: '',
+        modalChannelId: '',
         modalChannelName: '',
         error: null,
+        isSuccses: false,
       });
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(channelsApi.endpoints.addChannel.matchPending, (state) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: null,
+          isOpen: true,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.addChannel.matchFulfilled, (state, { payload }) => {
+        const { name, id } = payload;
+        Object.assign(state, {
+          currentChannelName: name,
+          currentChannelId: id,
+          isSuccses: true,
+          error: null,
+          isOpen: false,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.addChannel.matchRejected, (state, { payload }) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: payload.status,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.removeChannel.matchPending, (state) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: null,
+          isOpen: true,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.removeChannel.matchFulfilled, (state) => {
+        Object.assign(state, {
+          isSuccses: true,
+          error: null,
+          isOpen: false,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.removeChannel.matchRejected, (state, { payload }) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: payload.status,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.editChannel.matchPending, (state) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: null,
+          isOpen: true,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.editChannel.matchFulfilled, (state, { payload }) => {
+        const { name, id } = payload;
+        Object.assign(state, {
+          currentChannelName: name,
+          currentChannelId: id,
+          isSuccses: true,
+          error: null,
+          isOpen: false,
+        });
+      })
+      .addMatcher(channelsApi.endpoints.editChannel.matchRejected, (state, { payload }) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: payload.status,
+        });
+      });
   },
 });
 
@@ -53,7 +126,8 @@ export const {
 export const selectCurrentChannelId = (state) => state.app.currentChannelId;
 export const selectIsSuccses = (state) => state.app.isSuccses;
 export const selectModalChannelName = (state) => state.app.modalChannelName;
-export const selectChannelId = (state) => state.app.channelId;
+export const selectModalChannelId = (state) => state.app.modalChannelId;
 export const selectShowModal = (state) => state.app.showModal;
 export const selectError = (state) => state.app.error;
+export const selectIsOpen = (state) => state.app.isOpen;
 export default appSlice.reducer;
