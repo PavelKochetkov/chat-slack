@@ -118,14 +118,12 @@ const appSlice = createSlice({
       })
       .addMatcher(messagesApi.endpoints.addMessage.matchPending, (state) => {
         Object.assign(state, {
-          isSuccses: false,
           error: null,
         });
       })
       .addMatcher(messagesApi.endpoints.addMessage.matchFulfilled, (state, { payload }) => {
         const { message } = payload;
         Object.assign(state, {
-          isSuccses: true,
           error: null,
           message,
         });
