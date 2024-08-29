@@ -52,7 +52,7 @@ const RenameChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-  }, []);
+  }, [modalChannelName]);
 
   useEffect(() => {
     const myProps = props;
@@ -68,6 +68,7 @@ const RenameChannel = (props) => {
         <Formik
           initialValues={{
             name: modalChannelName,
+            id: сhannelId,
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}
