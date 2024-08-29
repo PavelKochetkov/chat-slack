@@ -50,9 +50,11 @@ const RenameChannel = (props) => {
 
   useEffect(() => {
     if (inputRef.current) {
+      inputRef.current.value = modalChannelName;
       inputRef.current.select();
     }
-  }, []);
+    console.log(inputRef.current.value);
+  }, [modalChannelName]);
 
   useEffect(() => {
     const myProps = props;
