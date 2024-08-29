@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetChannelsQuery } from '../api/channelsApi.js';
-import { changeChannel, setChannelModal } from '../store/slice/appSlice.js';
+import { changeChannel, setChannelModal, selectCurrentChannelId } from '../store/slice/appSlice.js';
 import Loading from './Spinner.jsx';
 import socket from '../socket.js';
 import ModalContainer from './modals/index.js';
@@ -11,7 +11,7 @@ import DropdownButton from './DropdownButton.jsx';
 const ChannelSidebar = () => {
   const { t } = useTranslation();
   const { data: channels, isLoading, refetch } = useGetChannelsQuery();
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const currentChannelId = useSelector(selectCurrentChannelId);
   const dispatch = useDispatch();
   const handleShowModal = (modalName) => {
     dispatch(setChannelModal({ modalName }));

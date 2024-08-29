@@ -124,6 +124,7 @@ export const {
   closeModal,
 } = appSlice.actions;
 export const selectCurrentChannelId = (state) => state.app.currentChannelId;
+export const selectCurrentChannelName = (state) => state.app.currentChannelName;
 export const selectIsSuccses = (state) => state.app.isSuccses;
 export const selectModalChannelName = (state) => state.app.modalChannelName;
 export const selectModalChannelId = (state) => state.app.modalChannelId;

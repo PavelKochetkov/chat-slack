@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useAddMessageMutation } from '../api/messagesApi';
 import filterText from '../utils/filterText';
 import { selectUsername } from '../store/slice/authSlice';
+import { selectCurrentChannelId } from '../store/slice/appSlice';
 
 const MessageForm = () => {
   const inputRef = useRef(null);
@@ -13,7 +14,7 @@ const MessageForm = () => {
     addMessage,
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const currentChannelId = useSelector(selectCurrentChannelId);
   const username = useSelector(selectUsername);
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
     try {

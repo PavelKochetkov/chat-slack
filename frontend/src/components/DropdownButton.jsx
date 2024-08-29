@@ -2,19 +2,20 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { changeChannel, setChannelModal } from '../store/slice/appSlice';
+import { changeChannel, setChannelModal, selectCurrentChannelId } from '../store/slice/appSlice';
 
 const DropdownButton = ({ data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const currentChannelId = useSelector(selectCurrentChannelId);
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ modalName, id: channel.id, name: channel.name }));
   };
   const switchChannel = () => {
-    const { id, name } = data;
+    const { id } = data;
+    console.log(data);
     if (id !== currentChannelId) {
-      dispatch(changeChannel({ id, name }));
+      dispatch(changeChannel(data));
     }
   };
   const isActive = data.id === currentChannelId;

@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useGetMessagesQuery } from '../api/messagesApi.js';
+import { selectCurrentChannelId } from '../store/slice/appSlice.js';
 import socket from '../socket.js';
 import Loading from './Spinner.jsx';
 
 const MessageBox = () => {
   const { data: messages, isLoading, refetch } = useGetMessagesQuery();
-  const currentChannelId = useSelector((state) => state.app.currentChannelId);
+  const currentChannelId = useSelector(selectCurrentChannelId);
   const filtredMessages = messages?.filter((message) => message.channelId === currentChannelId);
   const messageRef = useRef(null);
 
