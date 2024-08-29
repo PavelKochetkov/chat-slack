@@ -10,7 +10,6 @@ import {
   selectModalChannelId,
   selectIsSuccses,
   selectError,
-  selectIsOpen,
 } from '../../store/slice/appSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
 import filterText from '../../utils/filterText';
@@ -24,7 +23,6 @@ const RenameChannel = (props) => {
   const сhannelId = useSelector(selectModalChannelId);
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
-  const isOpen = useSelector(selectIsOpen);
   const { t } = useTranslation();
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
@@ -51,10 +49,10 @@ const RenameChannel = (props) => {
   }, [errorStatus, isSuccses, t]);
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
+    if (inputRef.current) {
       inputRef.current.select();
     }
-  }, [isOpen]);
+  }, []);
 
   useEffect(() => {
     const myProps = props;
