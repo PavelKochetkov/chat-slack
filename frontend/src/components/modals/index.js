@@ -13,7 +13,6 @@ const modalsTypes = {
 };
 
 const ModalContainer = () => {
-  const handleEntered = (inputRef) => inputRef.current?.select();
   const dispatch = useDispatch();
   const handleCloseModal = () => dispatch(closeModal());
   const showModal = useSelector(selectShowModal);
@@ -22,8 +21,8 @@ const ModalContainer = () => {
   if (!Container) return null;
 
   return (
-    <Modal show={isOpen} onHide={handleCloseModal} onEntered={handleEntered} centered>
-      <Container handleClose={handleCloseModal} handleEntered={handleEntered} />
+    <Modal show={isOpen} onHide={handleCloseModal} centered>
+      <Container handleClose={handleCloseModal} />
     </Modal>
   );
 };

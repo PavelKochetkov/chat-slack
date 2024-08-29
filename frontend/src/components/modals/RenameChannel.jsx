@@ -15,7 +15,7 @@ import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsA
 import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
-  const { handleClose, handleEntered } = props;
+  const { handleClose } = props;
   const inputRef = useRef(null);
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
@@ -49,10 +49,10 @@ const RenameChannel = (props) => {
   }, [errorStatus, isSuccses, t]);
 
   useEffect(() => {
-    if (handleEntered) {
-      handleEntered(inputRef);
+    if (inputRef.current) {
+      inputRef.current.select();
     }
-  }, [handleEntered]);
+  }, []);
 
   useEffect(() => {
     const myProps = props;
