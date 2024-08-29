@@ -52,7 +52,6 @@ const RenameChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-    console.log(inputRef.current.value);
   }, []);
 
   useEffect(() => {
