@@ -21,7 +21,7 @@ const ModalContainer = () => {
   if (!Container) return null;
 
   return (
-    <Modal show={isOpen} onHide={handleCloseModal} backdrop="static" centered>
+    <Modal show={isOpen} onHide={handleCloseModal} autoFocus centered>
       <Container handleClose={handleCloseModal} />
     </Modal>
   );
