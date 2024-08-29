@@ -86,7 +86,6 @@ const RenameChannel = (props) => {
                 ref={inputRef}
                 className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
-                autoFocus
               />
 
               <Form.Label className="visually-hidden" htmlFor="name">{t('modal.label')}</Form.Label>
