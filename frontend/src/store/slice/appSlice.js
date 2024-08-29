@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import channelsApi from '../../api/channelsApi';
+import messagesApi from '../../api/messagesApi';
 
 const initialState = {
   currentChannelId: 1,
   currentChannelName: 'general',
+  message: '',
   showModal: '',
   modalChannelId: '',
   modalChannelName: '',
@@ -109,6 +111,26 @@ const appSlice = createSlice({
         });
       })
       .addMatcher(channelsApi.endpoints.editChannel.matchRejected, (state, { payload }) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: payload.status,
+        });
+      })
+      .addMatcher(messagesApi.endpoints.addMessage.matchPending, (state) => {
+        Object.assign(state, {
+          isSuccses: false,
+          error: null,
+        });
+      })
+      .addMatcher(messagesApi.endpoints.addMessage.matchFulfilled, (state, { payload }) => {
+        const { message } = payload;
+        Object.assign(state, {
+          isSuccses: true,
+          error: null,
+          message,
+        });
+      })
+      .addMatcher(messagesApi.endpoints.addMessage.matchRejected, (state, { payload }) => {
         Object.assign(state, {
           isSuccses: false,
           error: payload.status,

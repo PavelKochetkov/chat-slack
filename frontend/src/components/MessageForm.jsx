@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useAddMessageMutation } from '../api/messagesApi';
 import filterText from '../utils/filterText';
 import { selectUsername } from '../store/slice/authSlice';
-import { selectCurrentChannelId } from '../store/slice/appSlice';
+import { selectCurrentChannelId, selectIsSuccses, selectError } from '../store/slice/appSlice';
 
 const MessageForm = () => {
   const inputRef = useRef(null);
@@ -15,24 +16,28 @@ const MessageForm = () => {
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
   const currentChannelId = useSelector(selectCurrentChannelId);
+  const isSuccses = useSelector(selectIsSuccses);
+  const errorStatus = useSelector(selectError);
   const username = useSelector(selectUsername);
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
-    try {
-      const { message } = values;
-      const data = {
-        message: filterText(message),
-        channelId: currentChannelId,
-        username,
-      };
-      await addMessage(data);
-      resetForm();
-      inputRef.current.focus();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setSubmitting(false);
-    }
+    const { message } = values;
+    const data = {
+      message: filterText(message),
+      channelId: currentChannelId,
+      username,
+    };
+    await addMessage(data);
+    resetForm();
+    inputRef.current.focus();
+    setSubmitting(false);
   };
+
+  useEffect(() => {
+    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
+      toast.error(t('toast.networkError'));
+    }
+  }, [errorStatus, isSuccses, t]);
+
   return (
     <div className="mt-auto px-5 py-3">
       <Formik
