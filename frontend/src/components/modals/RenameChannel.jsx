@@ -68,7 +68,6 @@ const RenameChannel = (props) => {
         <Formik
           initialValues={{
             name: modalChannelName,
-            id: сhannelId,
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}
