@@ -29,11 +29,11 @@ const RemoveChannel = (props) => {
   };
 
   useEffect(() => {
-    if (isSuccses && errorStatus === null) {
-      toast.success(t('toast.removeChannel'));
+    if (isSuccses) {
+      toast.success(t('toast.channelDeletedSuccessfully'));
       handleClose();
     }
-  }, [isSuccses, errorStatus, t, handleClose]);
+  }, [isSuccses, t, handleClose]);
 
   useEffect(() => {
     if (!isSuccses && errorStatus === 'FETCH_ERROR') {

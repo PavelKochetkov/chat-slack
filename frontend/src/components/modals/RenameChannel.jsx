@@ -38,11 +38,11 @@ const RenameChannel = (props) => {
   };
 
   useEffect(() => {
-    if (isSuccses && errorStatus === null) {
-      toast.success(t('toast.renameChannel'));
+    if (isSuccses) {
+      toast.success(t('toast.сhannelRenamedSuccessfully'));
       handleClose();
     }
-  }, [errorStatus, handleClose, isSuccses, t]);
+  }, [handleClose, isSuccses, t]);
 
   useEffect(() => {
     if (!isSuccses && errorStatus === 'FETCH_ERROR') {

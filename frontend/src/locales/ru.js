@@ -58,9 +58,9 @@ export default {
       text: 'Управление каналом',
     },
     toast: {
-      newChannel: 'Канал создан',
-      removeChannel: 'Канал удалён',
-      renameChannel: 'Канал переименован',
+      channelCreatedSuccessfully: 'Канал создан',
+      channelDeletedSuccessfully: 'Канал удалён',
+      сhannelRenamedSuccessfully: 'Канал переименован',
       networkError: 'Ошибка соединения',
     },
     countMessages: {

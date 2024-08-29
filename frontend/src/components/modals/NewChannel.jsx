@@ -32,11 +32,11 @@ const NewChannel = (props) => {
   };
 
   useEffect(() => {
-    if (isSuccses && errorStatus === null) {
-      toast.success(t('toast.newChannel'));
+    if (isSuccses) {
+      toast.success(t('toast.channelCreatedSuccessfully'));
       handleClose();
     }
-  }, [handleClose, errorStatus, isSuccses, t]);
+  }, [handleClose, isSuccses, t]);
 
   useEffect(() => {
     if (!isSuccses && errorStatus === 'FETCH_ERROR') {
