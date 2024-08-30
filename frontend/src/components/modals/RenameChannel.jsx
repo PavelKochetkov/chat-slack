@@ -16,7 +16,7 @@ import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
   const { handleClose } = props;
-  const inputRef = useRef(null);
+  const inputRef = useRef();
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const modalChannelName = useSelector(selectModalChannelName);
@@ -51,7 +51,7 @@ const RenameChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-  }, [inputRef]);
+  }, []);
 
   useEffect(() => {
     const myProps = props;
