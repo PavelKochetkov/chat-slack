@@ -48,7 +48,10 @@ const RenameChannel = (props) => {
   }, [isSuccses, errorStatus, t, handleClose]);
 
   useEffect(() => {
-    inputRef?.current.select();
+    if (inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
   }, [inputRef]);
 
   useEffect(() => {
