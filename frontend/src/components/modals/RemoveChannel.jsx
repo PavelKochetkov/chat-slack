@@ -33,13 +33,12 @@ const RemoveChannel = (props) => {
       toast.success(t('toast.channelDeletedSuccessfully'));
       handleClose();
     }
-  }, [isSuccses, t, handleClose]);
 
-  useEffect(() => {
     if (!isSuccses && errorStatus === 'FETCH_ERROR') {
       toast.error(t('toast.networkError'));
+      handleClose();
     }
-  }, [errorStatus, isSuccses, t]);
+  }, [isSuccses, errorStatus, t, handleClose]);
 
   return (
     <>
