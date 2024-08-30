@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -15,8 +15,7 @@ import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsA
 import filterText from '../../utils/filterText';
 
 const RenameChannel = (props) => {
-  const { handleClose } = props;
-  const inputRef = useRef();
+  const { handleClose, inputRef } = props;
   const { data: channels } = useGetChannelsQuery();
   const channelNames = channels ? channels.map((channel) => channel.name) : [];
   const modalChannelName = useSelector(selectModalChannelName);
@@ -46,13 +45,6 @@ const RenameChannel = (props) => {
       handleClose();
     }
   }, [isSuccses, errorStatus, t, handleClose]);
-
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
-    }
-  }, [inputRef]);
 
   useEffect(() => {
     const myProps = props;
