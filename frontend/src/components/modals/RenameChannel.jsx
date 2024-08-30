@@ -52,7 +52,7 @@ const RenameChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.select();
     }
-  }, [modalChannelName]);
+  }, [inputRef]);
 
   useEffect(() => {
     const myProps = props;
