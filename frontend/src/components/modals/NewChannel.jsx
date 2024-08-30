@@ -48,7 +48,7 @@ const NewChannel = (props) => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  }, []);
+  }, [inputRef]);
 
   return (
     <>
