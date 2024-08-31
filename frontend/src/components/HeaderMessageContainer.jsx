@@ -8,8 +8,8 @@ const HeaderMessageContainer = () => {
   const { t } = useTranslation();
   const currentChannelName = useSelector(selectCurrentChannelName);
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const { data: messages } = useGetMessagesQuery();
-  const filteredMessages = messages?.filter((message) => message.channelId === currentChannelId);
+  const { data: messages = [] } = useGetMessagesQuery();
+  const filteredMessages = messages.filter((message) => message.channelId === currentChannelId);
 
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
@@ -17,7 +17,7 @@ const HeaderMessageContainer = () => {
         <b>{`# ${currentChannelName}`}</b>
       </p>
       <span className="text-muted">
-        {t('countMessages.amount_of_messages', { count: filteredMessages?.length })}
+        {t('countMessages.amount_of_messages', { count: filteredMessages.length })}
       </span>
     </div>
   );

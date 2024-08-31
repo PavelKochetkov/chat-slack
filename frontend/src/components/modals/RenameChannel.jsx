@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { createSchemaValidationRenameChannel } from './validate';
 import {
-  selectModalChannelName,
-  selectModalChannelId,
+  selectChannelName,
+  selectChannelId,
   selectIsSuccses,
   selectError,
 } from '../../store/slice/appSlice';
@@ -17,10 +17,10 @@ import filterText from '../../utils/filterText';
 const RenameChannel = (props) => {
   const { handleClose } = props;
   const inputRef = useRef(null);
-  const { data: channels } = useGetChannelsQuery();
-  const channelNames = channels ? channels.map((channel) => channel.name) : [];
-  const modalChannelName = useSelector(selectModalChannelName);
-  const сhannelId = useSelector(selectModalChannelId);
+  const { data: channels = [] } = useGetChannelsQuery();
+  const channelNames = channels.map((channel) => channel.name);
+  const channelName = useSelector(selectChannelName);
+  const сhannelId = useSelector(selectChannelId);
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ const RenameChannel = (props) => {
       <Modal.Body>
         <Formik
           initialValues={{
-            name: modalChannelName,
+            name: channelName,
           }}
           validationSchema={validationSchema}
           validateOnBlur={false}

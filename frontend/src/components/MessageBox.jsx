@@ -6,16 +6,16 @@ import socket from '../socket.js';
 import Loading from './Spinner.jsx';
 
 const MessageBox = () => {
-  const { data: messages, isLoading, refetch } = useGetMessagesQuery();
+  const { data: messages = [], isLoading, refetch } = useGetMessagesQuery();
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const filtredMessages = messages?.filter((message) => message.channelId === currentChannelId);
+  const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
   const messageRef = useRef(null);
 
   useEffect(() => {
     if (messageRef.current) {
       messageRef.current.scrollTop = messageRef.current.scrollHeight;
     }
-  }, [messages?.length, currentChannelId]);
+  }, [messages.length, currentChannelId]);
 
   useEffect(() => {
     const handleNewMessage = async () => {

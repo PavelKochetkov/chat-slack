@@ -13,7 +13,6 @@ const DropdownButton = ({ data }) => {
   };
   const switchChannel = () => {
     const { id } = data;
-    console.log(data);
     if (id !== currentChannelId) {
       dispatch(changeChannel(data));
     }

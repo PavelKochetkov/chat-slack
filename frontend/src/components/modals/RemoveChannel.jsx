@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
 import {
   selectCurrentChannelId,
-  selectModalChannelId,
+  selectChannelId,
   setDefaultChannel,
   selectError,
   selectIsSuccses,
@@ -18,7 +18,7 @@ const RemoveChannel = (props) => {
   const dispatch = useDispatch();
   const [removeChannel] = useRemoveChannelMutation();
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const modalChannelId = useSelector(selectModalChannelId);
+  const channelId = useSelector(selectChannelId);
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const deleteChannel = async (id) => {
@@ -53,7 +53,7 @@ const RemoveChannel = (props) => {
               {t('modal.cancel')}
             </Button>
           </div>
-          <Button variant="danger" onClick={() => deleteChannel(modalChannelId)}>{t('modal.remove')}</Button>
+          <Button variant="danger" onClick={() => deleteChannel(channelId)}>{t('modal.remove')}</Button>
         </div>
       </Modal.Body>
     </>

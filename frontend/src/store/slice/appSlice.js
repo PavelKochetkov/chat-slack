@@ -6,9 +6,9 @@ const initialState = {
   currentChannelId: 1,
   currentChannelName: 'general',
   message: '',
-  showModal: '',
-  modalChannelId: '',
-  modalChannelName: '',
+  modalType: '',
+  channelId: '',
+  channelName: '',
   isSuccses: false,
   error: null,
   isOpen: false,
@@ -26,10 +26,10 @@ const appSlice = createSlice({
     },
     setChannelModal: (state, { payload }) => {
       Object.assign(state, {
-        showModal: payload.modalName,
+        modalType: payload.modalName,
         isOpen: true,
-        modalChannelId: payload.id,
-        modalChannelName: payload.name,
+        channelId: payload.id,
+        channelName: payload.name,
       });
     },
     setDefaultChannel: (state) => {
@@ -40,9 +40,9 @@ const appSlice = createSlice({
     },
     closeModal: (state) => {
       Object.assign(state, {
-        showModal: '',
-        modalChannelId: '',
-        modalChannelName: '',
+        modalType: '',
+        channelId: '',
+        channelName: '',
         error: null,
         isSuccses: false,
       });
@@ -146,9 +146,9 @@ export const {
 export const selectCurrentChannelId = (state) => state.app.currentChannelId;
 export const selectCurrentChannelName = (state) => state.app.currentChannelName;
 export const selectIsSuccses = (state) => state.app.isSuccses;
-export const selectModalChannelName = (state) => state.app.modalChannelName;
-export const selectModalChannelId = (state) => state.app.modalChannelId;
-export const selectShowModal = (state) => state.app.showModal;
+export const selectChannelName = (state) => state.app.channelName;
+export const selectChannelId = (state) => state.app.channelId;
+export const selectModalType = (state) => state.app.modalType;
 export const selectError = (state) => state.app.error;
 export const selectIsOpen = (state) => state.app.isOpen;
 export default appSlice.reducer;

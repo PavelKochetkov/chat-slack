@@ -16,10 +16,10 @@ import filterText from '../../utils/filterText.js';
 const NewChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
-  const { data: channels } = useGetChannelsQuery();
+  const { data: channels = [] } = useGetChannelsQuery();
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
-  const channelNames = channels ? channels.map((channel) => channel.name) : [];
+  const channelNames = channels.map((channel) => channel.name);
   const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
