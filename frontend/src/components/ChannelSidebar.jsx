@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGetChannelsQuery } from '../api/channelsApi.js';
 import { changeChannel, setChannelModal, selectCurrentChannelId } from '../store/slice/appSlice.js';
 import Loading from './Spinner.jsx';
-import socket from '../socket.js';
 import DropdownButton from './DropdownButton.jsx';
 
 const ChannelSidebar = () => {
   const { t } = useTranslation();
-  const { data: channels, isLoading, refetch } = useGetChannelsQuery();
+  const { data: channels, isLoading } = useGetChannelsQuery();
   const currentChannelId = useSelector(selectCurrentChannelId);
   const dispatch = useDispatch();
   const handleShowModal = (modalName) => {
@@ -21,21 +20,6 @@ const ChannelSidebar = () => {
       dispatch(changeChannel({ id, name }));
     }
   }, [channels, currentChannelId, dispatch]);
-  useEffect(() => {
-    const handleChannel = async () => {
-      await refetch();
-    };
-
-    socket.on('newChannel', handleChannel);
-    socket.on('removeChannel', handleChannel);
-    socket.on('renameChannel', handleChannel);
-
-    return () => {
-      socket.off('newChannel');
-      socket.off('removeChannel');
-      socket.off('renameChannel');
-    };
-  }, [refetch]);
 
   return (
     <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">

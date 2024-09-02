@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { changeChannel, setChannelModal, selectCurrentChannelId } from '../store/slice/appSlice';
 
 const DropdownButton = ({ data }) => {
+  const { id, name, removable } = data;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentChannelId = useSelector(selectCurrentChannelId);
@@ -12,19 +13,18 @@ const DropdownButton = ({ data }) => {
     dispatch(setChannelModal({ modalName, id: channel.id, name: channel.name }));
   };
   const switchChannel = () => {
-    const { id } = data;
     if (id !== currentChannelId) {
       dispatch(changeChannel(data));
     }
   };
-  const isActive = data.id === currentChannelId;
+  const isActive = id === currentChannelId;
   const buttonClass = isActive ? 'secondary' : '';
 
-  return data.removable ? (
+  return removable ? (
     <ButtonGroup className="d-flex" role="group">
       <Button onClick={switchChannel} variant={buttonClass} className="w-100 rounded-0 text-start text-truncate">
         <span className="me-1">#</span>
-        {data.name}
+        {name}
       </Button>
       <Dropdown as={ButtonGroup}>
         <Dropdown.Toggle split variant={buttonClass} id="channel-management-dropdown" className="flex-grow-0">
@@ -40,7 +40,7 @@ const DropdownButton = ({ data }) => {
     <ButtonGroup className="d-flex" role="group">
       <Button onClick={switchChannel} variant={buttonClass} className="w-100 rounded-0 text-start text-truncate">
         <span className="me-1">#</span>
-        {data.name}
+        {name}
       </Button>
     </ButtonGroup>
   );

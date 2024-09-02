@@ -26,56 +26,57 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(authApi.endpoints.login.matchPending, (state) => {
-      Object.assign(state, {
-        ...initialState,
-        authError: null,
-        isAuthError: false,
+    builder
+      .addMatcher(authApi.endpoints.login.matchPending, (state) => {
+        Object.assign(state, {
+          ...initialState,
+          authError: null,
+          isAuthError: false,
+        });
+      })
+      .addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
+        const { username, token } = payload;
+        Object.assign(state, {
+          ...initialState,
+          token,
+          username,
+          isAuth: true,
+        });
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', token);
+      })
+      .addMatcher(authApi.endpoints.login.matchRejected, (state, { payload }) => {
+        Object.assign(state, {
+          ...initialState,
+          authError: payload.status,
+          isAuthError: true,
+        });
+      })
+      .addMatcher(authApi.endpoints.createNewUser.matchPending, (state) => {
+        Object.assign(state, {
+          ...initialState,
+          authError: null,
+          isAuthError: false,
+        });
+      })
+      .addMatcher(authApi.endpoints.createNewUser.matchFulfilled, (state, { payload }) => {
+        const { username, token } = payload;
+        Object.assign(state, {
+          ...initialState,
+          token,
+          username,
+          isAuth: true,
+        });
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', token);
+      })
+      .addMatcher(authApi.endpoints.createNewUser.matchRejected, (state, { payload }) => {
+        Object.assign(state, {
+          ...initialState,
+          authError: payload.status,
+          isAuthError: true,
+        });
       });
-    });
-    builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
-      const { username, token } = payload;
-      Object.assign(state, {
-        ...initialState,
-        token,
-        username,
-        isAuth: true,
-      });
-      localStorage.setItem('username', username);
-      localStorage.setItem('token', token);
-    });
-    builder.addMatcher(authApi.endpoints.login.matchRejected, (state, { payload }) => {
-      Object.assign(state, {
-        ...initialState,
-        authError: payload.status,
-        isAuthError: true,
-      });
-    });
-    builder.addMatcher(authApi.endpoints.createNewUser.matchPending, (state) => {
-      Object.assign(state, {
-        ...initialState,
-        authError: null,
-        isAuthError: false,
-      });
-    });
-    builder.addMatcher(authApi.endpoints.createNewUser.matchFulfilled, (state, { payload }) => {
-      const { username, token } = payload;
-      Object.assign(state, {
-        ...initialState,
-        token,
-        username,
-        isAuth: true,
-      });
-      localStorage.setItem('username', username);
-      localStorage.setItem('token', token);
-    });
-    builder.addMatcher(authApi.endpoints.createNewUser.matchRejected, (state, { payload }) => {
-      Object.assign(state, {
-        ...initialState,
-        authError: payload.status,
-        isAuthError: true,
-      });
-    });
   },
 });
 

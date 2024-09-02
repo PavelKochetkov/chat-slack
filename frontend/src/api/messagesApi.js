@@ -18,6 +18,7 @@ const messagesApi = createApi({
         method: 'POST',
         body: message,
       }),
+      invalidatesTags: ['Messages'],
     }),
   }),
 });
