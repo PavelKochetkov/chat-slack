@@ -143,6 +143,7 @@ export const {
   setDefaultChannel,
   closeModal,
 } = appSlice.actions;
+
 export const selectCurrentChannelId = (state) => state.app.currentChannelId;
 export const selectCurrentChannelName = (state) => state.app.currentChannelName;
 export const selectIsSuccses = (state) => state.app.isSuccses;
@@ -151,4 +152,5 @@ export const selectChannelId = (state) => state.app.channelId;
 export const selectModalType = (state) => state.app.modalType;
 export const selectError = (state) => state.app.error;
 export const selectIsOpen = (state) => state.app.isOpen;
+
 export default appSlice.reducer;
