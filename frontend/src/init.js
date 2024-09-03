@@ -7,7 +7,7 @@ import messagesApi from './api/messagesApi.js';
 import store from './store/store.js';
 import App from './App.jsx';
 import resources from './locales/index.js';
-import addRussianDictionary from './utils/addDictionary.js';
+import { addRussianDictionary } from './utils/textFilter.js';
 import { setDefaultChannel } from './store/slice/appSlice.js';
 
 const init = async (socket) => {

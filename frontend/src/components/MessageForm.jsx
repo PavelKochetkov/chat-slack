@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useAddMessageMutation } from '../api/messagesApi';
-import filterText from '../utils/filterText';
+import { censorText } from '../utils/textFilter';
 import { selectUsername } from '../store/slice/authSlice';
 import { selectCurrentChannelId, selectIsSuccses, selectError } from '../store/slice/appSlice';
 
@@ -23,7 +23,7 @@ const MessageForm = () => {
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
     const { message } = values;
     const data = {
-      message: filterText(message),
+      message: censorText(message),
       channelId: currentChannelId,
       username,
     };

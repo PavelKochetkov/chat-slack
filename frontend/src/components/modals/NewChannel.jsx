@@ -11,7 +11,7 @@ import {
   selectIsSuccses,
   selectError,
 } from '../../store/slice/appSlice.js';
-import filterText from '../../utils/filterText.js';
+import { censorText } from '../../utils/textFilter.js';
 
 const NewChannel = (props) => {
   const { handleClose } = props;
@@ -27,7 +27,7 @@ const NewChannel = (props) => {
   const createNewChannel = async (values) => {
     const { name } = values;
     const data = {
-      name: filterText(name),
+      name: censorText(name),
     };
     await addChannel(data).unwrap();
   };

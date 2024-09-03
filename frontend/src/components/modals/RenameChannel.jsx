@@ -12,7 +12,7 @@ import {
   selectError,
 } from '../../store/slice/appSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
-import filterText from '../../utils/filterText';
+import { censorText } from '../../utils/textFilter';
 
 const RenameChannel = (props) => {
   const { handleClose } = props;
@@ -30,7 +30,7 @@ const RenameChannel = (props) => {
   const renameChannel = async (values) => {
     const { name } = values;
     const data = {
-      name: filterText(name),
+      name: censorText(name),
       id: сhannelId,
     };
     await editChannel(data).unwrap();

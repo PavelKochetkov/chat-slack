@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useCreateNewUserMutation } from '../api/authApi';
-import filterText from '../utils/filterText';
+import { censorText } from '../utils/textFilter';
 import getRoute from '../utils/routes';
 
 const SignupForm = () => {
@@ -40,7 +40,7 @@ const SignupForm = () => {
   const handleSignup = async (values) => {
     const { username, password } = values;
     const data = {
-      username: filterText(username),
+      username: censorText(username),
       password,
     };
     await createNewUser(data).unwrap();
