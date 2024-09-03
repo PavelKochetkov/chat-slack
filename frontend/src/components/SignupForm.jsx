@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -10,14 +11,25 @@ import { useCreateNewUserMutation } from '../api/authApi';
 import filterText from '../utils/filterText';
 import getRoute from '../utils/routes';
 
-const SignupForm = (props) => {
-  const { signupSchema } = props;
+const SignupForm = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [createNewUser] = useCreateNewUserMutation();
   const authError = useSelector(selectAuthError);
   const isAuthError = useSelector(selectIsAuthError);
+  const signupSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(3, t('errors.range'))
+      .max(20, t('errors.range'))
+      .required(t('errors.required')),
+    password: Yup.string()
+      .min(6, t('errors.min'))
+      .required(t('errors.required')),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], t('errors.mustMatch'))
+      .required(t('errors.required')),
+  });
 
   useEffect(() => {
     if (isAuthError && authError === 'FETCH_ERROR') {

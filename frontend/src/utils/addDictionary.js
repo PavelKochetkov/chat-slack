@@ -1,7 +1,7 @@
 import * as filter from 'leo-profanity';
 
-const addRussianDictionary = async (dictionary) => {
-  const ruDictionary = await filter.getDictionary(dictionary);
+const addRussianDictionary = (dictionary) => {
+  const ruDictionary = filter.getDictionary(dictionary);
 
   return filter.add(ruDictionary);
 };
