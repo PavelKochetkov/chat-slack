@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { SendFill } from 'react-bootstrap-icons';
 import { useAddMessageMutation } from '../api/messagesApi';
 import { censorText } from '../utils/textFilter';
 import { selectUsername } from '../store/slice/authSlice';
@@ -60,10 +61,11 @@ const MessageForm = () => {
               />
               <button
                 type="submit"
-                className="btn btn-outline-secondary"
+                className="btn me-1"
                 disabled={isAddingMessage && isSubmitting}
               >
-                {t('messageForm.button')}
+                <SendFill color="royalblue" size={20} />
+                <span className="visually-hidden">{t('messageForm.button')}</span>
               </button>
             </div>
           </Form>
