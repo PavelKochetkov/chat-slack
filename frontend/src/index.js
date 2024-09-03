@@ -10,11 +10,11 @@ const run = async () => {
   const root = ReactDOM.createRoot(document.getElementById('chat'));
   const app = await init(socket);
   root.render(
-    <BrowserRouter>
-      <React.StrictMode>
+    <React.StrictMode>
+      <BrowserRouter>
         {app}
-      </React.StrictMode>
-    </BrowserRouter>,
+      </BrowserRouter>
+    </React.StrictMode>,
   );
 };
 
