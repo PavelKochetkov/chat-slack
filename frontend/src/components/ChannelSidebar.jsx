@@ -36,7 +36,7 @@ const ChannelSidebar = () => {
       </div>
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels?.map((channel) => (
-          <Channel key={channel.id} data={channel} />
+          <Channel key={channel.id} channel={channel} />
         ))}
       </ul>
     </div>
