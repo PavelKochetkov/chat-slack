@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useCreateNewUserMutation } from '../api/authApi';
 import { censorText } from '../utils/textFilter';
-import getRoute from '../utils/routes';
+import { generatePageRoute } from '../utils/routes';
 
 const SignupForm = () => {
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ const SignupForm = () => {
       password,
     };
     await createNewUser(data).unwrap();
-    navigate(getRoute('PAGE_CHAT'));
+    navigate(generatePageRoute('PAGE_CHAT'));
   };
 
   useEffect(() => {

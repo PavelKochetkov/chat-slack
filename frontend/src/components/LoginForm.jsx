@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useLoginMutation } from '../api/authApi';
-import getRoute from '../utils/routes';
+import { generatePageRoute } from '../utils/routes';
 
 const LoginForm = () => {
   const [login] = useLoginMutation();
@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   const handleLogin = async (values) => {
     await login(values).unwrap();
-    navigate(getRoute('PAGE_CHAT'));
+    navigate(generatePageRoute('PAGE_CHAT'));
   };
 
   return (

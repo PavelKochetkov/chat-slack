@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { changeChannel, setChannelModal, selectCurrentChannelId } from '../store/slice/appSlice';
 
-const DropdownButton = ({ data }) => {
+const Channel = ({ data }) => {
   const { id, name, removable } = data;
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -49,4 +49,4 @@ const DropdownButton = ({ data }) => {
   );
 };
 
-export default DropdownButton;
+export default Channel;

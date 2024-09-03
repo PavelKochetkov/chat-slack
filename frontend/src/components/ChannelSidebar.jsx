@@ -5,7 +5,7 @@ import { PlusSquare } from 'react-bootstrap-icons';
 import { useGetChannelsQuery } from '../api/channelsApi.js';
 import { changeChannel, setChannelModal, selectCurrentChannelId } from '../store/slice/appSlice.js';
 import Loading from './Spinner.jsx';
-import DropdownButton from './DropdownButton.jsx';
+import Channel from './Channel.jsx';
 
 const ChannelSidebar = () => {
   const { t } = useTranslation();
@@ -36,7 +36,7 @@ const ChannelSidebar = () => {
       </div>
       <ul id="channel-box" className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
         {channels?.map((channel) => (
-          <DropdownButton key={channel.id} data={channel} />
+          <Channel key={channel.id} data={channel} />
         ))}
       </ul>
     </div>

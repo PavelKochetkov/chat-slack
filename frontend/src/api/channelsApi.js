@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import prepareHeaders from '../utils/apiHelpers';
+import { generateAuthApiRoute } from '../utils/routes';
 
 const channelsApi = createApi({
   reducerPath: 'channelsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1/channels',
+    baseUrl: generateAuthApiRoute('CHANNELS'),
     prepareHeaders: (headers) => prepareHeaders(headers),
   }),
   tagTypes: ['Channels', 'Messages'],

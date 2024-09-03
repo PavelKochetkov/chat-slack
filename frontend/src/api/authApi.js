@@ -1,23 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import prepareHeaders from '../utils/apiHelpers';
+import { generateAuthApiRoute } from '../utils/routes';
 
 const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: '/api/v1',
+    baseUrl: '',
     prepareHeaders: (headers) => prepareHeaders(headers),
   }),
   endpoints: (builder) => ({
     createNewUser: builder.mutation({
       query: ({ username, password }) => ({
-        url: 'signup',
+        url: generateAuthApiRoute('SIGNUP'),
         method: 'POST',
         body: { username, password },
       }),
     }),
     login: builder.mutation({
       query: ({ username, password }) => ({
-        url: 'login',
+        url: generateAuthApiRoute('LOGIN'),
         method: 'POST',
         body: { username, password },
       }),
