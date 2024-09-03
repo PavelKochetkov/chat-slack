@@ -78,9 +78,13 @@ const NewChannel = (props) => {
               <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
               {!isValid && <div className="invalid-feedback">{errors.name}</div>}
               <div className="d-flex justify-content-end">
-                <div className="me-2">
-                  <Button variant="secondary" onClick={handleClose}>{t('modal.cancel')}</Button>
-                </div>
+                <Button
+                  className="me-2"
+                  variant="secondary"
+                  onClick={handleClose}
+                >
+                  {t('modal.cancel')}
+                </Button>
                 <Button
                   type="submit"
                   variant="primary"
