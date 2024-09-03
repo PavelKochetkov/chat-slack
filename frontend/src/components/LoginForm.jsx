@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -14,6 +15,15 @@ const LoginForm = () => {
   const { t } = useTranslation();
   const authError = useSelector(selectAuthError);
   const isAuthError = useSelector(selectIsAuthError);
+  const loginSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(3, t('errors.range'))
+      .max(20, t('errors.range'))
+      .required(t('errors.required')),
+    password: Yup.string()
+      .min(6, t('errors.min'))
+      .required(t('errors.required')),
+  });
 
   useEffect(() => {
     if (isAuthError && authError === 'FETCH_ERROR') {
@@ -30,33 +40,34 @@ const LoginForm = () => {
     <Formik
       initialValues={{ username: '', password: '' }}
       onSubmit={handleLogin}
+      validationSchema={loginSchema}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, errors, touched }) => (
         <Form className="col-12 col-md-6 mt-3 mt-mb-0">
           <h1 className="text-center mb-4">{t('loginPage.title')}</h1>
-          {isAuthError && authError === 401 && <div className="alert alert-danger">{t('errors.login')}</div>}
           <div className="form-floating mb-3">
             <Field
               type="text"
               name="username"
-              className="form-control"
-              placeholder={t('loginPage.usernamePlaceholder')}
+              className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
+              placeholder={t('errors.range')}
               id="username"
-              required
               autoFocus
             />
-            <label htmlFor="username">{t('loginPage.userLabel')}</label>
+            <label htmlFor="username">{t('loginPage.username')}</label>
+            {errors.username && touched.username && <div className="invalid-tooltip">{errors.username}</div>}
           </div>
           <div className="form-floating mb-4">
             <Field
               type="password"
               name="password"
-              className="form-control"
-              placeholder={t('loginPage.passwordPlaceholder')}
+              className={`form-control ${(errors.password && touched.password) || isAuthError ? 'is-invalid' : ''}`}
+              placeholder={t('loginPage.password')}
               id="password"
-              required
             />
-            <label className="form-label" htmlFor="password">{t('loginPage.passwordLabel')}</label>
+            <label className="form-label" htmlFor="password">{t('loginPage.password')}</label>
+            {errors.password && touched.password && <div className="invalid-tooltip">{errors.password}</div>}
+            {isAuthError && authError === 401 && <div className="invalid-tooltip">{t('errors.login')}</div>}
           </div>
           <button
             type="submit"

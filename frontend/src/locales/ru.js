@@ -5,10 +5,9 @@ export default {
     },
     loginPage: {
       title: 'Войти',
-      usernamePlaceholder: 'Ваш ник',
+      username: 'Ваш ник',
       userLabel: 'Ваш ник',
-      passwordPlaceholder: 'Пароль',
-      passwordLabel: 'Пароль',
+      password: 'Пароль',
       button: 'Войти',
       alt: 'Главное изображение',
       footer: {
