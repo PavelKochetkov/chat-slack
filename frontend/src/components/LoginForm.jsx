@@ -17,11 +17,8 @@ const LoginForm = () => {
   const isAuthError = useSelector(selectIsAuthError);
   const loginSchema = Yup.object().shape({
     username: Yup.string()
-      .min(3, t('errors.range'))
-      .max(20, t('errors.range'))
       .required(t('errors.required')),
     password: Yup.string()
-      .min(6, t('errors.min'))
       .required(t('errors.required')),
   });
 
