@@ -5,6 +5,7 @@ import logo404 from '../assets/404.svg';
 
 const NotFoundPage = () => {
   const { t } = useTranslation();
+
   return (
     <div className="text-center">
       <img src={logo404} alt={t('notFoundPage.alt')} className="img-fluid h-25" />

@@ -19,6 +19,7 @@ const MessageForm = () => {
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const username = useSelector(selectUsername);
+
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
     const { message } = values;
     const data = {

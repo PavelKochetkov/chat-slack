@@ -26,6 +26,7 @@ const RenameChannel = (props) => {
   const { t } = useTranslation();
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel] = useEditChannelMutation();
+
   const renameChannel = async (values) => {
     const { name } = values;
     const data = {

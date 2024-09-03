@@ -17,6 +17,7 @@ const RemoveChannel = (props) => {
   const channelId = useSelector(selectChannelId);
   const isSuccses = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
+
   const deleteChannel = async (id) => {
     await removeChannel(id).unwrap();
   };

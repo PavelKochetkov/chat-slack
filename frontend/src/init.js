@@ -20,13 +20,15 @@ const init = async (socket) => {
       escapeValue: false,
     },
   });
-  await addRussianDictionary('ru');
+
+  addRussianDictionary('ru');
 
   const listenerNewChannel = (payload) => {
     store.dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draftChannels) => {
       draftChannels.push(payload);
     }));
   };
+
   const listenerRemoveChannel = (payload) => {
     const state = store.getState();
     if (state.app.currentChannelId === payload.id) {
@@ -34,17 +36,20 @@ const init = async (socket) => {
     }
     store.dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draftChannels) => draftChannels.filter(({ id }) => id !== payload.id)));
   };
+
   const listenerRenameChannel = (payload) => {
     store.dispatch(channelsApi.util.updateQueryData('getChannels', undefined, (draftChannels) => {
       const channel = draftChannels.find((item) => item.id === payload.id);
       channel.name = payload.name;
     }));
   };
+
   const listenerNewMessage = (payload) => {
     store.dispatch(messagesApi.util.updateQueryData('getMessages', undefined, (draftMessages) => {
       draftMessages.push(payload);
     }));
   };
+
   socket.on('newChannel', listenerNewChannel);
   socket.on('removeChannel', listenerRemoveChannel);
   socket.on('renameChannel', listenerRenameChannel);

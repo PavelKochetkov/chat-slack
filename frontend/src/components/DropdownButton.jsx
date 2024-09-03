@@ -9,14 +9,17 @@ const DropdownButton = ({ data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const currentChannelId = useSelector(selectCurrentChannelId);
+
   const handleShowModal = (modalName, channel = { id: '', name: '' }) => {
     dispatch(setChannelModal({ modalName, id: channel.id, name: channel.name }));
   };
+
   const switchChannel = () => {
     if (id !== currentChannelId) {
       dispatch(changeChannel(data));
     }
   };
+
   const isActive = id === currentChannelId;
   const buttonClass = isActive ? 'secondary' : '';
 

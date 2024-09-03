@@ -23,6 +23,7 @@ const NewChannel = (props) => {
   const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
+
   const createNewChannel = async (values) => {
     const { name } = values;
     const data = {

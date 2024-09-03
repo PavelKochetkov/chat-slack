@@ -11,9 +11,11 @@ const ChannelSidebar = () => {
   const { data: channels, isLoading } = useGetChannelsQuery();
   const currentChannelId = useSelector(selectCurrentChannelId);
   const dispatch = useDispatch();
+
   const handleShowModal = (modalName) => {
     dispatch(setChannelModal({ modalName }));
   };
+
   useEffect(() => {
     if (channels && currentChannelId === 1) {
       const { id, name } = channels[0];
