@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Formik } from 'formik';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Formik, Form, Field } from 'formik';
+import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -69,22 +69,19 @@ const RenameChannel = (props) => {
           onSubmit={renameChannel}
         >
           {({
-            errors, handleSubmit, handleChange, isValid, values,
+            errors, isSubmitting, isValid,
           }) => (
-            <Form noValidate onSubmit={handleSubmit}>
-              <Form.Control
+            <Form>
+              <Field
                 name="name"
-                value={values.name}
-                onChange={handleChange}
                 type="text"
-                ref={inputRef}
+                innerRef={inputRef}
                 className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
-                autoFocus
               />
 
-              <Form.Label className="visually-hidden" htmlFor="name">{t('modal.label')}</Form.Label>
-              {!isValid && <Form.Control.Feedback className="invalid-feedback">{errors.name}</Form.Control.Feedback>}
+              <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>
+              {!isValid && <div className="invalid-feedback">{errors.name}</div>}
               <div className="d-flex justify-content-end">
                 <Button
                   className="me-2"
@@ -93,10 +90,10 @@ const RenameChannel = (props) => {
                 >
                   {t('modal.cancel')}
                 </Button>
-
                 <Button
                   type="submit"
                   variant="primary"
+                  disabled={isSubmitting}
                 >
                   {t('modal.send')}
                 </Button>
