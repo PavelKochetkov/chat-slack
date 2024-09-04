@@ -1,20 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { useGetMessagesQuery } from '../api/messagesApi.js';
-import { selectCurrentChannelId } from '../store/slice/appSlice.js';
 import Loading from './Spinner.jsx';
 
-const MessageBox = () => {
-  const { data: messages = [], isLoading } = useGetMessagesQuery();
-  const currentChannelId = useSelector(selectCurrentChannelId);
-  const filtredMessages = messages.filter((message) => message.channelId === currentChannelId);
+const MessageBox = (props) => {
+  const { filtredMessages, isLoading } = props;
   const messageRef = useRef(null);
 
   useEffect(() => {
     if (messageRef.current) {
       messageRef.current.scrollTop = messageRef.current.scrollHeight;
     }
-  }, [messages.length, currentChannelId]);
+  }, [filtredMessages.length]);
 
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5" ref={messageRef}>

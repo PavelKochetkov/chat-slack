@@ -19,9 +19,8 @@ const App = () => (
         <Route path={getPageRoute('PAGE_SIGNUP')} element={<Signup />} />
         <Route path={getPageRoute('PAGE_NOT_FOUND')} element={<NotFoundPage />} />
       </Routes>
-      <ToastContainer />
-
     </BrowserRouter>
+    <ToastContainer />
   </div>
 );
 

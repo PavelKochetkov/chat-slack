@@ -1,15 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useGetMessagesQuery } from '../api/messagesApi';
-import { selectCurrentChannelId, selectCurrentChannelName } from '../store/slice/appSlice';
+import { selectCurrentChannelName } from '../store/slice/appSlice';
 
-const ChatHeader = () => {
+const ChatHeader = (props) => {
+  const { filtredMessages } = props;
   const { t } = useTranslation();
   const currentChannelName = useSelector(selectCurrentChannelName);
-  const currentChannelId = useSelector(selectCurrentChannelId);
-  const { data: messages = [] } = useGetMessagesQuery();
-  const filteredMessages = messages.filter((message) => message.channelId === currentChannelId);
 
   return (
     <div className="bg-light mb-4 p-3 shadow-sm small">
@@ -17,7 +14,7 @@ const ChatHeader = () => {
         <b>{`# ${currentChannelName}`}</b>
       </p>
       <span className="text-muted">
-        {t('countMessages.amount_of_messages', { count: filteredMessages.length })}
+        {t('countMessages.amount_of_messages', { count: filtredMessages.length })}
       </span>
     </div>
   );
