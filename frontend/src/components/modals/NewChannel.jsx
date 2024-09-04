@@ -11,6 +11,7 @@ import {
   selectError,
 } from '../../store/slice/appSlice.js';
 import { censorText } from '../../utils/textFilter.js';
+import handleError from '../../utils/handleError.js';
 
 const NewChannel = (props) => {
   const { handleClose } = props;
@@ -37,8 +38,9 @@ const NewChannel = (props) => {
       handleClose();
     }
 
-    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
-      toast.error(t('toast.networkError'));
+    if (!isSuccses && errorStatus) {
+      const errorMessage = handleError(errorStatus, t);
+      toast.error(errorMessage);
       handleClose();
     }
   }, [isSuccses, errorStatus, t, handleClose]);

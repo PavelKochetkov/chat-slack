@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useLoginMutation } from '../api/authApi';
 import { generatePageRoute } from '../utils/routes';
+import handleError from '../utils/handleError';
 
 const LoginForm = () => {
   const [login] = useLoginMutation();
@@ -16,17 +16,10 @@ const LoginForm = () => {
   const authError = useSelector(selectAuthError);
   const isAuthError = useSelector(selectIsAuthError);
   const loginSchema = Yup.object().shape({
-    username: Yup.string()
-      .required(t('errors.required')),
-    password: Yup.string()
-      .required(t('errors.required')),
+    username: Yup.string().required(t('errors.required')),
+    password: Yup.string().required(t('errors.required')),
   });
-
-  useEffect(() => {
-    if (isAuthError && authError === 'FETCH_ERROR') {
-      toast.error(t('toast.networkError'));
-    }
-  }, [isAuthError, authError, t]);
+  const errorMessage = handleError(authError, t);
 
   const handleLogin = async (values) => {
     await login(values).unwrap();
@@ -47,7 +40,7 @@ const LoginForm = () => {
               type="text"
               name="username"
               className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
-              placeholder={t('errors.range')}
+              placeholder={t('errors.username')}
               id="username"
               autoFocus
             />
@@ -64,7 +57,7 @@ const LoginForm = () => {
             />
             <label className="form-label" htmlFor="password">{t('loginPage.password')}</label>
             {errors.password && touched.password && <div className="invalid-tooltip">{errors.password}</div>}
-            {isAuthError && authError === 401 && <div className="invalid-tooltip">{t('errors.login')}</div>}
+            {isAuthError && <div className="invalid-tooltip">{errorMessage}</div>}
           </div>
           <button
             type="submit"

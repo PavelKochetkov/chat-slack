@@ -8,6 +8,7 @@ import { useAddMessageMutation } from '../api/messagesApi';
 import { censorText } from '../utils/textFilter';
 import { selectUsername } from '../store/slice/authSlice';
 import { selectCurrentChannelId, selectIsSuccses, selectError } from '../store/slice/appSlice';
+import handleError from '../utils/handleError';
 
 const MessageForm = () => {
   const inputRef = useRef(null);
@@ -35,8 +36,9 @@ const MessageForm = () => {
   };
 
   useEffect(() => {
-    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
-      toast.error(t('toast.networkError'));
+    if (!isSuccses && errorStatus) {
+      const errorMessage = handleError(errorStatus, t);
+      toast.error(errorMessage);
     }
   }, [errorStatus, isSuccses, t]);
 

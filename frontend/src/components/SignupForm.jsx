@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { toast } from 'react-toastify';
 import Button from 'react-bootstrap/Button';
 import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useCreateNewUserMutation } from '../api/authApi';
 import { censorText } from '../utils/textFilter';
 import { generatePageRoute } from '../utils/routes';
+import handleError from '../utils/handleError';
 
 const SignupForm = () => {
   const { t } = useTranslation();
@@ -30,12 +30,7 @@ const SignupForm = () => {
       .oneOf([Yup.ref('password'), null], t('errors.mustMatch'))
       .required(t('errors.required')),
   });
-
-  useEffect(() => {
-    if (isAuthError && authError === 'FETCH_ERROR') {
-      toast.error(t('toast.networkError'));
-    }
-  }, [isAuthError, authError, t]);
+  const errorMessage = handleError(authError, t);
 
   const handleSignup = async (values) => {
     const { username, password } = values;
@@ -77,7 +72,7 @@ const SignupForm = () => {
             />
             <label className="form-label" htmlFor="username">{t('signupPage.username')}</label>
             {errors.username && touched.username && <div className="invalid-tooltip">{errors.username}</div>}
-            {isAuthError && authError === 409 && <div className="invalid-tooltip">{t('errors.userExists')}</div>}
+            {isAuthError && <div className="invalid-tooltip">{errorMessage}</div>}
           </div>
           <div className="form-floating mb-3">
             <Field

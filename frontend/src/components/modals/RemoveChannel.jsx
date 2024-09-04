@@ -9,6 +9,7 @@ import {
   selectError,
   selectIsSuccses,
 } from '../../store/slice/appSlice';
+import handleError from '../../utils/handleError';
 
 const RemoveChannel = (props) => {
   const { handleClose } = props;
@@ -28,8 +29,9 @@ const RemoveChannel = (props) => {
       handleClose();
     }
 
-    if (!isSuccses && errorStatus === 'FETCH_ERROR') {
-      toast.error(t('toast.networkError'));
+    if (!isSuccses && errorStatus) {
+      const errorMessage = handleError(errorStatus, t);
+      toast.error(errorMessage);
       handleClose();
     }
   }, [isSuccses, errorStatus, t, handleClose]);

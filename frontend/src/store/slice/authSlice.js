@@ -71,6 +71,7 @@ const authSlice = createSlice({
         localStorage.setItem('token', token);
       })
       .addMatcher(authApi.endpoints.createNewUser.matchRejected, (state, { payload }) => {
+        console.log(payload);
         Object.assign(state, {
           ...initialState,
           authError: payload.status,
