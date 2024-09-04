@@ -41,7 +41,7 @@ const NewChannel = (props) => {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
     }
-  }, [isSuccess, errorStatus, t, handleClose]);
+  }, [isSuccess, errorStatus, t]);
 
   useEffect(() => {
     if (inputRef.current) {

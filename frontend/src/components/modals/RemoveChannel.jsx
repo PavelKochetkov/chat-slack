@@ -33,7 +33,7 @@ const RemoveChannel = (props) => {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
     }
-  }, [isSuccess, errorStatus, t, handleClose]);
+  }, [isSuccess, errorStatus, t]);
 
   return (
     <>

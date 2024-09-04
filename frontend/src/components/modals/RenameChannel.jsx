@@ -47,7 +47,7 @@ const RenameChannel = (props) => {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
     }
-  }, [isSuccses, errorStatus, t, handleClose]);
+  }, [isSuccses, errorStatus, t]);
 
   useEffect(() => {
     if (inputRef.current) {
