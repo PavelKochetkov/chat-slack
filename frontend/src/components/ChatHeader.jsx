@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useGetMessagesQuery } from '../api/messagesApi';
 import { selectCurrentChannelId, selectCurrentChannelName } from '../store/slice/appSlice';
 
-const Header = () => {
+const ChatHeader = () => {
   const { t } = useTranslation();
   const currentChannelName = useSelector(selectCurrentChannelName);
   const currentChannelId = useSelector(selectCurrentChannelId);
@@ -23,4 +23,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default ChatHeader;

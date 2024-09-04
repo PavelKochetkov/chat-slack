@@ -34,8 +34,8 @@ const Channel = (props) => {
           <span className="visually-hidden">{t('dropdown.text')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleShowModal('remove', channel)}>{t('dropdown.remove')}</Dropdown.Item>
-          <Dropdown.Item onClick={() => handleShowModal('renaming', channel)}>{t('dropdown.rename')}</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowModal('remove')}>{t('dropdown.remove')}</Dropdown.Item>
+          <Dropdown.Item onClick={() => handleShowModal('renaming')}>{t('dropdown.rename')}</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </ButtonGroup>
