@@ -35,18 +35,17 @@ const RenameChannel = (props) => {
       id: сhannelId,
     };
     await editChannel(data).unwrap();
+    handleClose();
   };
 
   useEffect(() => {
     if (isSuccses) {
       toast.success(t('toast.сhannelRenamedSuccessfully'));
-      handleClose();
     }
 
     if (!isSuccses && errorStatus) {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
-      handleClose();
     }
   }, [isSuccses, errorStatus, t, handleClose]);
 

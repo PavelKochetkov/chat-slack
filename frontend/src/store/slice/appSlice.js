@@ -52,7 +52,7 @@ const appSlice = createSlice({
     builder
       .addMatcher(channelsApi.endpoints.addChannel.matchPending, (state) => {
         Object.assign(state, {
-          isSuccses: false,
+          isSuccses: true,
           error: null,
           isOpen: true,
         });
@@ -75,7 +75,7 @@ const appSlice = createSlice({
       })
       .addMatcher(channelsApi.endpoints.removeChannel.matchPending, (state) => {
         Object.assign(state, {
-          isSuccses: false,
+          isSuccses: true,
           error: null,
           isOpen: true,
         });
@@ -95,7 +95,7 @@ const appSlice = createSlice({
       })
       .addMatcher(channelsApi.endpoints.editChannel.matchPending, (state) => {
         Object.assign(state, {
-          isSuccses: false,
+          isSuccses: true,
           error: null,
           isOpen: true,
         });

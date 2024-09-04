@@ -16,25 +16,24 @@ const RemoveChannel = (props) => {
   const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
   const channelId = useSelector(selectChannelId);
-  const isSuccses = useSelector(selectIsSuccses);
+  const isSuccess = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
 
   const deleteChannel = async (id) => {
     await removeChannel(id).unwrap();
+    handleClose();
   };
 
   useEffect(() => {
-    if (isSuccses) {
+    if (isSuccess) {
       toast.success(t('toast.channelDeletedSuccessfully'));
-      handleClose();
     }
 
-    if (!isSuccses && errorStatus) {
+    if (!isSuccess && errorStatus) {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
-      handleClose();
     }
-  }, [isSuccses, errorStatus, t, handleClose]);
+  }, [isSuccess, errorStatus, t, handleClose]);
 
   return (
     <>

@@ -6,10 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
-import {
-  selectIsSuccses,
-  selectError,
-} from '../../store/slice/appSlice.js';
+import { selectError, selectIsSuccses } from '../../store/slice/appSlice.js';
 import { censorText } from '../../utils/textFilter.js';
 import handleError from '../../utils/handleError.js';
 
@@ -17,12 +14,14 @@ const NewChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
   const { data: channels = [] } = useGetChannelsQuery();
-  const isSuccses = useSelector(selectIsSuccses);
+  const isSuccess = useSelector(selectIsSuccses);
   const errorStatus = useSelector(selectError);
   const channelNames = channels.map((channel) => channel.name);
   const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
   const [addChannel] = useAddChannelMutation();
+
+  console.log(isSuccess);
 
   const createNewChannel = async (values) => {
     const { name } = values;
@@ -30,20 +29,19 @@ const NewChannel = (props) => {
       name: censorText(name),
     };
     await addChannel(data).unwrap();
+    handleClose();
   };
 
   useEffect(() => {
-    if (isSuccses) {
+    if (isSuccess) {
       toast.success(t('toast.channelCreatedSuccessfully'));
-      handleClose();
     }
 
-    if (!isSuccses && errorStatus) {
+    if (!isSuccess && errorStatus) {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
-      handleClose();
     }
-  }, [isSuccses, errorStatus, t, handleClose]);
+  }, [isSuccess, errorStatus, t, handleClose]);
 
   useEffect(() => {
     if (inputRef.current) {
