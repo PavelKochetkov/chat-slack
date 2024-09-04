@@ -6,7 +6,7 @@ import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { selectAuthError, selectIsAuthError } from '../store/slice/authSlice';
 import { useLoginMutation } from '../api/authApi';
-import { generatePageRoute } from '../utils/routes';
+import { getPageRoute } from '../utils/routes';
 import handleError from '../utils/handleError';
 
 const LoginForm = () => {
@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   const handleLogin = async (values) => {
     await login(values).unwrap();
-    navigate(generatePageRoute('PAGE_CHAT'));
+    navigate(getPageRoute('PAGE_CHAT'));
   };
 
   return (

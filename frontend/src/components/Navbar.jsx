@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { logOut, selectIsAuth } from '../store/slice/authSlice';
-import { generatePageRoute } from '../utils/routes';
+import { getPageRoute } from '../utils/routes';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logOut());
-    navigate(generatePageRoute('PAGE_LOGIN'));
+    navigate(getPageRoute('PAGE_LOGIN'));
   };
 
   return (

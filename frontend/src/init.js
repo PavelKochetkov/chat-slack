@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import channelsApi from './api/channelsApi.js';
 import messagesApi from './api/messagesApi.js';
 import store from './store/store.js';
@@ -11,6 +12,11 @@ import { addRussianDictionary } from './utils/textFilter.js';
 import { setDefaultChannel } from './store/slice/appSlice.js';
 
 const init = async (socket) => {
+  const rollbarConfig = {
+    accessToken: process.env.REACT_APP_ROLLBAR_ACCESS_TOKEN,
+    environment: 'production',
+  };
+
   const i18nextInstance = i18next.createInstance();
   await i18nextInstance.init({
     debug: false,
@@ -56,11 +62,15 @@ const init = async (socket) => {
   socket.on('newMessage', listenerNewMessage);
 
   return (
-    <Provider store={store}>
-      <I18nextProvider i18n={i18nextInstance}>
-        <App />
-      </I18nextProvider>
-    </Provider>
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <I18nextProvider i18n={i18nextInstance}>
+            <App />
+          </I18nextProvider>
+        </Provider>
+      </ErrorBoundary>
+    </RollbarProvider>
   );
 };
 

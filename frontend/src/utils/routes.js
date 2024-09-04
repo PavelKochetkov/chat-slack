@@ -14,6 +14,6 @@ const API_ROUTES = {
   MESSAGES: 'messages',
 };
 
-export const generatePageRoute = (route) => PAGE_ROUTES[route];
+export const getPageRoute = (route) => PAGE_ROUTES[route];
 
-export const generateAuthApiRoute = (route) => `${API_VERSION}/${API_ROUTES[route]}`;
+export const getAuthApiRoute = (route) => `${API_VERSION}/${API_ROUTES[route]}`;
