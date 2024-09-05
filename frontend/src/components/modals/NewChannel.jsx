@@ -6,7 +6,7 @@ import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
-import { selectError, selectIsSuccses } from '../../store/slice/appSlice.js';
+import { selectError, selectIsSuccess } from '../../store/slice/appSlice.js';
 import { censorText } from '../../utils/textFilter.js';
 import handleError from '../../utils/handleError.js';
 
@@ -14,7 +14,7 @@ const NewChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
   const { data: channels = [] } = useGetChannelsQuery();
-  const isSuccess = useSelector(selectIsSuccses);
+  const isSuccess = useSelector(selectIsSuccess);
   const errorStatus = useSelector(selectError);
   const channelNames = channels.map((channel) => channel.name);
   const inputRef = useRef(null);

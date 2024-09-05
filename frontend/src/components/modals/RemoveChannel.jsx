@@ -7,7 +7,7 @@ import { useRemoveChannelMutation } from '../../api/channelsApi';
 import {
   selectChannelId,
   selectError,
-  selectIsSuccses,
+  selectIsSuccess,
 } from '../../store/slice/appSlice';
 import handleError from '../../utils/handleError';
 
@@ -16,7 +16,7 @@ const RemoveChannel = (props) => {
   const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
   const channelId = useSelector(selectChannelId);
-  const isSuccess = useSelector(selectIsSuccses);
+  const isSuccess = useSelector(selectIsSuccess);
   const errorStatus = useSelector(selectError);
 
   const deleteChannel = async (id) => {

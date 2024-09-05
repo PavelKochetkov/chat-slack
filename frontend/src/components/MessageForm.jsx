@@ -7,7 +7,7 @@ import { SendFill } from 'react-bootstrap-icons';
 import { useAddMessageMutation } from '../api/messagesApi';
 import { censorText } from '../utils/textFilter';
 import { selectUsername } from '../store/slice/authSlice';
-import { selectCurrentChannelId, selectIsSuccses, selectError } from '../store/slice/appSlice';
+import { selectCurrentChannelId, selectIsSuccess, selectError } from '../store/slice/appSlice';
 import handleError from '../utils/handleError';
 
 const MessageForm = () => {
@@ -18,7 +18,7 @@ const MessageForm = () => {
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const isSuccses = useSelector(selectIsSuccses);
+  const isSuccess = useSelector(selectIsSuccess);
   const errorStatus = useSelector(selectError);
   const username = useSelector(selectUsername);
 
@@ -36,11 +36,11 @@ const MessageForm = () => {
   };
 
   useEffect(() => {
-    if (!isSuccses && errorStatus) {
+    if (!isSuccess && errorStatus) {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
     }
-  }, [errorStatus, isSuccses, t]);
+  }, [errorStatus, isSuccess, t]);
 
   return (
     <div className="mt-auto px-5 py-3">
