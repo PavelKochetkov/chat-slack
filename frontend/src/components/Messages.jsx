@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Loading from './Spinner.jsx';
 
-const MessageBox = (props) => {
+const Messages = (props) => {
   const { filtredMessages, isLoading } = props;
   const messageRef = useRef(null);
 
@@ -26,4 +26,4 @@ const MessageBox = (props) => {
   );
 };
 
-export default MessageBox;
+export default Messages;
