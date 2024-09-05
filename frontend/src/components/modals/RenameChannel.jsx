@@ -8,7 +8,6 @@ import { createSchemaValidationRenameChannel } from './validate';
 import {
   selectChannelName,
   selectChannelId,
-  selectIsSuccess,
   selectError,
 } from '../../store/slice/appSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
@@ -22,11 +21,10 @@ const RenameChannel = (props) => {
   const channelNames = channels.map((channel) => channel.name);
   const channelName = useSelector(selectChannelName);
   const сhannelId = useSelector(selectChannelId);
-  const isSuccess = useSelector(selectIsSuccess);
   const errorStatus = useSelector(selectError);
   const { t } = useTranslation();
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
-  const [editChannel] = useEditChannelMutation();
+  const [editChannel, { isSuccess }] = useEditChannelMutation();
 
   const renameChannel = async (values) => {
     const { name } = values;
@@ -35,19 +33,19 @@ const RenameChannel = (props) => {
       id: сhannelId,
     };
     await editChannel(data).unwrap();
-    handleClose();
   };
 
   useEffect(() => {
     if (isSuccess) {
       toast.success(t('toast.сhannelRenamedSuccessfully'));
+      handleClose();
     }
 
     if (!isSuccess && errorStatus) {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
     }
-  }, [isSuccess, errorStatus, t]);
+  }, [isSuccess, errorStatus, t, handleClose]);
 
   useEffect(() => {
     if (inputRef.current) {

@@ -7,33 +7,31 @@ import { useRemoveChannelMutation } from '../../api/channelsApi';
 import {
   selectChannelId,
   selectError,
-  selectIsSuccess,
 } from '../../store/slice/appSlice';
 import handleError from '../../utils/handleError';
 
 const RemoveChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
-  const [removeChannel] = useRemoveChannelMutation();
+  const [removeChannel, { isSuccess }] = useRemoveChannelMutation();
   const channelId = useSelector(selectChannelId);
-  const isSuccess = useSelector(selectIsSuccess);
   const errorStatus = useSelector(selectError);
 
   const deleteChannel = async (id) => {
     await removeChannel(id).unwrap();
-    handleClose();
   };
 
   useEffect(() => {
     if (isSuccess) {
       toast.success(t('toast.channelDeletedSuccessfully'));
+      handleClose();
     }
 
     if (!isSuccess && errorStatus) {
       const errorMessage = handleError(errorStatus, t);
       toast.error(errorMessage);
     }
-  }, [isSuccess, errorStatus, t]);
+  }, [isSuccess, errorStatus, t, handleClose]);
 
   return (
     <>
