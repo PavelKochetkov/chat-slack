@@ -1,14 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { SendFill } from 'react-bootstrap-icons';
 import { useAddMessageMutation } from '../api/messagesApi';
 import { censorText } from '../utils/textFilter';
 import { selectUsername } from '../store/slice/authSlice';
-import { selectCurrentChannelId, selectIsSuccess, selectError } from '../store/slice/appSlice';
-import handleError from '../utils/handleError';
+import { selectCurrentChannelId } from '../store/slice/appSlice';
 
 const MessageForm = () => {
   const inputRef = useRef(null);
@@ -18,8 +16,6 @@ const MessageForm = () => {
     { isLoading: isAddingMessage },
   ] = useAddMessageMutation();
   const currentChannelId = useSelector(selectCurrentChannelId);
-  const isSuccess = useSelector(selectIsSuccess);
-  const errorStatus = useSelector(selectError);
   const username = useSelector(selectUsername);
 
   const sendMessage = async (values, { setSubmitting, resetForm }) => {
@@ -34,13 +30,6 @@ const MessageForm = () => {
     inputRef.current.focus();
     setSubmitting(false);
   };
-
-  useEffect(() => {
-    if (!isSuccess && errorStatus) {
-      const errorMessage = handleError(errorStatus, t);
-      toast.error(errorMessage);
-    }
-  }, [errorStatus, isSuccess, t]);
 
   return (
     <div className="mt-auto px-5 py-3">

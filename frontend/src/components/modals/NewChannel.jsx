@@ -1,20 +1,16 @@
 import React, { useRef, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useAddChannelMutation, useGetChannelsQuery } from '../../api/channelsApi.js';
 import { createSchemaValidationNewChannel } from './validate.js';
-import { selectError } from '../../store/slice/appSlice.js';
 import { censorText } from '../../utils/textFilter.js';
-import handleError from '../../utils/handleError.js';
 
 const NewChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
   const { data: channels = [] } = useGetChannelsQuery();
-  const errorStatus = useSelector(selectError);
   const channelNames = channels.map((channel) => channel.name);
   const inputRef = useRef(null);
   const validationSchema = createSchemaValidationNewChannel(channelNames, t);
@@ -33,12 +29,7 @@ const NewChannel = (props) => {
       toast.success(t('toast.channelCreatedSuccessfully'));
       handleClose();
     }
-
-    if (!isSuccess && errorStatus) {
-      const errorMessage = handleError(errorStatus, t);
-      toast.error(errorMessage);
-    }
-  }, [isSuccess, errorStatus, t, handleClose]);
+  }, [handleClose, isSuccess, t]);
 
   useEffect(() => {
     if (inputRef.current) {

@@ -5,14 +5,9 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { createSchemaValidationRenameChannel } from './validate';
-import {
-  selectChannelName,
-  selectChannelId,
-  selectError,
-} from '../../store/slice/appSlice';
+import { selectChannelName, selectChannelId } from '../../store/slice/appSlice';
 import { useEditChannelMutation, useGetChannelsQuery } from '../../api/channelsApi';
 import { censorText } from '../../utils/textFilter';
-import handleError from '../../utils/handleError';
 
 const RenameChannel = (props) => {
   const { handleClose } = props;
@@ -21,7 +16,6 @@ const RenameChannel = (props) => {
   const channelNames = channels.map((channel) => channel.name);
   const channelName = useSelector(selectChannelName);
   const сhannelId = useSelector(selectChannelId);
-  const errorStatus = useSelector(selectError);
   const { t } = useTranslation();
   const validationSchema = createSchemaValidationRenameChannel(channelNames, t);
   const [editChannel, { isSuccess }] = useEditChannelMutation();
@@ -40,12 +34,7 @@ const RenameChannel = (props) => {
       toast.success(t('toast.сhannelRenamedSuccessfully'));
       handleClose();
     }
-
-    if (!isSuccess && errorStatus) {
-      const errorMessage = handleError(errorStatus, t);
-      toast.error(errorMessage);
-    }
-  }, [isSuccess, errorStatus, t, handleClose]);
+  }, [isSuccess, t, handleClose]);
 
   useEffect(() => {
     if (inputRef.current) {

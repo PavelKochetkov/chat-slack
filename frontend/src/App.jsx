@@ -8,11 +8,13 @@ import Signup from './page/Signup.jsx';
 import NotFoundPage from './page/NotFoundPage.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import { getPageRoute } from './utils/routes.js';
+import ErrorNotification from './components/ErrorNotification.jsx';
 
 const App = () => (
   <div className="d-flex flex-column h-100">
     <BrowserRouter>
       <Navbar />
+      <ErrorNotification />
       <Routes>
         <Route path={getPageRoute('PAGE_CHAT')} element={<PrivateRoute element={ChatPage} />} />
         <Route path={getPageRoute('PAGE_LOGIN')} element={<Login />} />

@@ -4,18 +4,13 @@ import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../api/channelsApi';
-import {
-  selectChannelId,
-  selectError,
-} from '../../store/slice/appSlice';
-import handleError from '../../utils/handleError';
+import { selectChannelId } from '../../store/slice/appSlice';
 
 const RemoveChannel = (props) => {
   const { handleClose } = props;
   const { t } = useTranslation();
   const [removeChannel, { isSuccess }] = useRemoveChannelMutation();
   const channelId = useSelector(selectChannelId);
-  const errorStatus = useSelector(selectError);
 
   const deleteChannel = async (id) => {
     await removeChannel(id).unwrap();
@@ -26,12 +21,7 @@ const RemoveChannel = (props) => {
       toast.success(t('toast.channelDeletedSuccessfully'));
       handleClose();
     }
-
-    if (!isSuccess && errorStatus) {
-      const errorMessage = handleError(errorStatus, t);
-      toast.error(errorMessage);
-    }
-  }, [isSuccess, errorStatus, t, handleClose]);
+  }, [isSuccess, t, handleClose]);
 
   return (
     <>
