@@ -25,23 +25,44 @@ const Channel = (props) => {
 
   return channel.removable ? (
     <ButtonGroup className="d-flex" role="group">
-      <Button onClick={switchChannel} variant={buttonClass} className="w-100 rounded-0 text-start text-truncate">
+      <Button
+        className="w-100 rounded-0 text-start text-truncate"
+        onClick={switchChannel}
+        variant={buttonClass}
+      >
         <span className="me-1">#</span>
         {channel.name}
       </Button>
       <Dropdown as={ButtonGroup}>
-        <Dropdown.Toggle split variant={buttonClass} id="channel-management-dropdown" className="flex-grow-0">
+        <Dropdown.Toggle
+          className="flex-grow-0"
+          variant={buttonClass}
+          split
+          id="channel-management-dropdown"
+        >
           <span className="visually-hidden">{t('dropdown.text')}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => handleShowModal('remove')}>{t('dropdown.remove')}</Dropdown.Item>
-          <Dropdown.Item onClick={() => handleShowModal('renaming')}>{t('dropdown.rename')}</Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => handleShowModal('remove')}
+          >
+            {t('dropdown.remove')}
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => handleShowModal('renaming')}
+          >
+            {t('dropdown.rename')}
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </ButtonGroup>
   ) : (
     <ButtonGroup className="d-flex" role="group">
-      <Button onClick={switchChannel} variant={buttonClass} className="w-100 rounded-0 text-start text-truncate">
+      <Button
+        className="w-100 rounded-0 text-start text-truncate"
+        onClick={switchChannel}
+        variant={buttonClass}
+      >
         <span className="me-1">#</span>
         {channel.name}
       </Button>

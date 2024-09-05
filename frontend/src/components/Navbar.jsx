@@ -19,12 +19,17 @@ const Navbar = () => {
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <div className="container">
-        <a className="navbar-brand" href="/">{t('navBar.title')}</a>
+        <a
+          className="navbar-brand"
+          href="/"
+        >
+          {t('navBar.title')}
+        </a>
         {isAuth && (
         <button
+          className="btn btn-primary"
           onClick={handleLogout}
           type="button"
-          className="btn btn-primary"
         >
           {t('navBar.button')}
         </button>

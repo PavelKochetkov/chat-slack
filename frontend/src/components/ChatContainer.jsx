@@ -14,7 +14,10 @@ const ChatContainer = () => {
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
         <ChatHeader filtredMessages={filtredMessages} />
-        <Messages filtredMessages={filtredMessages} isLoading={isLoading} />
+        <Messages
+          filtredMessages={filtredMessages}
+          isLoading={isLoading}
+        />
         <MessageForm />
       </div>
     </div>

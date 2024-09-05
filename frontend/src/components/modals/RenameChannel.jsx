@@ -61,10 +61,10 @@ const RenameChannel = (props) => {
           }) => (
             <Form>
               <Field
+                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 name="name"
                 type="text"
                 innerRef={inputRef}
-                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
               />
 

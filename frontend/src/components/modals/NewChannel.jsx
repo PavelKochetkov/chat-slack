@@ -56,10 +56,10 @@ const NewChannel = (props) => {
           }) => (
             <Form>
               <Field
+                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 name="name"
                 type="text"
                 innerRef={inputRef}
-                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
                 id="name"
               />
               <label className="visually-hidden" htmlFor="name">{t('modal.label')}</label>

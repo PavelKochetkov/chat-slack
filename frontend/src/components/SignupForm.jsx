@@ -63,44 +63,59 @@ const SignupForm = () => {
           <h1 className="text-center mb-4">{t('signupPage.title')}</h1>
           <div className="form-floating mb-3">
             <Field
+              className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
               name="username"
               id="username"
               placeholder={t('errors.range')}
               autoComplete="username"
-              className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
               innerRef={inputRef}
             />
-            <label className="form-label" htmlFor="username">{t('signupPage.username')}</label>
+            <label
+              className="form-label"
+              htmlFor="username"
+            >
+              {t('signupPage.username')}
+            </label>
             {errors.username && touched.username && <div className="invalid-tooltip">{errors.username}</div>}
             {isAuthError && <div className="invalid-tooltip">{errorMessage}</div>}
           </div>
           <div className="form-floating mb-3">
             <Field
+              className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
               name="password"
               id="password"
               type="password"
               placeholder={t('errors.min')}
               autoComplete="new-password"
-              className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="password">{t('signupPage.password')}</label>
+            <label
+              className="form-label"
+              htmlFor="password"
+            >
+              {t('signupPage.password')}
+            </label>
             {errors.password && touched.password && <div className="invalid-tooltip">{errors.password}</div>}
           </div>
           <div className="form-floating mb-3">
             <Field
+              className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
               name="confirmPassword"
               id="confirmPassword"
               type="password"
               placeholder={t('errors.mustMatch')}
               autoComplete="new-password"
-              className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
             />
-            <label className="form-label" htmlFor="confirmPassword">{t('signupPage.confirmPassword')}</label>
+            <label
+              className="form-label"
+              htmlFor="confirmPassword"
+            >
+              {t('signupPage.confirmPassword')}
+            </label>
             {errors.confirmPassword && touched.confirmPassword && <div className="invalid-tooltip">{errors.confirmPassword}</div>}
           </div>
           <Button
-            type="submit"
             variant="outline-primary w-100"
+            type="submit"
             disabled={isSubmitting}
           >
             {t('signupPage.button')}

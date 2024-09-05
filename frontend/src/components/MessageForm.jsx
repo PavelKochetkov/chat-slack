@@ -41,21 +41,24 @@ const MessageForm = () => {
           <Form className="py-1 border rounded-2">
             <div className="input-group has-validation">
               <Field
+                className="border-0 p-0 ps-2 form-control"
                 type="text"
                 name="message"
                 placeholder={t('messageForm.placeholder')}
-                className="border-0 p-0 ps-2 form-control"
                 autoFocus
                 required
                 innerRef={inputRef}
                 aria-label={t('messageForm.label')}
               />
               <button
-                type="submit"
                 className="btn me-1"
+                type="submit"
                 disabled={isAddingMessage && isSubmitting}
               >
-                <SendFill color="royalblue" size={20} />
+                <SendFill
+                  color="royalblue"
+                  size={20}
+                />
                 <span className="visually-hidden">{t('messageForm.button')}</span>
               </button>
             </div>

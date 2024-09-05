@@ -37,9 +37,9 @@ const LoginForm = () => {
           <h1 className="text-center mb-4">{t('loginPage.title')}</h1>
           <div className="form-floating mb-3">
             <Field
+              className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
               type="text"
               name="username"
-              className={`form-control ${(errors.username && touched.username) || isAuthError ? 'is-invalid' : ''}`}
               placeholder={t('errors.username')}
               id="username"
               autoFocus
@@ -49,19 +49,24 @@ const LoginForm = () => {
           </div>
           <div className="form-floating mb-4">
             <Field
+              className={`form-control ${(errors.password && touched.password) || isAuthError ? 'is-invalid' : ''}`}
               type="password"
               name="password"
-              className={`form-control ${(errors.password && touched.password) || isAuthError ? 'is-invalid' : ''}`}
               placeholder={t('loginPage.password')}
               id="password"
             />
-            <label className="form-label" htmlFor="password">{t('loginPage.password')}</label>
+            <label
+              className="form-label"
+              htmlFor="password"
+            >
+              {t('loginPage.password')}
+            </label>
             {errors.password && touched.password && <div className="invalid-tooltip">{errors.password}</div>}
             {isAuthError && <div className="invalid-tooltip">{errorMessage}</div>}
           </div>
           <button
-            type="submit"
             className="w-100 mb-3 btn btn-outline-primary"
+            type="submit"
             disabled={isSubmitting}
           >
             {t('loginPage.button')}

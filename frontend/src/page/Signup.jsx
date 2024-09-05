@@ -13,7 +13,11 @@ const Signup = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-                <img src={logo} className="rounded-circle" alt={t('signupPage.alt')} />
+                <img
+                  className="rounded-circle"
+                  src={logo}
+                  alt={t('signupPage.alt')}
+                />
                 <SignupForm />
               </div>
             </div>

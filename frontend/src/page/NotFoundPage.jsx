@@ -8,7 +8,11 @@ const NotFoundPage = () => {
 
   return (
     <div className="text-center">
-      <img src={logo404} alt={t('notFoundPage.alt')} className="img-fluid h-25" />
+      <img
+        className="img-fluid h-25"
+        src={logo404}
+        alt={t('notFoundPage.alt')}
+      />
       <h1 className="h4 text-muted">{t('notFoundPage.title')}</h1>
       <p className="text-muted">
         {t('notFoundPage.text')}

@@ -12,10 +12,17 @@ const Messages = (props) => {
   }, [filtredMessages.length]);
 
   return (
-    <div id="messages-box" className="chat-messages overflow-auto px-5" ref={messageRef}>
+    <div
+      className="chat-messages overflow-auto px-5"
+      id="messages-box"
+      ref={messageRef}
+    >
       {isLoading && <Loading />}
       {filtredMessages.map((message) => (
-        <div className="text-break mb-2" key={message.id}>
+        <div
+          className="text-break mb-2"
+          key={message.id}
+        >
           <b>{message.username}</b>
           :
           {' '}
