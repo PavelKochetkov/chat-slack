@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
+import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -56,7 +57,7 @@ const NewChannel = (props) => {
           }) => (
             <Form>
               <Field
-                className={`form-control ${!isValid ? 'mb-2 is-invalid' : 'mb-2'}`}
+                className={cn('form-control mb-2', { 'is-invalid': !isValid })}
                 name="name"
                 type="text"
                 innerRef={inputRef}
