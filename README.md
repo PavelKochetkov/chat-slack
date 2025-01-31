@@ -1,9 +1,9 @@
-# Проект "Hexlet Chat"
+# Проект "Chat Slack"
 [![Actions Status](https://github.com/PavelKochetkov/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/PavelKochetkov/frontend-project-12/actions)
 
 ## Описание
 
-Hexlet Chat — приложение для обмена сообщениями. Разработано с использованием библиотеки React в связке с Redux Toolkit. 
+Chat Slack — приложение для обмена сообщениями. Разработано с использованием библиотеки React в связке с Redux Toolkit. 
 Для демо-доступа можно использовать тестовую учетную запись: 
 - имя пользователя: admin, 
 - пароль: admin. 
